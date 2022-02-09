@@ -37,4 +37,10 @@ public class Domicilio implements Serializable  {
     @JoinColumn(name = "id_persona", nullable = false)
     private Persona domPers;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = {"domCem", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JoinColumn(name = "id_cementerio", nullable = false)
+    private Cementerio domCem;
+
+
 }
