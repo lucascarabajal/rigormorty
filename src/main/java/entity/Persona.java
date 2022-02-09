@@ -1,17 +1,16 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-
-@Entity
 @Getter @Setter @NoArgsConstructor
+@MappedSuperclass
 public class Persona {
 
     @Id
@@ -34,9 +33,6 @@ public class Persona {
     @Column(nullable = false)
     private Domicilio domicilio;
 
-    @ManyToOne
-    @JsonManagedReference("persDom")
-    @JoinColumn(name = "fkDom", nullable = false)
-    private Domicilio persDom;
-
+    @OneToMany(mappedBy = "domicilio", cascade = CascadeType.ALL)
+    private List<Domicilio> domPers = new ArrayList<>();
 }

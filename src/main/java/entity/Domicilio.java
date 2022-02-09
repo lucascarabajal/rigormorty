@@ -1,16 +1,15 @@
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
-import java.util.List;
+import java.io.Serializable;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
-public class Domicilio {
+public class Domicilio implements Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDomicilio;
@@ -33,8 +32,9 @@ public class Domicilio {
     @Column(nullable = false, length = 25)
     private String pais;
 
-    @OneToMany(mappedBy = "domicilio", cascade = CascadeType.ALL)
-    @JsonManagedReference("domPers")
-    private List<Persona> domPers;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = {"domPers", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JoinColumn(name = "id_persona", nullable = false)
+    private Persona domPers;
 
 }
