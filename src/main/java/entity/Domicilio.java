@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "domicilios")
 @Getter @Setter @NoArgsConstructor
 public class Domicilio implements Serializable  {
     @Id
@@ -18,10 +19,10 @@ public class Domicilio implements Serializable  {
     private String calle;
 
     @Column
-    private int cp;
+    private Integer cp;
 
     @Column(nullable = false)
-    private int numero;
+    private Integer numero;
 
     @Column(nullable = false, length = 50)
     private String ciudad;
@@ -33,14 +34,14 @@ public class Domicilio implements Serializable  {
     private String pais;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"domPers", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"domicilio", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_persona", nullable = false)
-    private Persona domPers;
+    private Persona domicilios;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"domCem", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"ubicaciones", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_cementerio", nullable = false)
-    private Cementerio domCem;
+    private Cementerio ubicaciones;
 
 
 }

@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "usuarios")
 @Getter @Setter @NoArgsConstructor
 public class Usuario extends Persona implements Serializable {
-
     @Column(nullable = false, length = 30)
     private String username;
 
@@ -25,6 +25,6 @@ public class Usuario extends Persona implements Serializable {
     private int numTel;
 
     @OneToMany(mappedBy = "roles", cascade = CascadeType.ALL)
-    private List<Roles> userRol = new ArrayList<>();
+    private List<Roles> usuarios = new ArrayList<>();
 
 }

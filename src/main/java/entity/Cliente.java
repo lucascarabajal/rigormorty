@@ -7,9 +7,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "clientes")
 @Getter @Setter @NoArgsConstructor
 public class Cliente extends Persona implements Serializable {
-
     @Column(nullable = false,length = 75)
     private String email;
 

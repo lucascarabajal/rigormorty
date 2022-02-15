@@ -9,25 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "cementerios")
 @Getter @Setter @NoArgsConstructor
 public class Cementerio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCementerio;
+    private Long id;
 
     @Column(nullable = false,length = 60)
-    private String nombreCementerio;
+    private String nombre;
 
     @Column(nullable = false)
     private Domicilio ubicacion;
 
     @Column(nullable = false)
-    private int zonas;
+    private Integer cantZonas;
 
-    @OneToMany(mappedBy = "ubicacion", cascade = CascadeType.ALL)
-    private List<Domicilio> domCem = new ArrayList<>();
+    @OneToMany(mappedBy = "ubicaciones", cascade = CascadeType.ALL)
+    private List<Domicilio> ubicaciones = new ArrayList<>();
 
     @OneToMany(mappedBy = "zonas", cascade = CascadeType.ALL)
-    private List<Zona> zonaCem = new ArrayList<>();
+    private List<Zona> zonasC = new ArrayList<>();
 
 }

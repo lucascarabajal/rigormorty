@@ -9,9 +9,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "roles")
 @Getter @Setter @NoArgsConstructor
 public class Roles implements Serializable {
-
     @Id
     @GeneratedValue
     private Long idRol;
@@ -20,8 +20,8 @@ public class Roles implements Serializable {
     private NombreRol nombreRol;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"userRol", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"usuarios", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_usuario",nullable = false)
-    private Usuario userRol;
+    private Usuario usuarios;
 
 }
