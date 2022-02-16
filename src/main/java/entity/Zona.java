@@ -26,11 +26,11 @@ public class Zona implements Serializable {
     private Integer nivelMax;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"zonasC", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"zonas", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_cementerio")
-    private Cementerio zonasC;
+    private Cementerio cementerio;
 
-    @OneToMany(mappedBy = "parcelaZ", cascade = CascadeType.ALL)
-    private List<Parcela> parcelaz = new ArrayList<>();
+    @OneToMany(mappedBy = "zona", cascade = CascadeType.ALL)
+    private List<Parcela> parcelas = new ArrayList<>();
 
 }

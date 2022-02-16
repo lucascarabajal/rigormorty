@@ -34,14 +34,14 @@ public class Domicilio implements Serializable  {
     private String pais;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"domicilio", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"domicilios", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_persona", nullable = false)
-    private Persona domicilios;
+    private Persona persona;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"ubicaciones", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"domicilios", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_cementerio", nullable = false)
-    private Cementerio ubicaciones;
+    private Cementerio cementerio;
 
 
 }

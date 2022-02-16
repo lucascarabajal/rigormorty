@@ -20,8 +20,8 @@ public class Roles implements Serializable {
     private NombreRol nombreRol;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"usuarios", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"roles", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_usuario",nullable = false)
-    private Usuario usuarios;
+    private Usuario usuario;
 
 }

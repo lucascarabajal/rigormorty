@@ -30,11 +30,11 @@ public class Mantenimiento implements Serializable {
     @Column(nullable = false)
     private Double precio;
 
-    @OneToMany(mappedBy = "pagos", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mantenimiento", cascade = CascadeType.ALL)
     private List<Periodo> periodos = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"parcelas", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"mantenimientos", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_parcela",nullable = false)
-    private Parcela parcelas;
+    private Parcela parcela;
 }

@@ -28,9 +28,6 @@ public class Persona {
     @Temporal(TemporalType.DATE)
     private Date fechaNac;
 
-    @Column(nullable = false)
-    private Domicilio domicilio;
-
-    @OneToMany(mappedBy = "domicilio", cascade = CascadeType.ALL)
-    private List<Domicilio> domPers = new ArrayList<>();
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    private List<Domicilio> domicilios = new ArrayList<>();
 }

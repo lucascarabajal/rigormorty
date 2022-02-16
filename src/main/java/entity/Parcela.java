@@ -26,25 +26,25 @@ public class Parcela implements Serializable {
     private Integer numeroParcela;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"parcelaZ", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"parcelas", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_zona")
-    private Zona parcelaZ;
+    private Zona zona;
 
     //reveer mas adelante
-    @OneToMany(mappedBy = "estados", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parcela", cascade = CascadeType.ALL)
     private List<EstadoParcela> estados = new ArrayList<>();
 
-    @OneToMany(mappedBy = "mantenimientos", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parcela", cascade = CascadeType.ALL)
     private List<Mantenimiento> mantenimientos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "difuntos", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parcela", cascade = CascadeType.ALL)
     private List<Difunto> difuntos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "registros", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parcela", cascade = CascadeType.ALL)
     private List<RegistroCompra> registros = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"compradores", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"parcelas", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_cliente",nullable = false)
-    private Cliente compradores;
+    private Cliente cliente;
 }

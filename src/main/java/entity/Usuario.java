@@ -24,7 +24,7 @@ public class Usuario extends Persona implements Serializable {
     @Column(nullable = false)
     private Integer numTel;
 
-    @OneToMany(mappedBy = "roles", cascade = CascadeType.ALL)
-    private List<Roles> usuarios = new ArrayList<>();
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Roles> roles = new ArrayList<>();
 
 }

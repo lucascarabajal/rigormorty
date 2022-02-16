@@ -21,7 +21,7 @@ public class FormaPago implements Serializable {
     private NombreForma formaPago;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"registros", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"formaPagos", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_registro",nullable = false)
-    private RegistroCompra registros;
+    private RegistroCompra registro;
 }

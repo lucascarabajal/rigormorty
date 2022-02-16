@@ -25,10 +25,10 @@ public class Cementerio implements Serializable {
     @Column(nullable = false)
     private Integer cantZonas;
 
-    @OneToMany(mappedBy = "ubicaciones", cascade = CascadeType.ALL)
-    private List<Domicilio> ubicaciones = new ArrayList<>();
+    @OneToMany(mappedBy = "cementerio", cascade = CascadeType.ALL)
+    private List<Domicilio> domicilios = new ArrayList<>();
 
-    @OneToMany(mappedBy = "zonas", cascade = CascadeType.ALL)
-    private List<Zona> zonasC = new ArrayList<>();
+    @OneToMany(mappedBy = "cementerio", cascade = CascadeType.ALL)
+    private List<Zona> zonas = new ArrayList<>();
 
 }

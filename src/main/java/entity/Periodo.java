@@ -20,9 +20,9 @@ public class Periodo {
     private NombrePago pago;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"mantenimientos", "handler","hibernateLazyInitializer"}, allowSetters = true)
-    @JoinColumn(name = "id_periodo",nullable = false)
-    private Mantenimiento mantenimientos;
+    @JsonIgnoreProperties(value = {"periodos", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JoinColumn(name = "id_mantenimiento",nullable = false)
+    private Mantenimiento mantenimiento;
 
 
 }
