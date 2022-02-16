@@ -4,26 +4,34 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "difuntos")
+@Table(name = "mantenimiento")
 @Getter @Setter @NoArgsConstructor
-public class Difunto extends Persona implements Serializable {
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaDef;
-
-    @Column(nullable = false, length = 50)
-    private String numExpediente;
+public class Mantenimiento implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
-    private Integer numNivel;
+    @Temporal(TemporalType.DATE)
+    private Date vencimiento;
 
-    @Column(length = 100)
-    private String acta;
+    @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date pago;
+
+    @Column(nullable = false)
+    private Double precio;
+
+    @OneToMany(mappedBy = "pagos", cascade = CascadeType.ALL)
+    private List<Periodo> periodos = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"parcelas", "handler","hibernateLazyInitializer"}, allowSetters = true)

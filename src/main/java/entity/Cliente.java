@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
@@ -15,5 +17,11 @@ public class Cliente extends Persona implements Serializable {
 
     @Column(nullable = false)
     private int numTel;
+
+    @OneToMany(mappedBy = "parcelas", cascade = CascadeType.ALL)
+    private List<Parcela> parcelas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "registros", cascade = CascadeType.ALL)
+    private List<RegistroCompra> registros = new ArrayList<>();
 
 }

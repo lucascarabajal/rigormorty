@@ -22,7 +22,7 @@ public class Usuario extends Persona implements Serializable {
     private String email;
 
     @Column(nullable = false)
-    private int numTel;
+    private Integer numTel;
 
     @OneToMany(mappedBy = "roles", cascade = CascadeType.ALL)
     private List<Roles> usuarios = new ArrayList<>();

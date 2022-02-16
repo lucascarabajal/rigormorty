@@ -1,7 +1,6 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import enums.NombreParcela;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +17,7 @@ public class Parcela implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private Integer nivelActual;
@@ -35,4 +34,17 @@ public class Parcela implements Serializable {
     @OneToMany(mappedBy = "estados", cascade = CascadeType.ALL)
     private List<EstadoParcela> estados = new ArrayList<>();
 
+    @OneToMany(mappedBy = "mantenimientos", cascade = CascadeType.ALL)
+    private List<Mantenimiento> mantenimientos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "difuntos", cascade = CascadeType.ALL)
+    private List<Difunto> difuntos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "registros", cascade = CascadeType.ALL)
+    private List<RegistroCompra> registros = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = {"compradores", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JoinColumn(name = "id_cliente",nullable = false)
+    private Cliente compradores;
 }
