@@ -17,7 +17,7 @@ public class Zona implements Serializable {
     private String nombreZona;
 
     @Column(nullable = false)
-    private int cantidadParcela;
+    private Integer cantidadParcela;
 
     @Column(nullable = false)
     private double precioZona;

@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "mantenimiento")
+@Table(name = "mantenimientos")
 @Getter @Setter @NoArgsConstructor
 public class Mantenimiento implements Serializable {
     @Id

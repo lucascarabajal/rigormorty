@@ -6,7 +6,7 @@ import enums.NombreParcela;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "estadoParcela")
+@Table(name = "estado_parcela")
 public class EstadoParcela {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "registroCompra")
+@Table(name = "registro_compra")
 @Getter @Setter @NoArgsConstructor
 public class RegistroCompra implements Serializable {
     @Id

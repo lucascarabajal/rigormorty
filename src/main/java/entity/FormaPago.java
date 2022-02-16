@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "formaPago")
+@Table(name = "forma_pago")
 @Getter @Setter @NoArgsConstructor
 public class FormaPago implements Serializable {
     @Id
