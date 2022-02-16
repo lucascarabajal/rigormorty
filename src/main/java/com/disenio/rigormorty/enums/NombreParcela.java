@@ -1,4 +1,4 @@
-package enums;
+package com.disenio.rigormorty.enums;
 
 public enum NombreParcela {
     ESTADO_PARCELA_OCUPADO,

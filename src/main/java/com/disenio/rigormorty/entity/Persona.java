@@ -1,4 +1,4 @@
-package entity;
+package com.disenio.rigormorty.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package entity;
+package com.disenio.rigormorty.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -26,26 +26,6 @@ public class Difunto extends Persona implements Serializable {
 
     @Column(length = 100)
     private String acta;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, length = 25)
-    private String nombre;
-
-    @Column(nullable = false, length = 25)
-    private String apellido;
-
-    @Column(nullable = false, length = 9)
-    private Integer dni;
-
-    @Column
-    @Temporal(TemporalType.DATE)
-    private Date fechaNac;
-
-    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
-    private List<Domicilio> domicilios = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"difuntos", "handler","hibernateLazyInitializer"}, allowSetters = true)

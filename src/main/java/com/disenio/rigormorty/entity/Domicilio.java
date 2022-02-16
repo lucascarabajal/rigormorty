@@ -1,4 +1,4 @@
-package entity;
+package com.disenio.rigormorty.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Domicilio implements Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idDomicilio;
+    private Long id;
 
     @Column(nullable = false, length = 50)
     private String calle;

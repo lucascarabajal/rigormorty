@@ -1,7 +1,7 @@
-package entity;
+package com.disenio.rigormorty.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import enums.NombreRol;
+import com.disenio.rigormorty.enums.NombreRol;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,10 +14,10 @@ import java.io.Serializable;
 public class Roles implements Serializable {
     @Id
     @GeneratedValue
-    private Long idRol;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
-    private NombreRol nombreRol;
+    private NombreRol nombre;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"roles", "handler","hibernateLazyInitializer"}, allowSetters = true)

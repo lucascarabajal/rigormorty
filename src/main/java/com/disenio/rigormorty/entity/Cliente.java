@@ -1,4 +1,4 @@
-package entity;
+package com.disenio.rigormorty.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class Cliente extends Persona implements Serializable {
     private String email;
 
     @Column(nullable = false)
-    private Integer numTel;
+    private Integer telefono;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Parcela> parcelas = new ArrayList<>();

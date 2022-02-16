@@ -1,4 +1,4 @@
-package enums;
+package com.disenio.rigormorty.enums;
 
 public enum NombrePago {
     NOMBRE_PAGO_MENSUAL,

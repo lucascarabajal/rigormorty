@@ -1,7 +1,7 @@
-package entity;
+package com.disenio.rigormorty.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import enums.NombrePago;
+import com.disenio.rigormorty.enums.NombrePago;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
