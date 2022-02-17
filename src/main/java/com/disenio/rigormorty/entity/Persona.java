@@ -3,10 +3,10 @@ package com.disenio.rigormorty.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 
 @Getter @Setter @NoArgsConstructor
 @MappedSuperclass
@@ -28,6 +28,4 @@ public class Persona {
     @Temporal(TemporalType.DATE)
     private Date fechaNac;
 
-    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
-    private List<Domicilio> domicilios = new ArrayList<>();
 }

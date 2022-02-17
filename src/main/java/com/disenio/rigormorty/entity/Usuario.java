@@ -3,6 +3,7 @@ package com.disenio.rigormorty.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class Usuario extends Persona implements Serializable {
     private Integer telefono;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Roles> roles = new ArrayList<>();
+    private List<Domicilio> domicilios = new ArrayList<>();
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Roles> roles = new ArrayList<>();
 }

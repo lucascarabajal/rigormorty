@@ -36,21 +36,18 @@ public class RegistroCompra implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date pago;
 
-    @OneToMany(mappedBy = "periodos", cascade = CascadeType.ALL)
-    private List<Periodo> periodos = new ArrayList<>();
 
     @OneToMany(mappedBy = "registro", cascade = CascadeType.ALL)
     private List<FormaPago> formaPagos = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"registros", "handler","hibernateLazyInitializer"}, allowSetters = true)
-    @JoinColumn(name = "id_parcela",nullable = false)
-    private Parcela parcela;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"registros", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_cliente",nullable = false)
     private Cliente cliente;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = {"registros", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @JoinColumn(name = "id_parcela",nullable = false)
+    private Parcela parcela;
 
 }

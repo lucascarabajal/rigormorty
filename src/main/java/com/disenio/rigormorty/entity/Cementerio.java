@@ -3,6 +3,7 @@ package com.disenio.rigormorty.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,9 +19,6 @@ public class Cementerio implements Serializable {
 
     @Column(nullable = false,length = 60)
     private String nombre;
-
-    @Column(nullable = false)
-    private Domicilio ubicacion;
 
     @Column(nullable = false)
     private Integer cantZonas;

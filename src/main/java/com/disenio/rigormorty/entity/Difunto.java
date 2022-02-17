@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,4 +32,8 @@ public class Difunto extends Persona implements Serializable {
     @JsonIgnoreProperties(value = {"difuntos", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_parcela",nullable = false)
     private Parcela parcela;
+
+    @OneToMany(mappedBy = "difunto", cascade = CascadeType.ALL)
+    private List<Domicilio> domicilios = new ArrayList<>();
+
 }

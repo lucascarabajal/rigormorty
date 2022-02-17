@@ -1,7 +1,7 @@
 package com.disenio.rigormorty.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.disenio.rigormorty.enums.NombreParcela;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,5 +23,4 @@ public class EstadoParcela {
     @JsonIgnoreProperties(value = {"estados", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_parcela",nullable = false)
     private Parcela parcela;
-
 }

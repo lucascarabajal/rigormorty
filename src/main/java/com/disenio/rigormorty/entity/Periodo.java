@@ -1,7 +1,7 @@
 package com.disenio.rigormorty.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.disenio.rigormorty.enums.NombrePago;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +23,4 @@ public class Periodo {
     @JsonIgnoreProperties(value = {"periodos", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_mantenimiento",nullable = false)
     private Mantenimiento mantenimiento;
-
-
 }

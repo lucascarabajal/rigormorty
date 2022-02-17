@@ -1,10 +1,11 @@
 package com.disenio.rigormorty.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.disenio.rigormorty.enums.NombreRol;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -23,5 +24,4 @@ public class Roles implements Serializable {
     @JsonIgnoreProperties(value = {"roles", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_usuario",nullable = false)
     private Usuario usuario;
-
 }
