@@ -1,4 +1,4 @@
-package com.disenio.rigormorty.Repository;
+package com.disenio.rigormorty.repository;
 
 import com.disenio.rigormorty.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
