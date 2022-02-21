@@ -36,7 +36,6 @@ public class RegistroCompra implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date pago;
 
-
     @OneToMany(mappedBy = "registro", cascade = CascadeType.ALL)
     private List<FormaPago> formaPagos = new ArrayList<>();
 
