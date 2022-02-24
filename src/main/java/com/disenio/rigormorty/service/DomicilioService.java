@@ -26,18 +26,22 @@ public class DomicilioService {
 
     public ResponseEntity<Domicilio> addDomicilio(Domicilio domicilio){
         Domicilio newDomicilio = domicilioRepository.save(domicilio);
+
         return ResponseEntity.ok(newDomicilio);
     }
 
     public List<Domicilio> getDomicilio(){
         List<Domicilio> domicilios = domicilioRepository.findAll();
+
         return domicilios;
     }
 
     public Object updateDomicilio(Domicilio domicilio){
         Optional<Domicilio> optionalDomicilio = domicilioRepository.findById(domicilio.getId());
         if(optionalDomicilio.isPresent()){
+
             Domicilio domicilioToUpdate = optionalDomicilio.get();
+
             domicilioToUpdate.setCalle(domicilio.getCalle());
             domicilioToUpdate.setCp(domicilio.getCp());
             domicilioToUpdate.setNumero(domicilio.getNumero());
@@ -45,6 +49,7 @@ public class DomicilioService {
             domicilioToUpdate.setProvincia(domicilio.getProvincia());
             domicilioToUpdate.setPais(domicilio.getPais());
             domicilioRepository.save(domicilioToUpdate);
+
             return domicilioToUpdate;
         }else{
             throw new ResourceNotFoundException("Domicilio no encontrado");

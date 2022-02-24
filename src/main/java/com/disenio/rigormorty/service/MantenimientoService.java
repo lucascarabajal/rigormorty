@@ -1,0 +1,55 @@
+package com.disenio.rigormorty.service;
+
+
+import com.disenio.rigormorty.entity.Mantenimiento;
+import com.disenio.rigormorty.exception.ResourceNotFoundException;
+import com.disenio.rigormorty.repository.MantenimientoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class MantenimientoService {
+    private final MantenimientoRepository mantenimientoRepository;
+
+    @Autowired
+    public MantenimientoService(MantenimientoRepository mantenimientoRepository) {
+        this.mantenimientoRepository = mantenimientoRepository;
+    }
+
+    public ResponseEntity<Mantenimiento> addFormaPago(Mantenimiento mantenimiento){
+        Mantenimiento newMantenimiento = mantenimientoRepository.save(mantenimiento);
+
+        return ResponseEntity.ok(newMantenimiento);
+    }
+
+    public List<Mantenimiento> getMantenimiento(){
+        List<Mantenimiento> mantenimientos = mantenimientoRepository.findAll();
+
+        return mantenimientos;
+    }
+
+    public Object updateMantenimiento(Mantenimiento mantenimiento){
+        Optional<Mantenimiento> optionalMantenimiento = mantenimientoRepository.findById(mantenimiento.getId());
+        if(optionalMantenimiento.isPresent()){
+            Mantenimiento mantenimientoToUpdate = optionalMantenimiento.get();
+
+            mantenimientoToUpdate.setVencimiento(mantenimiento.getVencimiento());
+            mantenimientoToUpdate.setPago(mantenimiento.getPago());
+            mantenimientoToUpdate.setPrecio(mantenimiento.getPrecio());
+            mantenimientoToUpdate.setPeriodos(mantenimiento.getPeriodos());
+            mantenimientoToUpdate.setParcela(mantenimiento.getParcela());
+
+            mantenimientoRepository.save(mantenimientoToUpdate);
+
+            return mantenimientoToUpdate;
+        }else{
+            throw new ResourceNotFoundException("Mantenimiento no encontrado");
+        }
+
+
+    }
+}
