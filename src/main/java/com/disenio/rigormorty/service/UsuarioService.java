@@ -27,11 +27,11 @@ public class UsuarioService {
         return ResponseEntity.ok(newUsuario);
     }
 
-    public List<Usuario> getUsuario(){
+    public ResponseEntity<List<Usuario>> getUsuario(){
         List<Usuario> usuarios = usuarioRepository.findAll();
-
-        return usuarios;
+        return ResponseEntity.ok(usuarios);
     }
+
 
     public Object updateUsuario(Usuario usuario){
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuario.getId());

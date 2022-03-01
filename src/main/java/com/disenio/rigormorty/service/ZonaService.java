@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.service;
 
 
+import com.disenio.rigormorty.entity.Usuario;
 import com.disenio.rigormorty.entity.Zona;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.repository.ZonaRepository;
@@ -26,10 +27,9 @@ public class ZonaService {
         return ResponseEntity.ok(newZona);
     }
 
-    public List<Zona> getZona(){
+    public ResponseEntity<List<Zona>> getZona(){
         List<Zona> zonas = zonaRepository.findAll();
-
-        return zonas;
+        return ResponseEntity.ok(zonas);
     }
 
     public Object updateZona(Zona zona){
