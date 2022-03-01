@@ -27,10 +27,10 @@ public class EstadoParcelaService {
         return ResponseEntity.ok(newEstadoParcela);
     }
 
-    public List<EstadoParcela> getEstadoParcela(){
+    public ResponseEntity<List<EstadoParcela>> getEstadoParcela(){
         List<EstadoParcela> estadoParcelas = estadoParcelaRepository.findAll();
 
-        return estadoParcelas;
+        return ResponseEntity.ok(estadoParcelas);
     }
 
     public Object updateEstadoParcela(EstadoParcela estadoParcela){

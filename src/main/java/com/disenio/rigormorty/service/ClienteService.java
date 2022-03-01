@@ -26,9 +26,9 @@ public class ClienteService {
     }
 
 
-    public List<Cliente> getCliente(){
+    public ResponseEntity<List<Cliente>> getClientes(){
         List<Cliente> clientes = clienteRepository.findAll();
-        return clientes;
+        return ResponseEntity.ok(clientes);
     }
 
     public Object updateCliente(Cliente cliente){

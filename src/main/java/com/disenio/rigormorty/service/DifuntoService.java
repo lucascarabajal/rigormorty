@@ -27,9 +27,9 @@ public class DifuntoService {
     }
 
 
-    public List<Difunto> getDifunto(){
+    public ResponseEntity<List<Difunto>> getDifunto(){
         List<Difunto> difuntos = difuntoRepository.findAll();
-        return difuntos;
+        return ResponseEntity.ok(difuntos);
     }
 
     public Object updateDifuntos(Difunto difunto){

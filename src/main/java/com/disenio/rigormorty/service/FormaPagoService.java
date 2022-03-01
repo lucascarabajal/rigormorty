@@ -26,10 +26,10 @@ public class FormaPagoService {
         return ResponseEntity.ok(newFormaPago);
     }
 
-    public List<FormaPago> getFormaPago(){
+    public ResponseEntity<List<FormaPago>> getFormaPago(){
         List<FormaPago> formasPago = formaPagoRepository.findAll();
 
-        return formasPago;
+        return ResponseEntity.ok(formasPago);
     }
 
     public Object updateFormaPago(FormaPago formaPago){

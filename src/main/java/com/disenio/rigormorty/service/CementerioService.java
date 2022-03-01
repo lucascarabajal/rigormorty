@@ -23,9 +23,9 @@ public class CementerioService {
         return ResponseEntity.ok(newCementerio);
     }
 
-    public List<Cementerio> getCementerio(){
+    public ResponseEntity<List<Cementerio>> getCementerios(){
         List<Cementerio> cementerios = cementerioRepository.findAll();
-        return cementerios;
+        return ResponseEntity.ok(cementerios);
     }
 
     public Object updateCementerio(Cementerio cementerio){

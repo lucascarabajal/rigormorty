@@ -30,10 +30,9 @@ public class DomicilioService {
         return ResponseEntity.ok(newDomicilio);
     }
 
-    public List<Domicilio> getDomicilio(){
+    public ResponseEntity<List<Domicilio>> getDomicilio(){
         List<Domicilio> domicilios = domicilioRepository.findAll();
-
-        return domicilios;
+        return ResponseEntity.ok(domicilios);
     }
 
     public Object updateDomicilio(Domicilio domicilio){
