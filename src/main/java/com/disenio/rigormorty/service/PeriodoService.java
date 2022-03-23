@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.service;
 
 
+import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.entity.Periodo;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.repository.PeriodoRepository;
@@ -26,10 +27,9 @@ public class PeriodoService {
         return ResponseEntity.ok(newPeriodo);
     }
 
-    public List<Periodo> getPeriodo(){
+    public ResponseEntity<List<Periodo>> getPeriodos(){
         List<Periodo> periodos = periodoRepository.findAll();
-
-        return periodos;
+        return ResponseEntity.ok(periodos);
     }
 
     public Object updatePeriodo(Periodo periodo){

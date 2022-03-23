@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.service;
 
 
+import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.entity.RegistroCompra;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.repository.RegistroCompraRepository;
@@ -26,10 +27,9 @@ public class RegistroCompraService {
         return ResponseEntity.ok(newRegistro);
     }
 
-    public List<RegistroCompra> getRegistroCompra(){
-        List<RegistroCompra> registros = registroCompraRepository.findAll();
-
-        return registros;
+    public ResponseEntity<List<RegistroCompra>> getRegistroCompras(){
+        List<RegistroCompra> registroCompras = registroCompraRepository.findAll();
+        return ResponseEntity.ok(registroCompras);
     }
 
     public Object updateRegistroCompra(RegistroCompra registroCompra){

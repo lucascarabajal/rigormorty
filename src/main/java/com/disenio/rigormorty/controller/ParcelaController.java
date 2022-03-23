@@ -1,5 +1,6 @@
 package com.disenio.rigormorty.controller;
 
+import com.disenio.rigormorty.entity.Mantenimiento;
 import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.service.ParcelaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class ParcelaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Parcela>> getParcelas(){
-        return parcelaService.getParcela();
+    public ResponseEntity<List<Parcela>>getParcelas(){
+        return parcelaService.getParcelas();
     }
 
 //    @GetMapping

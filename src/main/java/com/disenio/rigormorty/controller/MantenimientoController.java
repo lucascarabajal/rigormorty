@@ -1,5 +1,6 @@
 package com.disenio.rigormorty.controller;
 
+import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.Mantenimiento;
 import com.disenio.rigormorty.service.MantenimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class MantenimientoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Mantenimiento>> getMantenimiento(){
-        return mantenimientoService.getMantenimiento();
+    public ResponseEntity<List<Mantenimiento>>getMantenimiento(){
+        return mantenimientoService.getMantenimientos();
     }
 
 

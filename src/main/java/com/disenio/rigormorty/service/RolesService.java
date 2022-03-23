@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.service;
 
 
+import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.entity.Roles;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.repository.RolesRepository;
@@ -26,10 +27,9 @@ public class RolesService {
         return ResponseEntity.ok(newRol);
     }
 
-    public List<Roles> getRol(){
+    public ResponseEntity<List<Roles>> getRoles(){
         List<Roles> roles = rolesRepository.findAll();
-
-        return roles;
+        return ResponseEntity.ok(roles);
     }
 
     public Object updateRol(Roles roles){

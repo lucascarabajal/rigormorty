@@ -21,7 +21,7 @@ public class PeriodoController {
 
     @GetMapping
     public ResponseEntity<List<Periodo>> getPeriodos(){
-        return  periodoService.getPeriodo();
+        return  periodoService.getPeriodos();
     }
 
 //    @GetMapping

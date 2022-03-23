@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.service;
 
 
+import com.disenio.rigormorty.entity.Mantenimiento;
 import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.repository.ParcelaRepository;
@@ -27,10 +28,9 @@ public class ParcelaService {
         return ResponseEntity.ok(newParcela);
     }
 
-    public List<Parcela> getParcela(){
+    public ResponseEntity<List<Parcela>> getParcelas(){
         List<Parcela> parcelas = parcelaRepository.findAll();
-
-        return parcelas;
+        return ResponseEntity.ok(parcelas);
     }
 
     public Object updateParcela(Parcela parcela){

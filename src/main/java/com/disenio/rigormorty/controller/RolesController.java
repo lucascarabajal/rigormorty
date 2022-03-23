@@ -22,7 +22,7 @@ public class RolesController {
 
     @GetMapping
     public ResponseEntity<List<Roles>> getRoles(){
-        return  rolesService.getRol();
+        return  rolesService.getRoles();
     }
 
 

@@ -20,8 +20,8 @@ public class RegistroCompraController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RegistroCompra>> getRegistroCompra(){
-        return  registroCompraService.getRegistroCompra();
+    public ResponseEntity<List<RegistroCompra>> getRegistroCompras(){
+        return  registroCompraService.getRegistroCompras();
     }
 
 

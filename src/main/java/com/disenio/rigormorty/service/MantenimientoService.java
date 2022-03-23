@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.service;
 
 
+import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.Mantenimiento;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.repository.MantenimientoRepository;
@@ -20,16 +21,15 @@ public class MantenimientoService {
         this.mantenimientoRepository = mantenimientoRepository;
     }
 
-    public ResponseEntity<Mantenimiento> addFormaPago(Mantenimiento mantenimiento){
+    public ResponseEntity<Mantenimiento> addMantenimiento(Mantenimiento mantenimiento){
         Mantenimiento newMantenimiento = mantenimientoRepository.save(mantenimiento);
 
         return ResponseEntity.ok(newMantenimiento);
     }
 
-    public List<Mantenimiento> getMantenimiento(){
+    public ResponseEntity<List<Mantenimiento>> getMantenimientos(){
         List<Mantenimiento> mantenimientos = mantenimientoRepository.findAll();
-
-        return mantenimientos;
+        return ResponseEntity.ok(mantenimientos);
     }
 
     public Object updateMantenimiento(Mantenimiento mantenimiento){
