@@ -1,7 +1,7 @@
 package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.Roles;
-import com.disenio.rigormorty.service.RolesService;
+import com.disenio.rigormorty.service.RolesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,22 +13,22 @@ import java.util.List;
 public class RolesController {
 
     @Autowired
-    private RolesService rolesService;
+    private RolesServiceImpl rolesServiceImpl;
 
     @PostMapping
     public ResponseEntity<Roles> addRol(@RequestBody Roles roles){
-        return rolesService.addRol(roles);
+        return rolesServiceImpl.addRol(roles);
     }
 
     @GetMapping
     public ResponseEntity<List<Roles>> getRoles(){
-        return  rolesService.getRoles();
+        return  rolesServiceImpl.getRoles();
     }
 
 
     @PutMapping("{id}")
     public ResponseEntity<Object> updateRoles(@PathVariable Long id, @RequestBody Roles roles) {
         roles.setId(id);
-        return ResponseEntity.ok().body(this.rolesService.updateRol(roles));
+        return ResponseEntity.ok().body(this.rolesServiceImpl.updateRol(roles));
     }
 }

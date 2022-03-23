@@ -1,7 +1,7 @@
 package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.Periodo;
-import com.disenio.rigormorty.service.PeriodoService;
+import com.disenio.rigormorty.service.PeriodoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,16 +12,16 @@ import java.util.List;
 @RestController
 public class PeriodoController {
     @Autowired
-    private PeriodoService periodoService;
+    private PeriodoServiceImpl periodoServiceImpl;
 
     @PostMapping
     public ResponseEntity<Periodo> addPeriodo(@RequestBody Periodo periodo){
-        return periodoService.addPeriodo(periodo);
+        return periodoServiceImpl.addPeriodo(periodo);
     }
 
     @GetMapping
     public ResponseEntity<List<Periodo>> getPeriodos(){
-        return  periodoService.getPeriodos();
+        return  periodoServiceImpl.getPeriodos();
     }
 
 //    @GetMapping
@@ -32,7 +32,7 @@ public class PeriodoController {
     @PutMapping("{id}")
     public ResponseEntity<Object> updatePeriodo(@PathVariable Long id, @RequestBody Periodo periodo) {
         periodo.setId(id);
-        return ResponseEntity.ok().body(this.periodoService.updatePeriodo(periodo));
+        return ResponseEntity.ok().body(this.periodoServiceImpl.updatePeriodo(periodo));
     }
 
 }

@@ -1,7 +1,7 @@
 package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.RegistroCompra;
-import com.disenio.rigormorty.service.RegistroCompraService;
+import com.disenio.rigormorty.service.RegistroCompraServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,23 +12,23 @@ import java.util.List;
 @RestController
 public class RegistroCompraController {
     @Autowired
-    private RegistroCompraService registroCompraService;
+    private RegistroCompraServiceImpl registroCompraServiceImpl;
 
     @PostMapping
     public ResponseEntity<RegistroCompra> addRegistroCompra(@RequestBody RegistroCompra registroCompra){
-        return registroCompraService.addRegistroCompra(registroCompra);
+        return registroCompraServiceImpl.addRegistroCompra(registroCompra);
     }
 
     @GetMapping
     public ResponseEntity<List<RegistroCompra>> getRegistroCompras(){
-        return  registroCompraService.getRegistroCompras();
+        return  registroCompraServiceImpl.getRegistroCompras();
     }
 
 
     @PutMapping("{id}")
     public ResponseEntity<Object> updateRegistroCompra(@PathVariable Long id, @RequestBody RegistroCompra registroCompra) {
         registroCompra.setId(id);
-        return ResponseEntity.ok().body(this.registroCompraService.updateRegistroCompra(registroCompra));
+        return ResponseEntity.ok().body(this.registroCompraServiceImpl.updateRegistroCompra(registroCompra));
     }
 
 }

@@ -1,9 +1,7 @@
 package com.disenio.rigormorty.controller;
 
-import com.disenio.rigormorty.entity.Difunto;
 import com.disenio.rigormorty.entity.Domicilio;
-import com.disenio.rigormorty.service.DifuntoService;
-import com.disenio.rigormorty.service.DomicilioService;
+import com.disenio.rigormorty.service.DomicilioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,21 +12,21 @@ import java.util.List;
 @RestController
 public class DomicilioController {
     @Autowired
-    private DomicilioService domicilioService;
+    private DomicilioServiceImpl domicilioServiceImpl;
 
     @PostMapping
     public ResponseEntity<Domicilio> addDomicilio(@RequestBody Domicilio domicilio){
-        return domicilioService.addDomicilio(domicilio);
+        return domicilioServiceImpl.addDomicilio(domicilio);
     }
 
     @GetMapping
     public ResponseEntity<List<Domicilio>> getDomicilio(){
-        return domicilioService.getDomicilio();
+        return domicilioServiceImpl.getDomicilios();
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Object> updateDomicilio(@PathVariable Long id, @RequestBody Domicilio domicilio){
         domicilio.setId(id);
-        return ResponseEntity.ok().body(this.domicilioService.updateDomicilio(domicilio));
+        return ResponseEntity.ok().body(this.domicilioServiceImpl.updateDomicilio(domicilio));
     }
 }

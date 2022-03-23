@@ -1,7 +1,7 @@
 package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.Cliente;
-import com.disenio.rigormorty.service.ClienteService;
+import com.disenio.rigormorty.service.ClienteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,22 +12,22 @@ import java.util.List;
 @RestController
 public class ClienteController {
     @Autowired
-    private ClienteService clienteService;
+    private ClienteServiceImpl clienteServiceImpl;
 
     @PostMapping
     public ResponseEntity<Cliente> addCliente(@RequestBody Cliente cliente){
-        return clienteService.addCliente(cliente);
+        return clienteServiceImpl.addCliente(cliente);
     }
 
     @GetMapping
-    public ResponseEntity<List<Cliente>>getCliente(){
-        return clienteService.getClientes();
+    public ResponseEntity<List<Cliente>>getClientes(){
+        return clienteServiceImpl.getClientes();
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Object> updateCliente(@PathVariable Long id, @RequestBody Cliente cliente){
         cliente.setId(id);
-        return ResponseEntity.ok().body(this.clienteService.updateCliente(cliente));
+        return ResponseEntity.ok().body(this.clienteServiceImpl.updateCliente(cliente));
     }
 
 }

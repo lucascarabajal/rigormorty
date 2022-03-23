@@ -1,9 +1,7 @@
 package com.disenio.rigormorty.controller;
 
-import com.disenio.rigormorty.entity.Difunto;
 import com.disenio.rigormorty.entity.FormaPago;
-import com.disenio.rigormorty.service.DifuntoService;
-import com.disenio.rigormorty.service.FormaPagoService;
+import com.disenio.rigormorty.service.FormaPagoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,21 +12,21 @@ import java.util.List;
 @RestController
 public class FormaPagoController {
     @Autowired
-    private FormaPagoService formaPagoService;
+    private FormaPagoServiceImpl formaPagoServiceImpl;
 
     @PostMapping
     public ResponseEntity<FormaPago> addFormaPago(@RequestBody FormaPago formaPago){
-        return formaPagoService.addFormaPago(formaPago);
+        return formaPagoServiceImpl.addFormaPago(formaPago);
     }
 
     @GetMapping
-    public ResponseEntity<List<FormaPago>> getFormaPago(){
-        return formaPagoService.getFormaPago();
+    public ResponseEntity<List<FormaPago>> getFormaPagos(){
+        return formaPagoServiceImpl.getFormaPagos();
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Object> updateFormaPago(@PathVariable Long id, @RequestBody FormaPago formaPago){
         formaPago.setId(id);
-        return ResponseEntity.ok().body(this.formaPagoService.updateFormaPago(formaPago));
+        return ResponseEntity.ok().body(this.formaPagoServiceImpl.updateFormaPago(formaPago));
     }
 }

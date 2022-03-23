@@ -1,8 +1,7 @@
 package com.disenio.rigormorty.controller;
 
-import com.disenio.rigormorty.entity.Mantenimiento;
 import com.disenio.rigormorty.entity.Parcela;
-import com.disenio.rigormorty.service.ParcelaService;
+import com.disenio.rigormorty.service.ParcelaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +12,16 @@ import java.util.List;
 @RestController
 public class ParcelaController {
     @Autowired
-    private ParcelaService parcelaService;
+    private ParcelaServiceImpl parcelaServiceImpl;
 
     @PostMapping
     public ResponseEntity<Parcela> addParcela(@RequestBody Parcela parcela){
-        return parcelaService.addParcela(parcela);
+        return parcelaServiceImpl.addParcela(parcela);
     }
 
     @GetMapping
     public ResponseEntity<List<Parcela>>getParcelas(){
-        return parcelaService.getParcelas();
+        return parcelaServiceImpl.getParcelas();
     }
 
 //    @GetMapping
@@ -33,6 +32,6 @@ public class ParcelaController {
     @PutMapping("{id}")
     public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody Parcela parcela) {
         parcela.setId(id);
-        return ResponseEntity.ok().body(this.parcelaService.updateParcela(parcela));
+        return ResponseEntity.ok().body(this.parcelaServiceImpl.updateParcela(parcela));
     }
 }
