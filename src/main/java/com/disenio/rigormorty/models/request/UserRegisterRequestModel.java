@@ -2,9 +2,8 @@ package com.disenio.rigormorty.models.request;
 
 import lombok.Data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import java.util.Date;
 
 @Data
 public class UserRegisterRequestModel {
@@ -22,6 +21,18 @@ public class UserRegisterRequestModel {
 
     @NotBlank
     @Size(min = 9, max = 15)
-    private Integer telefono;
+    private String telefono;
 
+    @NotBlank
+    @Size(max = 25)
+    private String nombre;
+
+    @NotBlank
+    @Size(max = 25)
+    private String apellido;
+
+    private Date fechaNac;
+
+    @Min(value = 100000, message = "The value must be positive")
+    private Integer dni;
 }

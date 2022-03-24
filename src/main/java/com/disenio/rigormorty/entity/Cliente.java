@@ -17,7 +17,7 @@ public class Cliente extends Persona implements Serializable {
     private String email;
 
     @Column(nullable = false)
-    private Integer telefono;
+    private String telefono;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Parcela> parcelas = new ArrayList<>();
