@@ -16,13 +16,13 @@ public class Cliente extends Persona implements Serializable {
     @Column(nullable = false,length = 75)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 15)
     private String telefono;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Parcela> parcelas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL )
     private List<Domicilio> domicilios = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)

@@ -27,8 +27,5 @@ public class Usuario extends Persona implements Serializable {
     private String telefono;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Domicilio> domicilios = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Roles> roles = new ArrayList<>();
 }
