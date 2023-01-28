@@ -15,6 +15,10 @@ import java.util.List;
 @Setter @Getter @NoArgsConstructor
 public class Zona implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String nombreZona;
 
     @Column(nullable = false)
@@ -26,12 +30,8 @@ public class Zona implements Serializable {
     @Column(nullable = false)
     private Integer nivelMax;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"zonas", "handler","hibernateLazyInitializer"}, allowSetters = true)
-    @JoinColumn(name = "id_cementerio")
-    private Cementerio cementerio;
-
-    @OneToMany(mappedBy = "zona", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_zona", referencedColumnName = "id")
     private List<Parcela> parcelas = new ArrayList<>();
 
 }

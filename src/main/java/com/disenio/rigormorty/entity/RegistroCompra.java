@@ -36,7 +36,8 @@ public class RegistroCompra implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date pago;
 
-    @OneToMany(mappedBy = "registro", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_registro", referencedColumnName = "id", nullable = false)
     private List<FormaPago> formaPagos = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,5 +49,12 @@ public class RegistroCompra implements Serializable {
     @JsonIgnoreProperties(value = {"registros", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_parcela",nullable = false)
     private Parcela parcela;
+
+    @ManyToOne(optional=false)
+    @JoinColumn(name="usuario",referencedColumnName="id")
+    private Usuario usuario;
+
+
+
 
 }

@@ -43,7 +43,7 @@ public class EstadoParcelaServiceImpl implements EstadoParcelaService{
             EstadoParcela estadoParcelaToUpdate = optionalEstadoParcela.get();
 
             estadoParcelaToUpdate.setEstadoParcela(estadoParcela.getEstadoParcela());
-            estadoParcelaToUpdate.setParcela(estadoParcela.getParcela());
+//            estadoParcelaToUpdate.setParcela(estadoParcela.getParcela());
 
             estadoParcelaRepository.save(estadoParcelaToUpdate);
 

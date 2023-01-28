@@ -28,12 +28,14 @@ public class Difunto extends Persona implements Serializable {
     @Column(length = 100)
     private String acta;
 
+
+    //TODO ver que onda
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"difuntos", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_parcela",nullable = false)
     private Parcela parcela;
 
-    @OneToMany(mappedBy = "difunto", cascade = CascadeType.ALL)
-    private List<Domicilio> domicilios = new ArrayList<>();
+//    @OneToMany(mappedBy = "difunto", cascade = CascadeType.ALL)
+//    private List<Domicilio> domicilios = new ArrayList<>();
 
 }

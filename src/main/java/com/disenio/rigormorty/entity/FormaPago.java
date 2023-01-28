@@ -20,8 +20,8 @@ public class FormaPago implements Serializable {
     @Enumerated(EnumType.STRING)
     private NombreForma formaPago;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"formaPagos", "handler","hibernateLazyInitializer"}, allowSetters = true)
-    @JoinColumn(name = "id_registro",nullable = false)
-    private RegistroCompra registro;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonIgnoreProperties(value = {"formaPagos", "handler","hibernateLazyInitializer"}, allowSetters = true)
+//    @JoinColumn(name = "id_registro",nullable = false)
+//    private RegistroCompra registro;
 }

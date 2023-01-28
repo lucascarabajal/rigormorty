@@ -41,7 +41,7 @@ public class RolesServiceImpl implements RolesService{
             Roles rolToUpdate = optionalRoles.get();
 
             rolToUpdate.setNombre(roles.getNombre());
-            rolToUpdate.setUsuario(roles.getUsuario());
+//            rolToUpdate.setUsuario(roles.getUsuario());
 
             rolesRepository.save(rolToUpdate);
 

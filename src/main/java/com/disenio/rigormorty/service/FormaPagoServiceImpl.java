@@ -41,7 +41,7 @@ public class FormaPagoServiceImpl implements FormaPagoService{
             FormaPago formaPagoToUpdate = optionalFormaPago.get();
 
             formaPagoToUpdate.setFormaPago(formaPago.getFormaPago());
-            formaPagoToUpdate.setRegistro(formaPago.getRegistro());
+//            formaPagoToUpdate.setRegistro(formaPago.getRegistro());
 
             formaPagoRepository.save(formaPagoToUpdate);
 

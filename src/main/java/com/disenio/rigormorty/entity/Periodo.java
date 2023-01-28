@@ -19,8 +19,8 @@ public class Periodo {
     @Enumerated(EnumType.STRING)
     private NombrePago pago;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"periodos", "handler","hibernateLazyInitializer"}, allowSetters = true)
-    @JoinColumn(name = "id_mantenimiento",nullable = false)
-    private Mantenimiento mantenimiento;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonIgnoreProperties(value = {"periodos", "handler","hibernateLazyInitializer"}, allowSetters = true)
+//    @JoinColumn(name = "id_mantenimiento",nullable = false)
+//    private Mantenimiento mantenimiento;
 }

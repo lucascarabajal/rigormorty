@@ -44,7 +44,7 @@ public class MantenimientoServiceImpl implements MantenimientoService {
             mantenimientoToUpdate.setPago(mantenimiento.getPago());
             mantenimientoToUpdate.setPrecio(mantenimiento.getPrecio());
             mantenimientoToUpdate.setPeriodos(mantenimiento.getPeriodos());
-            mantenimientoToUpdate.setParcela(mantenimiento.getParcela());
+//            mantenimientoToUpdate.setParcela(mantenimiento.getParcela());
 
             mantenimientoRepository.save(mantenimientoToUpdate);
 

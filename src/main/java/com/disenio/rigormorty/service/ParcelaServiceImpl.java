@@ -46,8 +46,7 @@ public class ParcelaServiceImpl implements ParcelaService{
             parcelaToUpdate.setEstados(parcela.getEstados());
             parcelaToUpdate.setMantenimientos(parcela.getMantenimientos());
             parcelaToUpdate.setRegistros(parcela.getRegistros());
-            parcelaToUpdate.setCliente(parcela.getCliente());
-            parcelaToUpdate.setZona(parcela.getZona());
+//            parcelaToUpdate.setCliente(parcela.getCliente());
 
 
             parcelaRepository.save(parcelaToUpdate);

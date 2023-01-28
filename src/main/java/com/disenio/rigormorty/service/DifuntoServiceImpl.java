@@ -45,7 +45,7 @@ public class DifuntoServiceImpl implements DifuntoService{
             difuntoToUpdate.setFechaDef(difunto.getFechaDef());
             difuntoToUpdate.setNumExpediente(difunto.getNumExpediente());
             difuntoToUpdate.setNumNivel(difunto.getNumNivel());
-            difuntoToUpdate.setDomicilios(difunto.getDomicilios());
+//            difuntoToUpdate.setDomicilios(difunto.getDomicilios());
             difuntoToUpdate.setActa(difunto.getActa());
             difuntoToUpdate.setParcela(difunto.getParcela());
             difuntoRepository.save(difuntoToUpdate);

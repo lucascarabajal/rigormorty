@@ -26,6 +26,10 @@ public class Usuario extends Persona implements Serializable {
     @Column(nullable = false)
     private String telefono;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Roles> roles = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_rol", nullable = false)
+    private Roles rol;
+
+    @OneToMany(mappedBy = "usuario",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<RegistroCompra> registroCompras = new ArrayList<>();
 }

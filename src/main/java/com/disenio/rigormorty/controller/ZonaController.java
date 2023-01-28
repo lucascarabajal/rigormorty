@@ -7,7 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RequestMapping("/zona")
+@RestController
 public class ZonaController {
     @Autowired
     private ZonaServiceImpl zonaServiceImpl;
@@ -24,8 +25,7 @@ public class ZonaController {
 
 
     @PutMapping("{id}")
-    public ResponseEntity<Object> updateZona(@PathVariable String nombreZona, @RequestBody Zona zona) {
-        zona.setNombreZona(nombreZona);
+    public ResponseEntity<Object> updateZona(@RequestBody Zona zona) {
         return ResponseEntity.ok().body(this.zonaServiceImpl.updateZona(zona));
     }
 }

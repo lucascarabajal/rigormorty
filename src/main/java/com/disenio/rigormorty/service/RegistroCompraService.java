@@ -1,6 +1,5 @@
 package com.disenio.rigormorty.service;
 
-import com.disenio.rigormorty.entity.Cementerio;
 import com.disenio.rigormorty.entity.RegistroCompra;
 import org.springframework.http.ResponseEntity;
 

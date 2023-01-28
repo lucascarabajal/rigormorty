@@ -34,19 +34,14 @@ public class Domicilio implements Serializable {
     @Column(nullable = false, length = 25)
     private String pais;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"domicilios", "handler","hibernateLazyInitializer"}, allowSetters = true)
-    @JoinColumn(name = "id_cementerio", nullable = true)
-    private Cementerio cementerio;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonIgnoreProperties(value = {"domicilios", "handler","hibernateLazyInitializer"}, allowSetters = true)
+//    @JoinColumn(name = "id_cementerio", nullable = true)
+//    private Cementerio cementerio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"domicilios", "handler","hibernateLazyInitializer"}, allowSetters = true)
-    @JoinColumn(name = "id_difunto", nullable = true)
-    private Difunto difunto;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = {"domicilios", "handler","hibernateLazyInitializer"}, allowSetters = true)
-    @JoinColumn(name = "id_cliente", nullable = false)
-    private Cliente cliente;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonIgnoreProperties(value = {"domicilios", "handler","hibernateLazyInitializer"}, allowSetters = true)
+//    @JoinColumn(name = "id_difunto", nullable = true)
+//    private Difunto difunto;
 
 }

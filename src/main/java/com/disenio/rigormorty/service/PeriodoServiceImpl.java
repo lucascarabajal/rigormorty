@@ -41,7 +41,7 @@ public class PeriodoServiceImpl implements PeriodoService{
             Periodo periodoToUpdate = optionalPeriodo.get();
 
             periodoToUpdate.setPago(periodo.getPago());
-            periodoToUpdate.setMantenimiento(periodo.getMantenimiento());
+//            periodoToUpdate.setMantenimiento(periodo.getMantenimiento());
 
             periodoRepository.save(periodoToUpdate);
 

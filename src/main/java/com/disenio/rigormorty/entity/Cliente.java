@@ -19,10 +19,12 @@ public class Cliente extends Persona implements Serializable {
     @Column(nullable = false, length = 15)
     private String telefono;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private List<Parcela> parcelas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL )
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private List<Domicilio> domicilios = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
