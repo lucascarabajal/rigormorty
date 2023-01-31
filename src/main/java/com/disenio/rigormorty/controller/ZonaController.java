@@ -28,4 +28,10 @@ public class ZonaController {
     public ResponseEntity<Object> updateZona(@RequestBody Zona zona) {
         return ResponseEntity.ok().body(this.zonaServiceImpl.updateZona(zona));
     }
+
+    @PostMapping("/all")
+    public ResponseEntity<Object> addListZona(@RequestBody List<Zona> zonas){
+        this.zonaServiceImpl.addListZona(zonas);
+        return ResponseEntity.ok().body("Zonas Creadas");
+    }
 }
