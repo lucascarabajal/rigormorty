@@ -17,8 +17,8 @@ public class Roles implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private NombreRol nombre;
+    @Column(nullable = false)
+    private String nombre;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JsonIgnoreProperties(value = {"roles", "handler","hibernateLazyInitializer"}, allowSetters = true)

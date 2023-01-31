@@ -3,6 +3,7 @@ package com.disenio.rigormorty.service;
 
 
 import com.disenio.rigormorty.entity.Usuario;
+import com.disenio.rigormorty.enums.NombreRol;
 import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
 import com.disenio.rigormorty.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,8 +44,8 @@ public class UsuarioServiceImpl implements UsuarioService{
     public Usuario createUser(UserRegisterRequestModel user) {
         Usuario usuario = new Usuario();
 
+        NombreRol.valueOf(user.getRol().getNombre());
         BeanUtils.copyProperties(user,usuario);
-
         usuario.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         return usuarioRepository.save(usuario);

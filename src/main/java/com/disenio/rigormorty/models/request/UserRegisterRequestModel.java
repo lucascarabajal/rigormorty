@@ -1,5 +1,6 @@
 package com.disenio.rigormorty.models.request;
 
+import com.disenio.rigormorty.entity.Roles;
 import lombok.Data;
 
 import javax.validation.constraints.*;
@@ -32,6 +33,8 @@ public class UserRegisterRequestModel {
     private String apellido;
 
     private Date fechaNac;
+
+    private Roles rol;
 
     @Min(value = 100000, message = "The value must be positive")
     private Integer dni;
