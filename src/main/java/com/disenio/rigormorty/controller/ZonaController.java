@@ -1,11 +1,13 @@
 package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.Zona;
+import com.disenio.rigormorty.models.responses.ZonaResponse;
 import com.disenio.rigormorty.service.ZonaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 @RequestMapping("/zona")
 @RestController
@@ -22,6 +24,12 @@ public class ZonaController {
     public ResponseEntity<List<Zona>> getZona(){
         return zonaServiceImpl.getZonas();
     }
+
+    @GetMapping("{nombreZona}")
+    public ZonaResponse getZonaByName(@PathVariable("nombreZona") String nombreZona){
+        return this.zonaServiceImpl.findByNameZona(nombreZona);
+    }
+
 
 
     @PutMapping("{id}")

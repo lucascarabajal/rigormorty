@@ -1,5 +1,6 @@
 package com.disenio.rigormorty.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,11 +26,12 @@ public class Zona implements Serializable {
     private Integer cantidadParcela;
 
     @Column(nullable = false)
-    private double precioZona;
+    private Double precioZona;
 
     @Column(nullable = false)
     private Integer nivelMax;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_zona", referencedColumnName = "id")
     private List<Parcela> parcelas = new ArrayList<>();

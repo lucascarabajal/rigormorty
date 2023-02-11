@@ -7,6 +7,7 @@ import com.disenio.rigormorty.entity.Usuario;
 import com.disenio.rigormorty.entity.Zona;
 import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
+import com.disenio.rigormorty.models.responses.ZonaResponse;
 import com.disenio.rigormorty.repository.ParcelaRepository;
 import com.disenio.rigormorty.repository.ZonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,12 @@ public class ZonaServiceImpl implements ZonaService{
             zonas.get(i).setParcelas(generarParcelas(zonas.get(i)));
         }
         zonaRepository.saveAll(zonas);
+    }
+
+    @Override
+    public ZonaResponse findByNameZona(String nombreZona) {
+        ZonaResponse zona = zonaRepository.findZonaByNombreZona(nombreZona);
+        return zona;
     }
 
     private List<Parcela> generarParcelas(Zona zona){
