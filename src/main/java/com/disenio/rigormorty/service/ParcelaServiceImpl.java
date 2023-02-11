@@ -1,15 +1,18 @@
 package com.disenio.rigormorty.service;
 
 
+import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Mantenimiento;
 import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
+import com.disenio.rigormorty.mappers.ParcelaMapper;
 import com.disenio.rigormorty.repository.ParcelaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -57,5 +60,17 @@ public class ParcelaServiceImpl implements ParcelaService{
         }
 
 
+    }
+
+    @Override
+    public ParcelaDTO getById(Long id) {
+
+        Optional<Parcela> parcela = parcelaRepository.findById(id);
+
+        if (parcela.isPresent()){
+            return ParcelaMapper.entityToDTO(parcela.get());
+        }else {
+            throw new ResourceNotFoundException("No existe parcela con ese id");
+        }
     }
 }

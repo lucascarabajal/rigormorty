@@ -72,9 +72,14 @@ public class ZonaServiceImpl implements ZonaService{
     }
 
     @Override
-    public ZonaResponse findByNameZona(String nombreZona) {
-        ZonaResponse zona = zonaRepository.findZonaByNombreZona(nombreZona);
-        return zona;
+    public ZonaResponse findById(Long id) {
+        Optional<Zona> zona = zonaRepository.findById(id);
+
+        if (zona.isPresent()){
+            return zonaRepository.findZonaByNombreZona(zona.get().getNombreZona());
+        }else{
+            throw new ResourceNotFoundException("No se encuentra zona con ese id");
+        }
     }
 
     private List<Parcela> generarParcelas(Zona zona){

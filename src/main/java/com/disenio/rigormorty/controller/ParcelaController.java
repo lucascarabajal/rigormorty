@@ -1,7 +1,8 @@
 package com.disenio.rigormorty.controller;
 
+import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Parcela;
-import com.disenio.rigormorty.service.ParcelaServiceImpl;
+import com.disenio.rigormorty.service.ParcelaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,26 +13,26 @@ import java.util.List;
 @RestController
 public class ParcelaController {
     @Autowired
-    private ParcelaServiceImpl parcelaServiceImpl;
+    private ParcelaService parcelaService;
 
     @PostMapping
     public ResponseEntity<Parcela> addParcela(@RequestBody Parcela parcela){
-        return parcelaServiceImpl.addParcela(parcela);
+        return parcelaService.addParcela(parcela);
     }
 
     @GetMapping
     public ResponseEntity<List<Parcela>>getParcelas(){
-        return parcelaServiceImpl.getParcelas();
+        return parcelaService.getParcelas();
     }
 
-//    @GetMapping
-//    public ResponseEntity<Parcela> getParcelaById(@PathVariable("id") Long id){
-//        return parcelaService.getParcelaById()
-//    }
+    @GetMapping("{id}")
+    public ParcelaDTO getParcelaById(@PathVariable("id") Long id){
+        return parcelaService.getById(id);
+    }
 
     @PutMapping("{id}")
     public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody Parcela parcela) {
         parcela.setId(id);
-        return ResponseEntity.ok().body(this.parcelaServiceImpl.updateParcela(parcela));
+        return ResponseEntity.ok().body(this.parcelaService.updateParcela(parcela));
     }
 }

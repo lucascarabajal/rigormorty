@@ -25,9 +25,9 @@ public class ZonaController {
         return zonaServiceImpl.getZonas();
     }
 
-    @GetMapping("{nombreZona}")
-    public ZonaResponse getZonaByName(@PathVariable("nombreZona") String nombreZona){
-        return this.zonaServiceImpl.findByNameZona(nombreZona);
+    @GetMapping("{id}")
+    public ZonaResponse getZonaByID(@PathVariable("id") Long id){
+        return this.zonaServiceImpl.findById(id);
     }
 
 

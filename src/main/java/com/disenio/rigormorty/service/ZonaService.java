@@ -14,5 +14,5 @@ public interface ZonaService {
 
     void addListZona(List<Zona> zonas);
 
-    ZonaResponse findByNameZona(String nombreZona);
+    ZonaResponse findById(Long id);
 }
