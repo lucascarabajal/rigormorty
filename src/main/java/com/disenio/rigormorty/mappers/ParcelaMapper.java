@@ -3,19 +3,24 @@ package com.disenio.rigormorty.mappers;
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Parcela;
 
-public interface ParcelaMapper{
+import java.util.Objects;
 
-  static ParcelaDTO entityToDTO(Parcela parcela){
+public class ParcelaMapper{
+
+  public static ParcelaDTO entityToDTO(Parcela parcela){
         ParcelaDTO parcelaDTO = new ParcelaDTO();
 
         parcelaDTO.setId(parcela.getId());
         parcelaDTO.setNumeroParcela(parcela.getNumeroParcela());
-        parcelaDTO.setNivelActual(parcela.getNivelActual());
+        parcelaDTO.setNivelActual(parcela.getNivelMax());
         parcelaDTO.setEstados(parcela.getEstados());
-        parcelaDTO.setDifuntos(parcela.getDifuntos());
         parcelaDTO.setMantenimientos(parcela.getMantenimientos());
         parcelaDTO.setRegistros(parcela.getRegistros());
 
+        if (Objects.nonNull(parcela.getDifuntos()))
+            parcelaDTO.setDifuntos(DifuntoMapper.entityToDTOList(parcela.getDifuntos()));
+
+
         return parcelaDTO;
-    }
+  }
 }

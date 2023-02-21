@@ -6,6 +6,7 @@ import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.entity.Usuario;
 import com.disenio.rigormorty.entity.Zona;
 import com.disenio.rigormorty.enums.NombreParcela;
+import com.disenio.rigormorty.exception.EqualObjectException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.ZonaResponse;
 import com.disenio.rigormorty.repository.ParcelaRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,7 +32,9 @@ public class ZonaServiceImpl implements ZonaService{
     }
 
     @Override
-    public ResponseEntity<Zona> addZona(Zona zona){
+    public ResponseEntity<Zona> addZona(Zona zona) {
+
+        if (Objects.nonNull(zonaRepository.findZonaByNombreZona(zona.getNombreZona()))) throw new EqualObjectException("Ya existe zona con este nombre");
 
         zona.setParcelas(generarParcelas(zona));
 
@@ -88,8 +92,8 @@ public class ZonaServiceImpl implements ZonaService{
                     Parcela parcela = new Parcela();
                     List<EstadoParcela> estadoParcelas = new ArrayList<>();
 
-                    parcela.setNumeroParcela(zona.getNombreZona()+i);
-                    parcela.setNivelActual(zona.getNivelMax());
+                    parcela.setNumeroParcela(zona.getNombreZona()+(i+1));
+                    parcela.setNivelMax(zona.getNivelMax());
 
                     IntStream.range(0, zona.getNivelMax()).forEach(j -> {
                         EstadoParcela estadoParcela = new EstadoParcela();

@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.Usuario;
+import com.disenio.rigormorty.exception.EqualObjectException;
 import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
 import com.disenio.rigormorty.models.responses.UserRest;
 import com.disenio.rigormorty.service.UsuarioService;
@@ -24,7 +25,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<UserRest> createUser(@RequestBody @Valid UserRegisterRequestModel usuarioModel) {
+    public ResponseEntity<UserRest> createUser(@RequestBody @Valid UserRegisterRequestModel usuarioModel){
         Usuario user = usuarioService.createUser(usuarioModel);
         UserRest userRest = new UserRest();
 

@@ -1,9 +1,11 @@
 package com.disenio.rigormorty.service;
 
 
+import com.disenio.rigormorty.dto.DifuntoDTO;
 import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.Difunto;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
+import com.disenio.rigormorty.mappers.DifuntoMapper;
 import com.disenio.rigormorty.repository.DifuntoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +30,11 @@ public class DifuntoServiceImpl implements DifuntoService{
     }
 
     @Override
-    public ResponseEntity<List<Difunto>> getDifuntos(){
+    public ResponseEntity<List<DifuntoDTO>> getDifuntos(){
+        DifuntoDTO difuntoDTO = new DifuntoDTO();
         List<Difunto> difuntos = difuntoRepository.findAll();
-        return ResponseEntity.ok(difuntos);
+
+        return ResponseEntity.ok(DifuntoMapper.entityToDTOList(difuntos));
     }
 
     @Override

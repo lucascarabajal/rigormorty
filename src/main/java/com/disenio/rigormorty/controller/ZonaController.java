@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.Zona;
+import com.disenio.rigormorty.exception.EqualObjectException;
 import com.disenio.rigormorty.models.responses.ZonaResponse;
 import com.disenio.rigormorty.service.ZonaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class ZonaController {
     private ZonaServiceImpl zonaServiceImpl;
 
     @PostMapping
-    public ResponseEntity<Zona> addZona(@RequestBody Zona zona) {
+    public ResponseEntity<Zona> addZona(@RequestBody Zona zona){
         return zonaServiceImpl.addZona(zona);
     }
 

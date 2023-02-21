@@ -43,7 +43,7 @@ public class ParcelaServiceImpl implements ParcelaService{
         if(optionalParcela.isPresent()){
             Parcela parcelaToUpdate = optionalParcela.get();
 
-            parcelaToUpdate.setNivelActual(parcela.getNivelActual());
+            parcelaToUpdate.setNivelMax(parcela.getNivelMax());
             parcelaToUpdate.setNumeroParcela(parcela.getNumeroParcela());
             parcelaToUpdate.setDifuntos(parcela.getDifuntos());
             parcelaToUpdate.setEstados(parcela.getEstados());

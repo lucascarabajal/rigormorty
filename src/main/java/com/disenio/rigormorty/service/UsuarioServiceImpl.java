@@ -4,6 +4,7 @@ package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.entity.Usuario;
 import com.disenio.rigormorty.enums.NombreRol;
+import com.disenio.rigormorty.exception.EqualObjectException;
 import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
 import com.disenio.rigormorty.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.ObjectError;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 @Service
@@ -42,8 +45,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public Usuario createUser(UserRegisterRequestModel user) {
-        Usuario usuario = new Usuario();
 
+        if (Objects.nonNull(usuarioRepository.findByUsername(user.getUsername()))) throw new EqualObjectException("Ya existe usuario con ese Username");
+
+        Usuario usuario = new Usuario();
         NombreRol.valueOf(user.getRol().getNombre());
         BeanUtils.copyProperties(user,usuario);
         usuario.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

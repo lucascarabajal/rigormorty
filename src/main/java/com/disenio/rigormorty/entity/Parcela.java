@@ -20,7 +20,7 @@ public class Parcela{
     private Long id;
 
     @Column(nullable = false)
-    private Integer nivelActual;
+    private Integer nivelMax;
 
     @Column(nullable = false)
     private String numeroParcela;
@@ -43,10 +43,5 @@ public class Parcela{
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
     private List<RegistroCompra> registros = new ArrayList<>();
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JsonIgnoreProperties(value = {"parcelas", "handler","hibernateLazyInitializer"}, allowSetters = true)
-//    @JoinColumn(name = "id_cliente")
-//    private Cliente cliente;
 
 }

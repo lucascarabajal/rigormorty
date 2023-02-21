@@ -1,5 +1,6 @@
 package com.disenio.rigormorty.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,6 @@ public class Difunto extends Persona implements Serializable {
 
     //TODO ver que onda
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"difuntos", "handler","hibernateLazyInitializer"}, allowSetters = true)
     @JoinColumn(name = "id_parcela",nullable = false)
     private Parcela parcela;
 

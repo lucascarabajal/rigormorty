@@ -1,5 +1,6 @@
 package com.disenio.rigormorty.controller;
 
+import com.disenio.rigormorty.dto.DifuntoDTO;
 import com.disenio.rigormorty.entity.Difunto;
 import com.disenio.rigormorty.service.DifuntoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class DifuntoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Difunto>> getDifuntos(){
+    public ResponseEntity<List<DifuntoDTO>> getDifuntos(){
         return difuntoServiceImpl.getDifuntos();
     }
 
