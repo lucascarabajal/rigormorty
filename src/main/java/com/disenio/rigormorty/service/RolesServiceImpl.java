@@ -52,4 +52,9 @@ public class RolesServiceImpl implements RolesService{
 
 
     }
+
+    @Override
+    public Integer countRoles() {
+        return rolesRepository.countAllByIdIsNotNull();
+    }
 }

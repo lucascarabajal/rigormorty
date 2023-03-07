@@ -2,9 +2,12 @@ package com.disenio.rigormorty.service;
 
 
 
+import com.disenio.rigormorty.entity.Parcela;
+import com.disenio.rigormorty.entity.Roles;
 import com.disenio.rigormorty.entity.Usuario;
 import com.disenio.rigormorty.enums.NombreRol;
 import com.disenio.rigormorty.exception.EqualObjectException;
+import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
 import com.disenio.rigormorty.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +17,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.ObjectError;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 
 
 @Service
@@ -54,5 +57,32 @@ public class UsuarioServiceImpl implements UsuarioService{
         usuario.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         return usuarioRepository.save(usuario);
+    }
+
+    public Usuario updateUser(UserRegisterRequestModel user){
+        Optional<Usuario> usuarioToUpdate = Optional.ofNullable(usuarioRepository.findByUsername(user.getUsername()));
+
+        if(usuarioToUpdate.isPresent()){
+            Usuario usuario = usuarioToUpdate.get();
+
+            usuario.setUsername(user.getUsername());
+            usuario.setRol(user.getRol());
+            usuario.setNombre(user.getNombre());
+            usuario.setApellido(user.getApellido());
+            usuario.setEmail(user.getEmail());
+            usuario.setTelefono(user.getTelefono());
+            usuario.setDni(user.getDni());
+
+            usuarioRepository.save(usuario);
+
+            return usuario;
+        }else {
+            throw new ResourceNotFoundException("Usuario no encontrado");
+        }
+    }
+
+    @Override
+    public Integer countUsers() {
+        return usuarioRepository.countAllByUsernameNotNull();
     }
 }

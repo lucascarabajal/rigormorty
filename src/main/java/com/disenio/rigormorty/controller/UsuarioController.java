@@ -45,4 +45,13 @@ public class UsuarioController {
         return userRest;
     }
 
+    @PutMapping
+    public ResponseEntity<UserRest> updateUser(@RequestBody UserRegisterRequestModel userModel){
+        Usuario user = usuarioService.updateUser(userModel);
+        UserRest userRest = new UserRest();
+
+        BeanUtils.copyProperties(user,userRest);
+        return ResponseEntity.status(HttpStatus.OK).body(userRest);
+    }
+
 }

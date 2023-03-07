@@ -8,16 +8,19 @@ import java.util.Date;
 
 @Data
 public class UserRegisterRequestModel {
+
+    private Long id;
+
     @NotBlank
     @Email
     private String email;
 
     @NotBlank
-    @Size(min=6, max = 30)
+    @Size(min=5, max = 30)
     private String username;
 
     @NotBlank
-    @Size(min=6, max = 40)
+    @Size(min=5, max = 40)
     private String password;
 
     @NotBlank
