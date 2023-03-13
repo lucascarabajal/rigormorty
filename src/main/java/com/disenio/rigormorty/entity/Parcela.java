@@ -30,7 +30,7 @@ public class Parcela{
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
     private List<Difunto> difuntos = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
     private List<EstadoParcela> estados = new ArrayList<>();
 
@@ -43,5 +43,9 @@ public class Parcela{
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
     private List<RegistroCompra> registros = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
 
 }
