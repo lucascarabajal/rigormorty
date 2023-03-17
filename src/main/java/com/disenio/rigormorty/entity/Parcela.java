@@ -1,13 +1,15 @@
 package com.disenio.rigormorty.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonMerge;
+import org.hibernate.annotations.CascadeType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,26 +28,27 @@ public class Parcela{
     private String numeroParcela;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
+    @Cascade(CascadeType.ALL)
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
     private List<Difunto> difuntos = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE})
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
+    @JsonMerge
     private List<EstadoParcela> estados = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
+    @Cascade(CascadeType.ALL)
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
     private List<Mantenimiento> mantenimientos = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_parcela", referencedColumnName = "id")
-    private List<RegistroCompra> registros = new ArrayList<>();
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Cascade(CascadeType.ALL)
     @JoinColumn(name = "id_cliente")
+    @JsonMerge
     private Cliente cliente;
 
 }
