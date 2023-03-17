@@ -33,8 +33,7 @@ public class Parcela{
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
     private List<Difunto> difuntos = new ArrayList<>();
 
-    @OneToMany
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE})
+    @OneToMany(cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
     @JsonMerge
     private List<EstadoParcela> estados = new ArrayList<>();
