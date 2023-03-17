@@ -1,5 +1,6 @@
 package com.disenio.rigormorty.controller;
 
+import com.disenio.rigormorty.dto.RegistroDTO;
 import com.disenio.rigormorty.entity.RegistroCompra;
 import com.disenio.rigormorty.service.RegistroCompraServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class RegistroCompraController {
     private RegistroCompraServiceImpl registroCompraServiceImpl;
 
     @PostMapping
-    public ResponseEntity<RegistroCompra> addRegistroCompra(@RequestBody RegistroCompra registroCompra){
+    public ResponseEntity<RegistroDTO> addRegistroCompra(@RequestBody RegistroCompra registroCompra){
         return registroCompraServiceImpl.addRegistroCompra(registroCompra);
     }
 

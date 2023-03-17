@@ -2,27 +2,26 @@ package com.disenio.rigormorty.service;
 
 
 import com.disenio.rigormorty.dto.ParcelaDTO;
-import com.disenio.rigormorty.entity.Mantenimiento;
+import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.mappers.ParcelaMapper;
 import com.disenio.rigormorty.repository.ParcelaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ParcelaServiceImpl implements ParcelaService{
     private final ParcelaRepository parcelaRepository;
 
-    @Autowired
-    public ParcelaServiceImpl(ParcelaRepository parcelaRepository) {
-        this.parcelaRepository = parcelaRepository;
-    }
+
+    private ModelMapper mapper;
 
     @Override
     public ResponseEntity<Parcela> addParcela(Parcela parcela){
@@ -48,9 +47,7 @@ public class ParcelaServiceImpl implements ParcelaService{
             parcelaToUpdate.setDifuntos(parcela.getDifuntos());
             parcelaToUpdate.setEstados(parcela.getEstados());
             parcelaToUpdate.setMantenimientos(parcela.getMantenimientos());
-            parcelaToUpdate.setRegistros(parcela.getRegistros());
-//            parcelaToUpdate.setCliente(parcela.getCliente());
-
+            parcelaToUpdate.setCliente(this.mapper.map(parcela.getCliente(), Cliente.class));
 
             parcelaRepository.save(parcelaToUpdate);
 
@@ -58,10 +55,26 @@ public class ParcelaServiceImpl implements ParcelaService{
         }else{
             throw new ResourceNotFoundException("Parcela no encontrada");
         }
-
-
     }
 
+    @Override
+    public Object updateParcelaRegistro(ParcelaDTO parcela){
+        Optional<Parcela> optionalParcela = parcelaRepository.findById(parcela.getId());
+        if(optionalParcela.isPresent()){
+            Parcela parcelaToUpdate = optionalParcela.get();
+
+            parcelaToUpdate.setNumeroParcela(parcela.getNumeroParcela());
+            parcelaToUpdate.setEstados(parcela.getEstados());
+            parcelaToUpdate.setMantenimientos(parcela.getMantenimientos());
+            parcelaToUpdate.setCliente(this.mapper.map(parcela.getClienteRegistroDTO(), Cliente.class));
+
+            parcelaRepository.save(parcelaToUpdate);
+
+            return parcelaToUpdate;
+        }else{
+            throw new ResourceNotFoundException("Parcela no encontrada");
+        }
+    }
     @Override
     public ParcelaDTO getById(Long id) {
 
@@ -73,4 +86,6 @@ public class ParcelaServiceImpl implements ParcelaService{
             throw new ResourceNotFoundException("No existe parcela con ese id");
         }
     }
+
+
 }

@@ -1,6 +1,9 @@
 package com.disenio.rigormorty.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonMerge;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +32,9 @@ public class RegistroCompra implements Serializable {
     private Integer cuotasPagas;
 
     @Column
+    private Double totalPagar;
+
+    @Column
     @Temporal(TemporalType.DATE)
     private Date vencimiento;
 
@@ -40,21 +46,18 @@ public class RegistroCompra implements Serializable {
     @JoinColumn(name = "id_registro", referencedColumnName = "id", nullable = false)
     private List<FormaPago> formaPagos = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"registros", "handler","hibernateLazyInitializer"}, allowSetters = true)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente",nullable = false)
+    @JsonBackReference
     private Cliente cliente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"registros", "handler","hibernateLazyInitializer"}, allowSetters = true)
-    @JoinColumn(name = "id_parcela",nullable = false)
-    private Parcela parcela;
+    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_registro",referencedColumnName = "id")
+    @JsonMerge
+    private List<Parcela> parcelas;
 
     @ManyToOne(optional=false)
     @JoinColumn(name="usuario",referencedColumnName="id")
     private Usuario usuario;
-
-
-
 
 }

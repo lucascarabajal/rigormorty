@@ -69,8 +69,8 @@ public class ZonaServiceImpl implements ZonaService{
 
     @Override
     public void addListZona(List<Zona> zonas){
-        for (int i=0; i < zonas.size(); i++){
-            zonas.get(i).setParcelas(generarParcelas(zonas.get(i)));
+        for (Zona zona : zonas) {
+            zona.setParcelas(generarParcelas(zona));
         }
         zonaRepository.saveAll(zonas);
     }
@@ -87,7 +87,8 @@ public class ZonaServiceImpl implements ZonaService{
     }
 
     private List<Parcela> generarParcelas(Zona zona){
-        List<Parcela> parcelas = IntStream.range(0, zona.getCantidadParcela())
+
+        return IntStream.range(0, zona.getCantidadParcela())
                 .mapToObj(i ->{
                     Parcela parcela = new Parcela();
                     List<EstadoParcela> estadoParcelas = new ArrayList<>();
@@ -105,7 +106,5 @@ public class ZonaServiceImpl implements ZonaService{
                     return parcela;
                 })
                 .collect(Collectors.toList());
-
-        return parcelas;
     }
 }

@@ -11,5 +11,7 @@ public interface ParcelaService {
     ResponseEntity<List<Parcela>> getParcelas();
     Object updateParcela(Parcela parcela);
 
+    Object updateParcelaRegistro(ParcelaDTO parcela);
+
     ParcelaDTO getById(Long id);
 }
