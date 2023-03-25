@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,8 +33,9 @@ public class Zona implements Serializable {
     private Integer nivelMax;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_zona", referencedColumnName = "id")
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private List<Parcela> parcelas = new ArrayList<>();
 
 }

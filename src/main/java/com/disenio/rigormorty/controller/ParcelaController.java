@@ -35,4 +35,9 @@ public class ParcelaController {
         parcela.setId(id);
         return ResponseEntity.ok().body(this.parcelaService.updateParcela(parcela));
     }
+
+    @GetMapping("cliente/{id}")
+    public List<ParcelaDTO> getParcelasByCliente(@PathVariable Long id){
+        return ResponseEntity.ok().body(this.parcelaService.getParcelasByCliente(id)).getBody();
+    }
 }

@@ -3,9 +3,12 @@ package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Cliente;
+import com.disenio.rigormorty.entity.EstadoParcela;
 import com.disenio.rigormorty.entity.Parcela;
+import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.mappers.ParcelaMapper;
+import com.disenio.rigormorty.repository.EstadoParcelaRepository;
 import com.disenio.rigormorty.repository.ParcelaRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -85,6 +89,13 @@ public class ParcelaServiceImpl implements ParcelaService{
         }else {
             throw new ResourceNotFoundException("No existe parcela con ese id");
         }
+    }
+
+    public List<ParcelaDTO>  getParcelasByCliente(Long idCliente){
+
+        List<Parcela> parcelas = parcelaRepository.getParcelasByCliente_Id(idCliente);
+
+        return parcelas.stream().map(parcela -> mapper.map(parcela, ParcelaDTO.class)).collect(Collectors.toList());
     }
 
 

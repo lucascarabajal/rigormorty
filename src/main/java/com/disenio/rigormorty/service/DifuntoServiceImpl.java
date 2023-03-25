@@ -2,11 +2,16 @@ package com.disenio.rigormorty.service;
 
 
 import com.disenio.rigormorty.dto.DifuntoDTO;
+import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.Difunto;
+import com.disenio.rigormorty.entity.EstadoParcela;
+import com.disenio.rigormorty.entity.Parcela;
+import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.mappers.DifuntoMapper;
 import com.disenio.rigormorty.repository.DifuntoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,16 +20,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class DifuntoServiceImpl implements DifuntoService{
     private final DifuntoRepository difuntoRepository;
-
-    @Autowired
-    public DifuntoServiceImpl(DifuntoRepository difuntoRepository) {
-        this.difuntoRepository = difuntoRepository;
-    }
-
+    private final ParcelaService parcelaService;
     @Override
     public ResponseEntity<Difunto> addDifunto(Difunto difunto){
+
+        ParcelaDTO parcela = parcelaService.getById(difunto.getParcela().getId());
+
+        List<EstadoParcela> estadoParcelas = parcela.getEstados();
+
+        estadoParcelas.stream()
+                .filter(estadoParcela -> estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_COMPRADO))
+                .findFirst()
+                .ifPresent(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_OCUPADO));
+
         Difunto newDifunto = difuntoRepository.save(difunto);
         return ResponseEntity.ok(newDifunto);
     }

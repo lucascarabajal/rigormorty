@@ -10,8 +10,7 @@ public interface ParcelaService {
     ResponseEntity<Parcela> addParcela(Parcela parcela);
     ResponseEntity<List<Parcela>> getParcelas();
     Object updateParcela(Parcela parcela);
-
     Object updateParcelaRegistro(ParcelaDTO parcela);
-
     ParcelaDTO getById(Long id);
+    List<ParcelaDTO>  getParcelasByCliente(Long idCliente);
 }

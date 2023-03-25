@@ -35,7 +35,7 @@ public class Parcela{
 
     @OneToMany
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @Cascade(CascadeType.ALL)
     @JsonMerge
     private List<EstadoParcela> estados = new ArrayList<>();
 

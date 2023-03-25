@@ -11,10 +11,12 @@ import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.ZonaResponse;
 import com.disenio.rigormorty.repository.ParcelaRepository;
 import com.disenio.rigormorty.repository.ZonaRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,22 +25,26 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
+@AllArgsConstructor
 public class ZonaServiceImpl implements ZonaService{
     private final ZonaRepository zonaRepository;
 
-    @Autowired
-    public ZonaServiceImpl(ZonaRepository zonaRepository) {
-        this.zonaRepository = zonaRepository;
-    }
+    private final ParcelaRepository parcelaRepository;
+
 
     @Override
+    @Transactional
     public ResponseEntity<Zona> addZona(Zona zona) {
 
         if (Objects.nonNull(zonaRepository.findZonaByNombreZona(zona.getNombreZona()))) throw new EqualObjectException("Ya existe zona con este nombre");
 
-        zona.setParcelas(generarParcelas(zona));
-
+        // Guardar la instancia de Zona en la base de datos
         Zona newZona = zonaRepository.save(zona);
+
+        // Generar las parcelas y establecer la relación con la instancia de Zona guardada
+        newZona.setParcelas(generarParcelas(newZona));
+        newZona = zonaRepository.save(newZona);
+
         return ResponseEntity.ok(newZona);
     }
 
@@ -88,23 +94,29 @@ public class ZonaServiceImpl implements ZonaService{
 
     private List<Parcela> generarParcelas(Zona zona){
 
-        return IntStream.range(0, zona.getCantidadParcela())
-                .mapToObj(i ->{
-                    Parcela parcela = new Parcela();
-                    List<EstadoParcela> estadoParcelas = new ArrayList<>();
+        List<Parcela> parcelas = new ArrayList<>();
 
-                    parcela.setNumeroParcela(zona.getNombreZona()+(i+1));
-                    parcela.setNivelMax(zona.getNivelMax());
+        for(int i = 0; i < zona.getCantidadParcela(); i++){
+            Parcela parcela = new Parcela();
+            List<EstadoParcela> estadoParcelas = new ArrayList<>();
 
-                    IntStream.range(0, zona.getNivelMax()).forEach(j -> {
-                        EstadoParcela estadoParcela = new EstadoParcela();
-                        estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_LIBRE);
-                        estadoParcelas.add(estadoParcela);
-                    });
+            parcela.setNumeroParcela(zona.getNombreZona()+(i+1));
+            parcela.setNivelMax(zona.getNivelMax());
 
-                    parcela.setEstados(estadoParcelas);
-                    return parcela;
-                })
-                .collect(Collectors.toList());
+            for(int j = 0; j < zona.getNivelMax(); j++){
+                EstadoParcela estadoParcela = new EstadoParcela();
+                estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_LIBRE);
+                estadoParcelas.add(estadoParcela);
+            }
+
+            parcela.setEstados(estadoParcelas);
+
+            // Guardar la instancia de Parcela en la base de datos
+            parcela = parcelaRepository.save(parcela);
+
+            parcelas.add(parcela);
+        }
+
+        return parcelas;
     }
 }
