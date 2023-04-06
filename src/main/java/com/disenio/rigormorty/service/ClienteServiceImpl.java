@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -34,7 +35,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ResponseEntity<List<ClienteAddResponse>> getClientes(){
         List<Cliente> clientes = clienteRepository.findAll();
-        List<ClienteAddResponse>  responses = Collections.singletonList(this.mapper.map(clientes, ClienteAddResponse.class));
+        List<ClienteAddResponse>  responses = clientes.stream().map(cliente -> this.mapper.map(cliente,ClienteAddResponse.class)).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(responses);
     }
 
