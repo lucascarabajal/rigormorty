@@ -3,19 +3,17 @@ package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.dto.DifuntoDTO;
 import com.disenio.rigormorty.dto.ParcelaDTO;
-import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.Difunto;
 import com.disenio.rigormorty.entity.EstadoParcela;
-import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
-import com.disenio.rigormorty.mappers.DifuntoMapper;
 import com.disenio.rigormorty.repository.DifuntoRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +22,8 @@ import java.util.Optional;
 public class DifuntoServiceImpl implements DifuntoService{
     private final DifuntoRepository difuntoRepository;
     private final ParcelaService parcelaService;
+
+    private final ModelMapper mapper;
     @Override
     public ResponseEntity<Difunto> addDifunto(Difunto difunto){
 
@@ -45,7 +45,7 @@ public class DifuntoServiceImpl implements DifuntoService{
         DifuntoDTO difuntoDTO = new DifuntoDTO();
         List<Difunto> difuntos = difuntoRepository.findAll();
 
-        return ResponseEntity.ok(DifuntoMapper.entityToDTOList(difuntos));
+        return ResponseEntity.ok(Collections.singletonList(this.mapper.map(difuntos, DifuntoDTO.class)));
     }
 
     @Override

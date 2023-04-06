@@ -2,6 +2,7 @@ package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Parcela;
+import com.disenio.rigormorty.models.responses.ParcelaClienteResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface ParcelaService {
     Object updateParcela(Parcela parcela);
     Object updateParcelaRegistro(ParcelaDTO parcela);
     ParcelaDTO getById(Long id);
-    List<ParcelaDTO>  getParcelasByCliente(Long idCliente);
+    List<ParcelaClienteResponse>  getParcelasByCliente(Long idCliente);
 }

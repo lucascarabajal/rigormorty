@@ -1,36 +1,41 @@
 package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.entity.Cliente;
-import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
-import com.disenio.rigormorty.mappers.ParcelaMapper;
+import com.disenio.rigormorty.models.request.ClienteAddRequest;
+import com.disenio.rigormorty.models.responses.ClienteAddResponse;
 import com.disenio.rigormorty.repository.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ClienteServiceImpl implements ClienteService {
     private final ClienteRepository clienteRepository;
+    private final ModelMapper mapper;
+    @Override
+    public ResponseEntity<ClienteAddResponse> addCliente(ClienteAddRequest clienteRequest){
 
-    @Autowired
-    public ClienteServiceImpl(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
+        if (Objects.nonNull(clienteRepository.getClienteByDni(clienteRequest.getDni())))throw new RuntimeException("El cliente con el dni "+ clienteRequest.getDni()+ " ya existe.");
+
+        Cliente cliente = clienteRepository.save(this.mapper.map(clienteRequest,Cliente.class));
+        ClienteAddResponse response = this.mapper.map(cliente, ClienteAddResponse.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @Override
-    public ResponseEntity<Cliente> addCliente(Cliente cliente){
-        Cliente newCliente = clienteRepository.save(cliente);
-        return ResponseEntity.ok(newCliente);
-    }
-
-    @Override
-    public ResponseEntity<List<Cliente>> getClientes(){
+    public ResponseEntity<List<ClienteAddResponse>> getClientes(){
         List<Cliente> clientes = clienteRepository.findAll();
-        return ResponseEntity.ok(clientes);
+        List<ClienteAddResponse>  responses = Collections.singletonList(this.mapper.map(clientes, ClienteAddResponse.class));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(responses);
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "clientes")
 @Getter @Setter @NoArgsConstructor
-public class Cliente extends Persona implements Serializable {
+public class Cliente extends Persona{
     @Column(nullable = false,length = 75)
     private String email;
 

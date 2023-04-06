@@ -3,6 +3,7 @@ package com.disenio.rigormorty.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class Persona {
 
     @Column
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private Date fechaNac;
 
 }

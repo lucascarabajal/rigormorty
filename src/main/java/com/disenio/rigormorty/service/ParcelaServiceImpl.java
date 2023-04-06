@@ -3,12 +3,9 @@ package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Cliente;
-import com.disenio.rigormorty.entity.EstadoParcela;
 import com.disenio.rigormorty.entity.Parcela;
-import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
-import com.disenio.rigormorty.mappers.ParcelaMapper;
-import com.disenio.rigormorty.repository.EstadoParcelaRepository;
+import com.disenio.rigormorty.models.responses.ParcelaClienteResponse;
 import com.disenio.rigormorty.repository.ParcelaRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -70,7 +67,7 @@ public class ParcelaServiceImpl implements ParcelaService{
             parcelaToUpdate.setNumeroParcela(parcela.getNumeroParcela());
             parcelaToUpdate.setEstados(parcela.getEstados());
             parcelaToUpdate.setMantenimientos(parcela.getMantenimientos());
-            parcelaToUpdate.setCliente(this.mapper.map(parcela.getClienteRegistroDTO(), Cliente.class));
+            parcelaToUpdate.setCliente(this.mapper.map(parcela.getCliente(), Cliente.class));
 
             parcelaRepository.save(parcelaToUpdate);
 
@@ -85,17 +82,17 @@ public class ParcelaServiceImpl implements ParcelaService{
         Optional<Parcela> parcela = parcelaRepository.findById(id);
 
         if (parcela.isPresent()){
-            return ParcelaMapper.entityToDTO(parcela.get());
+            return this.mapper.map(parcela, ParcelaDTO.class);
         }else {
             throw new ResourceNotFoundException("No existe parcela con ese id");
         }
     }
 
-    public List<ParcelaDTO>  getParcelasByCliente(Long idCliente){
+    public List<ParcelaClienteResponse>  getParcelasByCliente(Long idCliente){
 
         List<Parcela> parcelas = parcelaRepository.getParcelasByCliente_Id(idCliente);
 
-        return parcelas.stream().map(parcela -> mapper.map(parcela, ParcelaDTO.class)).collect(Collectors.toList());
+        return parcelas.stream().map(parcela -> mapper.map(parcela, ParcelaClienteResponse.class)).collect(Collectors.toList());
     }
 
 

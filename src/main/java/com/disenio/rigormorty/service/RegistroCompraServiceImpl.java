@@ -8,13 +8,13 @@ import com.disenio.rigormorty.dto.RegistroDTO;
 import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.RegistroCompra;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
-import com.disenio.rigormorty.mappers.ParcelaMapper;
 import com.disenio.rigormorty.repository.RegistroCompraRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +36,8 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
         ClienteRegistroDTO clienteRegistroDTO = this.mapper.map(cliente, ClienteRegistroDTO.class);
 
         registroCompra.getParcelas().forEach(parcela -> parcela.setCliente(this.mapper.map(clienteRegistroDTO,Cliente.class)));
-        List<ParcelaDTO> parcelasDTO = ParcelaMapper.entityToDTOList(registroCompra.getParcelas());
+
+        List<ParcelaDTO> parcelasDTO = Collections.singletonList(this.mapper.map(registroCompra.getParcelas(), ParcelaDTO.class));
 
         RegistroCompra newRegistro = registroCompraRepository.save(registroCompra);
 
