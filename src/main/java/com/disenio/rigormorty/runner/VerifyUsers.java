@@ -1,32 +1,44 @@
-package com.disenio.rigormorty.jobs;
+package com.disenio.rigormorty.runner;
 
 import com.disenio.rigormorty.entity.Roles;
 import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
+import com.disenio.rigormorty.repository.RolesRepository;
 import com.disenio.rigormorty.service.RolesService;
 import com.disenio.rigormorty.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class VerifyUsers {
+public class VerifyUsers implements ApplicationRunner {
 
     private final UsuarioService usuarioService;
+    private final RolesRepository rolesRepository;
     private final RolesService rolesService;
 
-    @Scheduled(fixedRate = 604000000)
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        verifyRoles();
+        verifyUsers();
+    }
+
     public void verifyRoles(){
         if (rolesService.countRoles()==0){
             Roles rol = new Roles();
-            rol.setId(1L);
             rol.setNombre("ADMIN");
-
             rolesService.addRol(rol);
+            Roles rol1 = new Roles();
+            rol1.setNombre("VENDEDOR");
+            rolesService.addRol(rol1);
         }
     }
 
-    @Scheduled(fixedRate = 604000000)
     public void verifyUsers(){
 
         if (usuarioService.countUsers()==0){
@@ -46,4 +58,6 @@ public class VerifyUsers {
             usuarioService.createUser(usuario);
         }
     }
+
+
 }
