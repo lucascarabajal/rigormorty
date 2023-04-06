@@ -60,11 +60,11 @@ public class ClienteServiceImpl implements ClienteService {
         }
     }
 
-    public Cliente getById(Long id){
+    public ClienteAddResponse getById(Long id){
         Optional<Cliente> cliente = clienteRepository.findById(id);
 
         if (cliente.isPresent()){
-            return cliente.get();
+            return this.mapper.map(cliente.get(), ClienteAddResponse.class);
         }else {
             throw new ResourceNotFoundException("No existe cliente con ese id");
         }

@@ -34,4 +34,9 @@ public class ClienteController {
         return ResponseEntity.ok().body(this.clienteServiceImpl.updateCliente(cliente));
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<ClienteAddResponse> getClienteById(@PathVariable Long id){
+        return ResponseEntity.ok().body(this.clienteServiceImpl.getById(id));
+    }
+
 }
