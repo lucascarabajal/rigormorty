@@ -22,7 +22,7 @@ public class ParcelaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Parcela>>getParcelas(){
+    public ResponseEntity<List<ParcelaClienteResponse>>getParcelas(){
         return parcelaService.getParcelas();
     }
 

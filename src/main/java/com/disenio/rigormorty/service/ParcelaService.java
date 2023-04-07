@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ParcelaService {
     ResponseEntity<Parcela> addParcela(Parcela parcela);
-    ResponseEntity<List<Parcela>> getParcelas();
+    ResponseEntity<List<ParcelaClienteResponse>> getParcelas();
     Object updateParcela(Parcela parcela);
     Object updateParcelaRegistro(ParcelaDTO parcela);
     ParcelaDTO getById(Long id);

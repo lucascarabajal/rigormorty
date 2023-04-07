@@ -32,9 +32,10 @@ public class ParcelaServiceImpl implements ParcelaService{
     }
 
     @Override
-    public ResponseEntity<List<Parcela>> getParcelas(){
+    public ResponseEntity<List<ParcelaClienteResponse>> getParcelas(){
         List<Parcela> parcelas = parcelaRepository.findAll();
-        return ResponseEntity.ok(parcelas);
+        List<ParcelaClienteResponse> response = parcelas.stream().map(parcela -> mapper.map(parcela,ParcelaClienteResponse.class)).toList();
+        return ResponseEntity.ok(response);
     }
 
     @Override
