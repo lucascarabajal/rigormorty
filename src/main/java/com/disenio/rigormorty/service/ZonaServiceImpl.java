@@ -12,6 +12,7 @@ import com.disenio.rigormorty.models.responses.ZonaResponse;
 import com.disenio.rigormorty.repository.ParcelaRepository;
 import com.disenio.rigormorty.repository.ZonaRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class ZonaServiceImpl implements ZonaService{
 
     private final ParcelaRepository parcelaRepository;
 
+    private ModelMapper mapper;
 
     @Override
     @Transactional
@@ -49,9 +51,10 @@ public class ZonaServiceImpl implements ZonaService{
     }
 
     @Override
-    public ResponseEntity<List<Zona>> getZonas(){
+    public ResponseEntity<List<ZonaResponse>> getZonas(){
         List<Zona> zonas = zonaRepository.findAll();
-        return ResponseEntity.ok(zonas);
+        List<ZonaResponse> response = zonas.stream().map(zona -> this.mapper.map(zona,ZonaResponse.class)).toList();
+        return ResponseEntity.ok(response);
     }
 
     @Override

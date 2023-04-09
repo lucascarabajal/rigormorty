@@ -22,7 +22,7 @@ public class ZonaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Zona>> getZona(){
+    public ResponseEntity<List<ZonaResponse>> getZona(){
         return zonaServiceImpl.getZonas();
     }
 

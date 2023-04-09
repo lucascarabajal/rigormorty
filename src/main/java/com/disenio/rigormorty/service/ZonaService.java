@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ZonaService {
     ResponseEntity<Zona> addZona(Zona zona);
-    ResponseEntity<List<Zona>> getZonas();
+    ResponseEntity<List<ZonaResponse>> getZonas();
     Object updateZona(Zona zona);
 
     void addListZona(List<Zona> zonas);
