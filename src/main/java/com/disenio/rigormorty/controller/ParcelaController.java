@@ -41,4 +41,9 @@ public class ParcelaController {
     public List<ParcelaClienteResponse> getParcelasByCliente(@PathVariable Long id){
         return ResponseEntity.ok().body(this.parcelaService.getParcelasByCliente(id)).getBody();
     }
+
+    @GetMapping("libres/{id}")
+    public List<ParcelaClienteResponse> getParcelasLibres(@PathVariable Long id){
+        return ResponseEntity.ok().body(this.parcelaService.getParcelasDesocupadas(id)).getBody();
+    }
 }

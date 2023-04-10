@@ -2,6 +2,7 @@ package com.disenio.rigormorty.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,6 +35,7 @@ public class Zona implements Serializable {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
+    @JsonManagedReference
     @JoinColumn(name = "id_zona", referencedColumnName = "id")
     @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private List<Parcela> parcelas = new ArrayList<>();

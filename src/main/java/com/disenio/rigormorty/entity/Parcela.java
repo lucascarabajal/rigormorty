@@ -1,5 +1,6 @@
 package com.disenio.rigormorty.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonMerge;
 import org.hibernate.annotations.CascadeType;

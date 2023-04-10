@@ -114,7 +114,6 @@ public class ZonaServiceImpl implements ZonaService{
             }
 
             parcela.setEstados(estadoParcelas);
-
             // Guardar la instancia de Parcela en la base de datos
             parcela = parcelaRepository.save(parcela);
 

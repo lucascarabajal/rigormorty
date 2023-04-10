@@ -4,8 +4,10 @@ package com.disenio.rigormorty.service;
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.Parcela;
+import com.disenio.rigormorty.entity.Zona;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.ParcelaClienteResponse;
+import com.disenio.rigormorty.models.responses.ZonaAllResponse;
 import com.disenio.rigormorty.repository.ParcelaRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,7 +22,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ParcelaServiceImpl implements ParcelaService{
     private final ParcelaRepository parcelaRepository;
-
 
     private ModelMapper mapper;
 
@@ -94,6 +95,12 @@ public class ParcelaServiceImpl implements ParcelaService{
         List<Parcela> parcelas = parcelaRepository.getParcelasByCliente_Id(idCliente);
 
         return parcelas.stream().map(parcela -> mapper.map(parcela, ParcelaClienteResponse.class)).collect(Collectors.toList());
+    }
+
+    public List<ParcelaClienteResponse> getParcelasDesocupadas(Long idZona){
+        List<Parcela> parcelas = parcelaRepository.getParcelasLibres(idZona);
+
+        return parcelas.stream().map(parcela -> this.mapper.map(parcela,ParcelaClienteResponse.class)).collect(Collectors.toList());
     }
 
 
