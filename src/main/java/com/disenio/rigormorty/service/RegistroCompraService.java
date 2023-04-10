@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface RegistroCompraService {
-    ResponseEntity<RegistroDTO> addRegistroCompra(RegistroCompra registroCompra);
+    RegistroCompraResponse addRegistroCompra(RegistroCompra registroCompra);
     List<RegistroCompraResponse> getRegistroCompras();
     Object updateRegistroCompra(RegistroCompra registroCompra);
     RegistroCompraResponse pagoCuota(Long id, Integer cantidad);

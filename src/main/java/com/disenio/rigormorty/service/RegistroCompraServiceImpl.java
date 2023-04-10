@@ -7,6 +7,7 @@ import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.dto.RegistroDTO;
 import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.RegistroCompra;
+import com.disenio.rigormorty.enums.FormaPago;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.ClienteAddResponse;
 import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
@@ -35,10 +36,12 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
     private final ModelMapper mapper;
 
     @Override
-    public ResponseEntity<RegistroDTO> addRegistroCompra(RegistroCompra registroCompra){
+    public RegistroCompraResponse addRegistroCompra(RegistroCompra registroCompra){
 
         registroCompra.setPago(Date.from(Instant.now()));
         registroCompra.setVencimiento(obtenerVencimiento(1));
+
+        FormaPago.valueOf(registroCompra.getFormaPago().toUpperCase());
 
         ClienteAddResponse cliente = clienteService.getById(registroCompra.getCliente().getId());
         ClienteRegistroDTO clienteRegistroDTO = this.mapper.map(cliente, ClienteRegistroDTO.class);
@@ -54,7 +57,7 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
 
         parcelasDTO.forEach(parcelaService::updateParcelaRegistro);
 
-        return ResponseEntity.ok(this.mapper.map(newRegistro,RegistroDTO.class));
+        return this.mapper.map(newRegistro,RegistroCompraResponse.class);
     }
 
     @Override
@@ -76,7 +79,7 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
             registroToUpdate.setCuotasPagas(registroCompra.getCuotasPagas());
             registroToUpdate.setVencimiento(registroCompra.getVencimiento());
             registroToUpdate.setPago(registroCompra.getPago());
-            registroToUpdate.setFormaPagos(registroCompra.getFormaPagos());
+            registroToUpdate.setFormaPago(registroCompra.getFormaPago());
             registroToUpdate.setCliente(registroCompra.getCliente());
             registroToUpdate.setParcelas(registroCompra.getParcelas());
             registroToUpdate.setTotalPagar(registroCompra.getTotalPagar());
@@ -97,7 +100,7 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
             RegistroCompra registroCompraUpdate = registroCompra.get();
 
             registroCompraUpdate.setCuotasPagas(registroCompraUpdate.getCuotasPagas()+cantidad);
-            registroCompraUpdate.setFormaPagos(registroCompraUpdate.getFormaPagos());
+            registroCompraUpdate.setFormaPago(registroCompraUpdate.getFormaPago());
 
             registroCompraUpdate.setVencimiento(obtenerVencimiento(cantidad));
             registroCompraUpdate.setPago(Date.from(Instant.now()));

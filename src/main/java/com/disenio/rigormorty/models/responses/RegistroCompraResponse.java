@@ -24,7 +24,7 @@ public class RegistroCompraResponse implements Serializable {
     private Double totalPagar;
     private Date vencimiento;
     private Date pago;
+    private String formaPago;
     private ClienteAddResponse cliente;
     private List<ParcelaClienteResponse> parcelas;
-    private UserRest usuario;
 }

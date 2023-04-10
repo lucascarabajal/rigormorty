@@ -42,9 +42,8 @@ public class RegistroCompra implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date pago;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_registro", referencedColumnName = "id", nullable = false)
-    private List<FormaPago> formaPagos = new ArrayList<>();
+    @Column
+    private String formaPago;
 
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente",nullable = false)

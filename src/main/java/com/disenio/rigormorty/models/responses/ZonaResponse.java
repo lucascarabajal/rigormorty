@@ -16,6 +16,8 @@ public class ZonaResponse implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+
     private String nombreZona;
 
     private Integer cantidadParcela;

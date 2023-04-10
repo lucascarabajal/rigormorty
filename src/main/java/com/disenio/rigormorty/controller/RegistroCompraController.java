@@ -17,8 +17,8 @@ public class RegistroCompraController {
     private RegistroCompraServiceImpl registroCompraServiceImpl;
 
     @PostMapping
-    public ResponseEntity<RegistroDTO> addRegistroCompra(@RequestBody RegistroCompra registroCompra){
-        return registroCompraServiceImpl.addRegistroCompra(registroCompra);
+    public ResponseEntity<RegistroCompraResponse> addRegistroCompra(@RequestBody RegistroCompra registroCompra){
+        return ResponseEntity.ok().body(registroCompraServiceImpl.addRegistroCompra(registroCompra));
     }
 
     @GetMapping
