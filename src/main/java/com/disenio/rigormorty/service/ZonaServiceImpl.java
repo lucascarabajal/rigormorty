@@ -89,7 +89,7 @@ public class ZonaServiceImpl implements ZonaService{
         Optional<Zona> zona = zonaRepository.findById(id);
 
         if (zona.isPresent()){
-            return zonaRepository.findZonaByNombreZona(zona.get().getNombreZona());
+            return this.mapper.map(zona.get(),ZonaResponse.class);
         }else{
             throw new ResourceNotFoundException("No se encuentra zona con ese id");
         }

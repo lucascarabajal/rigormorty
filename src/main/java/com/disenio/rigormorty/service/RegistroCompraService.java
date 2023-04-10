@@ -11,6 +11,6 @@ public interface RegistroCompraService {
     ResponseEntity<RegistroDTO> addRegistroCompra(RegistroCompra registroCompra);
     List<RegistroCompraResponse> getRegistroCompras();
     Object updateRegistroCompra(RegistroCompra registroCompra);
-
     RegistroCompraResponse pagoCuota(Long id, Integer cantidad);
+    List<RegistroCompraResponse> getRegistroCompraByCliente(Integer dni);
 }

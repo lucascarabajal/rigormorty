@@ -38,4 +38,9 @@ public class RegistroCompraController {
         return ResponseEntity.ok().body(this.registroCompraServiceImpl.pagoCuota(id, cantidad));
     }
 
+    @GetMapping("{dni}")
+    public ResponseEntity<Object> pagoCuota(@PathVariable Integer dni){
+        return ResponseEntity.ok().body(this.registroCompraServiceImpl.getRegistroCompraByCliente(dni));
+    }
+
 }

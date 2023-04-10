@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -117,6 +118,12 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
         calendar.add(Calendar.MONTH,cantidad);
 
         return calendar.getTime();
+    }
+
+    public List<RegistroCompraResponse> getRegistroCompraByCliente(Integer dni){
+        List<RegistroCompra> registroCompra = registroCompraRepository.getRegistroComprasByClienteDni(dni);
+
+        return registroCompra.stream().map(registroCompra1 -> this.mapper.map(registroCompra1,RegistroCompraResponse.class)).collect(Collectors.toList());
     }
 
 
