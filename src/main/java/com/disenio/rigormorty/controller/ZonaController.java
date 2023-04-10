@@ -2,6 +2,7 @@ package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.Zona;
 import com.disenio.rigormorty.exception.EqualObjectException;
+import com.disenio.rigormorty.models.responses.ZonaAllResponse;
 import com.disenio.rigormorty.models.responses.ZonaResponse;
 import com.disenio.rigormorty.service.ZonaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ZonaController {
     }
 
     @GetMapping("{id}")
-    public ZonaResponse getZonaByID(@PathVariable("id") Long id){
+    public ZonaAllResponse getZonaByID(@PathVariable("id") Long id){
         return this.zonaServiceImpl.findById(id);
     }
 

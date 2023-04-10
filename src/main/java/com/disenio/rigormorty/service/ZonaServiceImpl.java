@@ -8,6 +8,7 @@ import com.disenio.rigormorty.entity.Zona;
 import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.EqualObjectException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
+import com.disenio.rigormorty.models.responses.ZonaAllResponse;
 import com.disenio.rigormorty.models.responses.ZonaResponse;
 import com.disenio.rigormorty.repository.ParcelaRepository;
 import com.disenio.rigormorty.repository.ZonaRepository;
@@ -85,11 +86,11 @@ public class ZonaServiceImpl implements ZonaService{
     }
 
     @Override
-    public ZonaResponse findById(Long id) {
+    public ZonaAllResponse findById(Long id) {
         Optional<Zona> zona = zonaRepository.findById(id);
 
         if (zona.isPresent()){
-            return this.mapper.map(zona.get(),ZonaResponse.class);
+            return this.mapper.map(zona.get(),ZonaAllResponse.class);
         }else{
             throw new ResourceNotFoundException("No se encuentra zona con ese id");
         }

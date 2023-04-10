@@ -2,6 +2,7 @@ package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.entity.Zona;
+import com.disenio.rigormorty.models.responses.ZonaAllResponse;
 import com.disenio.rigormorty.models.responses.ZonaResponse;
 import org.springframework.http.ResponseEntity;
 
@@ -14,5 +15,5 @@ public interface ZonaService {
 
     void addListZona(List<Zona> zonas);
 
-    ZonaResponse findById(Long id);
+    ZonaAllResponse findById(Long id);
 }
