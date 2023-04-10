@@ -9,16 +9,18 @@ import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.RegistroCompra;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.ClienteAddResponse;
+import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
 import com.disenio.rigormorty.repository.RegistroCompraRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -34,8 +36,12 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
     @Override
     public ResponseEntity<RegistroDTO> addRegistroCompra(RegistroCompra registroCompra){
 
+        registroCompra.setPago(Date.from(Instant.now()));
+        registroCompra.setVencimiento(obtenerVencimiento(1));
+
         ClienteAddResponse cliente = clienteService.getById(registroCompra.getCliente().getId());
         ClienteRegistroDTO clienteRegistroDTO = this.mapper.map(cliente, ClienteRegistroDTO.class);
+
 
         registroCompra.getParcelas().forEach(parcela -> parcela.setCliente(this.mapper.map(clienteRegistroDTO,Cliente.class)));
 
@@ -51,9 +57,11 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
     }
 
     @Override
-    public ResponseEntity<List<RegistroCompra>> getRegistroCompras(){
+    public List<RegistroCompraResponse> getRegistroCompras(){
         List<RegistroCompra> registroCompras = registroCompraRepository.findAll();
-        return ResponseEntity.ok(registroCompras);
+
+        return registroCompras.stream()
+                .map(registroCompra -> this.mapper.map(registroCompra,RegistroCompraResponse.class)).toList();
     }
 
     @Override
@@ -80,6 +88,36 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
         }
     }
 
+    @Override
+    public RegistroCompraResponse pagoCuota(Long id, Integer cantidad) {
+        Optional<RegistroCompra> registroCompra = registroCompraRepository.findById(id);
+
+        if(registroCompra.isPresent()){
+            RegistroCompra registroCompraUpdate = registroCompra.get();
+
+            registroCompraUpdate.setCuotasPagas(registroCompraUpdate.getCuotasPagas()+cantidad);
+            registroCompraUpdate.setFormaPagos(registroCompraUpdate.getFormaPagos());
+
+            registroCompraUpdate.setVencimiento(obtenerVencimiento(cantidad));
+            registroCompraUpdate.setPago(Date.from(Instant.now()));
+
+            registroCompraRepository.save(registroCompraUpdate);
+
+            return this.mapper.map(registroCompraUpdate,RegistroCompraResponse.class);
+        }else {
+            throw new ResourceNotFoundException("Registro compra no encontrado");
+        }
+    }
+
+    private Date obtenerVencimiento(Integer cantidad){
+        Date proximoVenc = new SimpleDateFormat("yyyy-MM-dd").get2DigitYearStart();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Date.from(Instant.now()));
+        calendar.add(Calendar.MONTH,cantidad);
+
+        return calendar.getTime();
+    }
 
 
 }
