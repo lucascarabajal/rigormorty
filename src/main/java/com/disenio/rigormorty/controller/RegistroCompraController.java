@@ -33,7 +33,7 @@ public class RegistroCompraController {
         return ResponseEntity.ok().body(this.registroCompraServiceImpl.updateRegistroCompra(registroCompra));
     }
 
-    @GetMapping("{id}&{cantidad}")
+    @GetMapping("/cuota/{id}/{cantidad}")
     public ResponseEntity<Object> pagoCuota(@PathVariable Long id,@PathVariable Integer cantidad){
         return ResponseEntity.ok().body(this.registroCompraServiceImpl.pagoCuota(id, cantidad));
     }
