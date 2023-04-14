@@ -53,8 +53,8 @@ public class VerifyUsers implements ApplicationRunner {
             usuario.setApellido("admin");
             usuario.setDni(123456789);
             usuario.setTelefono("123456789");
-            usuario.setUsername("admin");
-            usuario.setPassword("admin");
+            usuario.setUsername("administrador");
+            usuario.setPassword("administrador");
             usuarioService.createUser(usuario);
         }
     }
