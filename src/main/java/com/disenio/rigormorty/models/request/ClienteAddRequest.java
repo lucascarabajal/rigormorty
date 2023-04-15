@@ -22,7 +22,5 @@ public class ClienteAddRequest extends PersonaRequest{
     @Size(min=9, max = 14)
     private String telefono;
 
-
-    //TODO cambiar Domicilio por otro DTO??
     private List<Domicilio> domicilios;
 }

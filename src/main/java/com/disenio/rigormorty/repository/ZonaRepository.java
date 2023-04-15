@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface ZonaRepository extends JpaRepository<Zona,Long> {
 
-    ZonaResponse findZonaByNombreZona(String nombreZona);
+    Zona findZonaByNombreZona(String nombreZona);
 
 }

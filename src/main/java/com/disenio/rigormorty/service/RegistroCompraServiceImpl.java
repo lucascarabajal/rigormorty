@@ -46,7 +46,6 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
         ClienteAddResponse cliente = clienteService.getById(registroCompra.getCliente().getId());
         ClienteRegistroDTO clienteRegistroDTO = this.mapper.map(cliente, ClienteRegistroDTO.class);
 
-
         registroCompra.getParcelas().forEach(parcela -> parcela.setCliente(this.mapper.map(clienteRegistroDTO,Cliente.class)));
 
 

@@ -36,6 +36,20 @@ public class DifuntoServiceImpl implements DifuntoService{
                 .findFirst()
                 .ifPresent(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_OCUPADO));
 
+
+        Optional<EstadoParcela> ultimoEstadoOcupado = Optional.empty();
+
+        for (int i = estadoParcelas.size() - 1; i >= 0; i--) {
+            EstadoParcela estadoParcela = estadoParcelas.get(i);
+            if (estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_OCUPADO)) {
+                ultimoEstadoOcupado = Optional.of(estadoParcela);
+                break;
+            }
+        }
+        difunto.setNumNivel(ultimoEstadoOcupado
+                .map(estadoParcelas::indexOf)
+                .orElseThrow(() -> new IllegalStateException("No se encontró un estado de parcela ocupado")));
+
         Difunto newDifunto = difuntoRepository.save(difunto);
         return ResponseEntity.ok(newDifunto);
     }

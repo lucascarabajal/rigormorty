@@ -19,10 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -79,9 +76,17 @@ public class ZonaServiceImpl implements ZonaService{
 
     @Override
     public void addListZona(List<Zona> zonas){
-        for (Zona zona : zonas) {
-            zona.setParcelas(generarParcelas(zona));
-        }
+        Set<String> nombresZonas = new HashSet<>();
+
+        zonas.forEach(zona ->{
+                    if (nombresZonas.contains(zona.getNombreZona()) ||
+                            Objects.nonNull(zonaRepository.findZonaByNombreZona(zona.getNombreZona()))) throw new EqualObjectException("Ya existe zona con nombre igual");
+                    nombresZonas.add(zona.getNombreZona());
+                }
+        );
+
+        zonas.forEach(zona -> zona.setParcelas(generarParcelas(zona)));
+
         zonaRepository.saveAll(zonas);
     }
 
