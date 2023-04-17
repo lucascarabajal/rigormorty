@@ -7,6 +7,7 @@ import com.disenio.rigormorty.entity.Difunto;
 import com.disenio.rigormorty.entity.EstadoParcela;
 import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
+import com.disenio.rigormorty.models.responses.DifuntoResponse;
 import com.disenio.rigormorty.repository.DifuntoRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -55,11 +57,11 @@ public class DifuntoServiceImpl implements DifuntoService{
     }
 
     @Override
-    public ResponseEntity<List<DifuntoDTO>> getDifuntos(){
-        DifuntoDTO difuntoDTO = new DifuntoDTO();
+    public ResponseEntity<List<DifuntoResponse>> getDifuntos(){
         List<Difunto> difuntos = difuntoRepository.findAll();
 
-        return ResponseEntity.ok(Collections.singletonList(this.mapper.map(difuntos, DifuntoDTO.class)));
+
+        return ResponseEntity.ok(difuntos.stream().map(difunto -> this.mapper.map(difunto, DifuntoResponse.class)).collect(Collectors.toList()));
     }
 
     @Override
