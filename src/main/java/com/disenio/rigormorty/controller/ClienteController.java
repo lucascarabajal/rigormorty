@@ -46,4 +46,9 @@ public class ClienteController {
         return ResponseEntity.ok().body("Se borró correctamente");
     }
 
+    @GetMapping("/parcelas")
+    public ResponseEntity<List<ClienteAddResponse>> clientesWithParcelas(){
+        return ResponseEntity.ok().body(clienteService.clientesWithParcelas());
+    }
+
 }

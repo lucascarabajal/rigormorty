@@ -142,7 +142,9 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
                     parcela1.setAsignada(false);
                     parcela1.getEstados().forEach(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_LIBRE));
                     registro.getParcelas().remove(parcela1);
-                    parcelaService.addParcela(this.mapper.map(parcela1, Parcela.class));
+                    parcelaService.updateParcela(this.mapper.map(parcela1, Parcela.class));
+                }else {
+                    throw new RuntimeException("No se puede desvincular");
                 }
             }
         }

@@ -88,4 +88,9 @@ public class ClienteServiceImpl implements ClienteService {
             }
         }
     }
+
+    @Override
+    public List<ClienteAddResponse> clientesWithParcelas() {
+        return clienteRepository.getClientesWithParcela().stream().map(cliente -> this.mapper.map(cliente,ClienteAddResponse.class)).collect(Collectors.toList());
+    }
 }
