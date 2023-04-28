@@ -37,7 +37,7 @@ public class Zona implements Serializable {
     @OneToMany(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "id_zona", referencedColumnName = "id")
-    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
+    @Cascade({org.hibernate.annotations.CascadeType.DELETE})
     private List<Parcela> parcelas = new ArrayList<>();
 
 }

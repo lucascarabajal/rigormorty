@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonMerge;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -45,13 +46,15 @@ public class RegistroCompra implements Serializable {
     @Column
     private String formaPago;
 
-    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente",nullable = false)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JsonBackReference
     private Cliente cliente;
 
-    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_registro",referencedColumnName = "id")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JsonMerge
     private List<Parcela> parcelas;
 

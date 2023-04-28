@@ -23,6 +23,6 @@ public class Cliente extends Persona{
     @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private List<Domicilio> domicilios = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente")
     private List<RegistroCompra> registros = new ArrayList<>();
 }

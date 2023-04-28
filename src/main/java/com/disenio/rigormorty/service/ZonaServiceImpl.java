@@ -101,6 +101,7 @@ public class ZonaServiceImpl implements ZonaService{
         }
     }
 
+
     private List<Parcela> generarParcelas(Zona zona){
 
         List<Parcela> parcelas = new ArrayList<>();
@@ -127,5 +128,12 @@ public class ZonaServiceImpl implements ZonaService{
         }
 
         return parcelas;
+    }
+
+    @Override
+    public void delete(Long id) {
+
+        if(!parcelaRepository.getParcelasLibres(id).equals(parcelaRepository.getParcelasByZona(id))) throw new RuntimeException("La zona tiene parcelas compradas");
+        zonaRepository.deleteById(id);
     }
 }

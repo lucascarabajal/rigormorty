@@ -52,6 +52,7 @@ public class ParcelaServiceImpl implements ParcelaService{
             parcelaToUpdate.setEstados(parcela.getEstados());
             parcelaToUpdate.setMantenimientos(parcela.getMantenimientos());
             parcelaToUpdate.setCliente(parcela.getCliente());
+            parcelaToUpdate.setAsignada(parcela.getAsignada());
 
             parcelaRepository.save(parcelaToUpdate);
 
@@ -71,6 +72,7 @@ public class ParcelaServiceImpl implements ParcelaService{
             parcelaToUpdate.setEstados(parcela.getEstados());
             parcelaToUpdate.setMantenimientos(parcela.getMantenimientos());
             parcelaToUpdate.setCliente(this.mapper.map(parcela.getCliente(), Cliente.class));
+            parcelaToUpdate.setAsignada(parcela.getAsignada());
 
             parcelaRepository.save(parcelaToUpdate);
 

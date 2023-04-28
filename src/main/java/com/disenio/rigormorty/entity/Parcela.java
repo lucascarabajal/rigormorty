@@ -33,14 +33,13 @@ public class Parcela{
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
-    @Cascade(CascadeType.ALL)
+//    @Cascade(CascadeType.ALL)
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
     private List<Difunto> difuntos = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
     @Cascade(CascadeType.ALL)
-    @JsonMerge
     private List<EstadoParcela> estados = new ArrayList<>();
 
     @JsonIgnore
@@ -50,7 +49,7 @@ public class Parcela{
     private List<Mantenimiento> mantenimientos = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade(CascadeType.ALL)
+//    @Cascade(CascadeType.ALL)
     @JoinColumn(name = "id_cliente")
     @JsonMerge
     private Cliente cliente;

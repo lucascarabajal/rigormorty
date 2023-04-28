@@ -36,10 +36,6 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
     @Override
     public RegistroCompraResponse addRegistroCompra(RegistroCompra registroCompra){
 
-        registroCompra.getParcelas().forEach(parcela -> {
-            if (parcela.getAsignada()) throw new RuntimeException("La parcela "+parcela.getNumeroParcela() +" ya se encuentra asignada");
-        });
-
         registroCompra.setPago(Date.from(Instant.now()));
         registroCompra.setVencimiento(obtenerVencimiento(1));
 
