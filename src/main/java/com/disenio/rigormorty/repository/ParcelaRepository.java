@@ -11,9 +11,10 @@ import java.util.List;
 
 @Repository
 public interface ParcelaRepository extends JpaRepository<Parcela,Long> {
-    List<Parcela> getParcelasByCliente_Id(Long id);
+    List<Parcela> getParcelasByCliente_IdAndAsignadaTrue(Long id);
 
-    @Query( value = "SELECT * FROM parcela p inner join zonas z on p.id_zona = z.id where id_cliente is null and z.id = :zona",
+    @Query( value = "SELECT * FROM parcela p inner join zonas z on p.id_zona = z.id where asignada = false and z.id = :zona",
     nativeQuery = true)
     List<Parcela> getParcelasLibres(@Param("zona") Long id);
+
 }

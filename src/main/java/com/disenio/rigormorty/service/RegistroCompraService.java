@@ -13,4 +13,5 @@ public interface RegistroCompraService {
     Object updateRegistroCompra(RegistroCompra registroCompra);
     RegistroCompraResponse pagoCuota(Long id, Integer cantidad);
     List<RegistroCompraResponse> getRegistroCompraByCliente(Integer dni);
+    void desvincularCliente(Long idParcela);
 }

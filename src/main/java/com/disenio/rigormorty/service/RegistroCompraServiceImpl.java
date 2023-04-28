@@ -4,23 +4,21 @@ package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.dto.ClienteRegistroDTO;
 import com.disenio.rigormorty.dto.ParcelaDTO;
-import com.disenio.rigormorty.dto.RegistroDTO;
 import com.disenio.rigormorty.entity.Cliente;
+import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.entity.RegistroCompra;
 import com.disenio.rigormorty.enums.FormaPago;
+import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.ClienteAddResponse;
 import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
 import com.disenio.rigormorty.repository.RegistroCompraRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,6 +36,10 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
     @Override
     public RegistroCompraResponse addRegistroCompra(RegistroCompra registroCompra){
 
+        registroCompra.getParcelas().forEach(parcela -> {
+            if (parcela.getAsignada()) throw new RuntimeException("La parcela "+parcela.getNumeroParcela() +" ya se encuentra asignada");
+        });
+
         registroCompra.setPago(Date.from(Instant.now()));
         registroCompra.setVencimiento(obtenerVencimiento(1));
 
@@ -47,7 +49,7 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
         ClienteRegistroDTO clienteRegistroDTO = this.mapper.map(cliente, ClienteRegistroDTO.class);
 
         registroCompra.getParcelas().forEach(parcela -> parcela.setCliente(this.mapper.map(clienteRegistroDTO,Cliente.class)));
-
+        registroCompra.getParcelas().forEach(parcela -> parcela.setAsignada(true));
 
         List<ParcelaDTO> parcelasDTO = registroCompra.getParcelas().stream().map(parcela -> this.mapper.map(parcela, ParcelaDTO.class)).toList();
 
@@ -125,8 +127,28 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
     public List<RegistroCompraResponse> getRegistroCompraByCliente(Integer dni){
         List<RegistroCompra> registroCompra = registroCompraRepository.getRegistroComprasByClienteDni(dni);
 
+        registroCompra.forEach(registroCompra1 -> {
+            if (registroCompra1.getParcelas().isEmpty()) throw new RuntimeException("El cliente no posee parcelas");
+        });
+
+        if (registroCompra.isEmpty()) throw new RuntimeException("El cliente no posee parcelas");
+
         return registroCompra.stream().map(registroCompra1 -> this.mapper.map(registroCompra1,RegistroCompraResponse.class)).collect(Collectors.toList());
     }
 
+    public void desvincularCliente(Long idParcela){
+        ParcelaDTO parcela = parcelaService.getById(idParcela);
+        List<RegistroCompra>  registroCompra = registroCompraRepository.getRegistroComprasByClienteDni(parcela.getCliente().getDni());
 
+        for (RegistroCompra registro : registroCompra) {
+            for (Parcela parcela1 : registro.getParcelas()) {
+                if (parcela1.getId().equals(idParcela) && parcela1.getEstados().stream().allMatch(estadoParcela -> estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_COMPRADO))) {
+                    parcela1.setAsignada(false);
+                    parcela1.getEstados().forEach(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_LIBRE));
+                    registro.getParcelas().remove(parcela1);
+                    parcelaService.addParcela(this.mapper.map(parcela1, Parcela.class));
+                }
+            }
+        }
+    }
 }

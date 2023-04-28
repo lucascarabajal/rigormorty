@@ -111,6 +111,7 @@ public class ZonaServiceImpl implements ZonaService{
 
             parcela.setNumeroParcela(zona.getNombreZona()+(i+1));
             parcela.setNivelMax(zona.getNivelMax());
+            parcela.setAsignada(false);
 
             for(int j = 0; j < zona.getNivelMax(); j++){
                 EstadoParcela estadoParcela = new EstadoParcela();

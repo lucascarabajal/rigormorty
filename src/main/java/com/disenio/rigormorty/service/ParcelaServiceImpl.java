@@ -2,11 +2,11 @@ package com.disenio.rigormorty.service;
 
 
 import com.disenio.rigormorty.dto.ParcelaDTO;
-import com.disenio.rigormorty.entity.Cliente;
-import com.disenio.rigormorty.entity.Parcela;
-import com.disenio.rigormorty.entity.Zona;
+import com.disenio.rigormorty.entity.*;
+import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.ParcelaClienteResponse;
+import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
 import com.disenio.rigormorty.models.responses.ZonaAllResponse;
 import com.disenio.rigormorty.repository.ParcelaRepository;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,8 +28,8 @@ public class ParcelaServiceImpl implements ParcelaService{
 
     @Override
     public ResponseEntity<Parcela> addParcela(Parcela parcela){
+        parcela.setAsignada(false);
         Parcela newParcela = parcelaRepository.save(parcela);
-
         return ResponseEntity.ok(newParcela);
     }
 
@@ -50,7 +51,7 @@ public class ParcelaServiceImpl implements ParcelaService{
             parcelaToUpdate.setDifuntos(parcela.getDifuntos());
             parcelaToUpdate.setEstados(parcela.getEstados());
             parcelaToUpdate.setMantenimientos(parcela.getMantenimientos());
-            parcelaToUpdate.setCliente(this.mapper.map(parcela.getCliente(), Cliente.class));
+            parcelaToUpdate.setCliente(parcela.getCliente());
 
             parcelaRepository.save(parcelaToUpdate);
 
@@ -92,8 +93,8 @@ public class ParcelaServiceImpl implements ParcelaService{
 
     public List<ParcelaClienteResponse>  getParcelasByCliente(Long idCliente){
 
-        List<Parcela> parcelas = parcelaRepository.getParcelasByCliente_Id(idCliente);
-
+        List<Parcela> parcelas = parcelaRepository.getParcelasByCliente_IdAndAsignadaTrue(idCliente);
+        if (parcelas.isEmpty())throw new RuntimeException("El cliente no tiene parcelas a su nombre");
         return parcelas.stream().map(parcela -> mapper.map(parcela, ParcelaClienteResponse.class)).collect(Collectors.toList());
     }
 
@@ -102,6 +103,5 @@ public class ParcelaServiceImpl implements ParcelaService{
 
         return parcelas.stream().map(parcela -> this.mapper.map(parcela,ParcelaClienteResponse.class)).collect(Collectors.toList());
     }
-
 
 }

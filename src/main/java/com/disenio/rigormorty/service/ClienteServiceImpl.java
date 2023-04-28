@@ -6,12 +6,18 @@ import com.disenio.rigormorty.models.request.ClienteAddRequest;
 import com.disenio.rigormorty.models.responses.ClienteAddResponse;
 import com.disenio.rigormorty.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
+import org.hibernate.HibernateException;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,27 +28,29 @@ import java.util.stream.Collectors;
 public class ClienteServiceImpl implements ClienteService {
     private final ClienteRepository clienteRepository;
     private final ModelMapper mapper;
+
     @Override
-    public ResponseEntity<ClienteAddResponse> addCliente(ClienteAddRequest clienteRequest){
+    public ResponseEntity<ClienteAddResponse> addCliente(ClienteAddRequest clienteRequest) {
 
-        if (Objects.nonNull(clienteRepository.getClienteByDni(clienteRequest.getDni())))throw new RuntimeException("El cliente con el dni "+ clienteRequest.getDni()+ " ya existe.");
+        if (Objects.nonNull(clienteRepository.getClienteByDni(clienteRequest.getDni())))
+            throw new RuntimeException("El cliente con el dni " + clienteRequest.getDni() + " ya existe.");
 
-        Cliente cliente = clienteRepository.save(this.mapper.map(clienteRequest,Cliente.class));
+        Cliente cliente = clienteRepository.save(this.mapper.map(clienteRequest, Cliente.class));
         ClienteAddResponse response = this.mapper.map(cliente, ClienteAddResponse.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @Override
-    public ResponseEntity<List<ClienteAddResponse>> getClientes(){
+    public ResponseEntity<List<ClienteAddResponse>> getClientes() {
         List<Cliente> clientes = clienteRepository.findAll();
-        List<ClienteAddResponse>  responses = clientes.stream().map(cliente -> this.mapper.map(cliente,ClienteAddResponse.class)).collect(Collectors.toList());
+        List<ClienteAddResponse> responses = clientes.stream().map(cliente -> this.mapper.map(cliente, ClienteAddResponse.class)).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(responses);
     }
 
     @Override
-    public Object updateCliente(Cliente cliente){
+    public Object updateCliente(Cliente cliente) {
         Optional<Cliente> optionalCliente = clienteRepository.findById(cliente.getId());
-        if(optionalCliente.isPresent()){
+        if (optionalCliente.isPresent()) {
             Cliente clienteToUpdate = optionalCliente.get();
             clienteToUpdate.setId(cliente.getId());
             clienteToUpdate.setNombre(cliente.getNombre());
@@ -55,19 +63,29 @@ public class ClienteServiceImpl implements ClienteService {
             clienteToUpdate.setRegistros(cliente.getRegistros());
             clienteRepository.save(clienteToUpdate);
             return clienteToUpdate;
-        }else{
+        } else {
             throw new ResourceNotFoundException("Cliente no encontrado");
         }
     }
 
-    public ClienteAddResponse getById(Long id){
+    public ClienteAddResponse getById(Long id) {
         Optional<Cliente> cliente = clienteRepository.findById(id);
 
-        if (cliente.isPresent()){
+        if (cliente.isPresent()) {
             return this.mapper.map(cliente.get(), ClienteAddResponse.class);
-        }else {
+        } else {
             throw new ResourceNotFoundException("No existe cliente con ese id");
         }
     }
 
+    @Override
+    public void delete(Long id) {
+        try {
+            clienteRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            if (e.getCause().getCause().getLocalizedMessage().contains("`cementery`.`parcela`")) {
+                throw new RuntimeException("El cliente tiene una parcela a su nombre");
+            }
+        }
+    }
 }

@@ -46,4 +46,6 @@ public class ParcelaController {
     public List<ParcelaClienteResponse> getParcelasLibres(@PathVariable Long id){
         return ResponseEntity.ok().body(this.parcelaService.getParcelasDesocupadas(id)).getBody();
     }
+
+
 }

@@ -11,6 +11,6 @@ public interface ClienteService {
     ResponseEntity<ClienteAddResponse> addCliente(ClienteAddRequest cliente);
     ResponseEntity<List<ClienteAddResponse>> getClientes();
     Object updateCliente(Cliente cliente);
-
     ClienteAddResponse getById(Long id);
+    void delete(Long id);
 }

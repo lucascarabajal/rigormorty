@@ -28,6 +28,9 @@ public class Parcela{
     @Column(nullable = false)
     private String numeroParcela;
 
+    @Column(nullable = false)
+    private Boolean asignada;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)

@@ -3,6 +3,7 @@ package com.disenio.rigormorty.controller;
 import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.models.request.ClienteAddRequest;
 import com.disenio.rigormorty.models.responses.ClienteAddResponse;
+import com.disenio.rigormorty.service.ClienteService;
 import com.disenio.rigormorty.service.ClienteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,28 +16,34 @@ import java.util.List;
 @RestController
 public class ClienteController {
     @Autowired
-    private ClienteServiceImpl clienteServiceImpl;
+    private ClienteService clienteService;
 
     @PostMapping
     public ResponseEntity<ClienteAddResponse> addCliente(@Valid @RequestBody ClienteAddRequest cliente){
-        return clienteServiceImpl.addCliente(cliente);
+        return clienteService.addCliente(cliente);
     }
 
     @GetMapping
     public ResponseEntity<List<ClienteAddResponse>>getClientes(){
-        return clienteServiceImpl.getClientes();
+        return clienteService.getClientes();
     }
 
     //TODO update realizar un request
     @PutMapping("{id}")
     public ResponseEntity<Object> updateCliente(@PathVariable Long id, @RequestBody Cliente cliente){
         cliente.setId(id);
-        return ResponseEntity.ok().body(this.clienteServiceImpl.updateCliente(cliente));
+        return ResponseEntity.ok().body(this.clienteService.updateCliente(cliente));
     }
 
     @GetMapping("{id}")
     public ResponseEntity<ClienteAddResponse> getClienteById(@PathVariable Long id){
-        return ResponseEntity.ok().body(this.clienteServiceImpl.getById(id));
+        return ResponseEntity.ok().body(this.clienteService.getById(id));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id){
+        clienteService.delete(id);
+        return ResponseEntity.ok().body("Se borró correctamente");
     }
 
 }
