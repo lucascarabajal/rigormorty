@@ -11,4 +11,6 @@ public interface DifuntoService {
     ResponseEntity<Difunto> addDifunto(Difunto difunto);
     ResponseEntity<List<DifuntoResponse>> getDifuntos();
     Object updateDifunto(Difunto difunto);
+
+    void delete(Long id);
 }

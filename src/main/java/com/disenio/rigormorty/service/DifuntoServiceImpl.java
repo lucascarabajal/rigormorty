@@ -5,6 +5,7 @@ import com.disenio.rigormorty.dto.DifuntoDTO;
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Difunto;
 import com.disenio.rigormorty.entity.EstadoParcela;
+import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.DifuntoResponse;
@@ -84,5 +85,13 @@ public class DifuntoServiceImpl implements DifuntoService{
         }else{
             throw new ResourceNotFoundException("Difunto no encontrado");
         }
+    }
+
+    public void delete(Long id){
+        Parcela parcela = parcelaService.getParcelaByDifunto(id);
+        parcela.getEstados().stream().filter(estadoParcela -> estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_OCUPADO))
+                        .findFirst()
+                        .ifPresent(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_LIBRE));
+        difuntoRepository.deleteById(id);
     }
 }

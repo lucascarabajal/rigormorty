@@ -16,4 +16,6 @@ public interface ParcelaService {
     List<ParcelaClienteResponse>  getParcelasByCliente(Long idCliente);
 
     List<ParcelaClienteResponse> getParcelasDesocupadas(Long idZona);
+
+    Parcela getParcelaByDifunto(Long id);
 }

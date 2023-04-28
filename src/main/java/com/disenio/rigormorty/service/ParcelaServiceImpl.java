@@ -106,4 +106,11 @@ public class ParcelaServiceImpl implements ParcelaService{
         return parcelas.stream().map(parcela -> this.mapper.map(parcela,ParcelaClienteResponse.class)).collect(Collectors.toList());
     }
 
+    @Override
+    public Parcela getParcelaByDifunto(Long id) {
+        Parcela parcela = parcelaRepository.getParcelaByDifunto(id);
+        if (Objects.isNull(parcela))throw new RuntimeException("No existe parcela");
+        return parcela;
+    }
+
 }
