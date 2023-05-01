@@ -1,31 +1,32 @@
 package com.disenio.rigormorty.service;
 
 
-import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.Mantenimiento;
+import com.disenio.rigormorty.enums.NombrePago;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.repository.MantenimientoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import javax.swing.*;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class MantenimientoServiceImpl implements MantenimientoService {
     private final MantenimientoRepository mantenimientoRepository;
 
-    @Autowired
-    public MantenimientoServiceImpl(MantenimientoRepository mantenimientoRepository) {
-        this.mantenimientoRepository = mantenimientoRepository;
-    }
-
     @Override
     public ResponseEntity<Mantenimiento> addMantenimiento(Mantenimiento mantenimiento){
-        Mantenimiento newMantenimiento = mantenimientoRepository.save(mantenimiento);
+        int periodo = obtenerPeriodo(mantenimiento.getPeriodo());
 
-        return ResponseEntity.ok(newMantenimiento);
+        mantenimiento.setFechaPago(Date.from(Instant.now()));
+        mantenimiento.setFechaVencimiento(obtenerVencimiento(periodo));
+
+        return ResponseEntity.ok(mantenimientoRepository.save(mantenimiento));
     }
 
     @Override
@@ -54,5 +55,35 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         }
 
 
+    }
+
+    private int obtenerPeriodo(String periodoMantenimiento ){
+        String periodo = NombrePago.valueOf(periodoMantenimiento).toString();
+
+        if (Objects.equals(periodo, "MENSUAL")){
+            return 1;
+        }else if (Objects.equals(periodo,"BIMESTRAL")){
+            return 2;
+        } else if (Objects.equals(periodo,"TRIMESTRAL")) {
+            return 3;
+        } else if (Objects.equals(periodo,"CUATRIMESTRAL")) {
+            return 4;
+        } else if (Objects.equals(periodo,"SEMESTRAL")) {
+            return 6;
+        } else if (Objects.equals(periodo,"ANUAL")) {
+            return 12;
+        }
+
+        return 0;
+    }
+
+    private Date obtenerVencimiento(Integer cantidad){
+        Date proximoVenc = new SimpleDateFormat("yyyy-MM-dd").get2DigitYearStart();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Date.from(Instant.now()));
+        calendar.add(Calendar.MONTH,cantidad);
+
+        return calendar.getTime();
     }
 }

@@ -42,8 +42,7 @@ public class ClienteController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id){
-        clienteService.delete(id);
-        return ResponseEntity.ok().body("Se borró correctamente");
+        return ResponseEntity.ok().body(clienteService.delete(id));
     }
 
     @GetMapping("/parcelas")

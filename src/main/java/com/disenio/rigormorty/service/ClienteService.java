@@ -12,7 +12,7 @@ public interface ClienteService {
     ResponseEntity<List<ClienteAddResponse>> getClientes();
     Object updateCliente(Cliente cliente);
     ClienteAddResponse getById(Long id);
-    void delete(Long id);
+    ResponseEntity<Object> delete(Long id);
 
     List<ClienteAddResponse> clientesWithParcelas();
 }

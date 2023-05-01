@@ -79,13 +79,12 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public void delete(Long id) {
+    public ResponseEntity<Object> delete(Long id) {
         try {
             clienteRepository.deleteById(id);
+            return ResponseEntity.accepted().body("Se borró correctamente") ;
         } catch (DataIntegrityViolationException e) {
-            if (e.getCause().getCause().getLocalizedMessage().contains("`cementery`.`parcela`")) {
-                throw new RuntimeException("El cliente tiene una parcela a su nombre");
-            }
+            return ResponseEntity.internalServerError().body("El cliente tiene una parcela a su nombre");
         }
     }
 
