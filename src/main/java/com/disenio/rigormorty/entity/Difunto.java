@@ -30,12 +30,8 @@ public class Difunto extends Persona implements Serializable {
     private String acta;
 
 
-    //TODO ver que onda
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_parcela",nullable = false)
     private Parcela parcela;
-
-//    @OneToMany(mappedBy = "difunto", cascade = CascadeType.ALL)
-//    private List<Domicilio> domicilios = new ArrayList<>();
 
 }

@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.dto;
 
 import com.disenio.rigormorty.entity.Domicilio;
+import com.disenio.rigormorty.entity.Mantenimiento;
 import com.disenio.rigormorty.entity.Persona;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class ClienteRegistroDTO extends Persona implements Serializable {
     private String email;
     private String telefono;
     private List<Domicilio> domicilios;
+    private List<Mantenimiento> mantenimientos;
 
 }

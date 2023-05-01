@@ -21,21 +21,24 @@ public class Mantenimiento implements Serializable {
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date vencimiento;
+    private Date fechaVencimiento;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date pago;
+    private Date fechaPago;
 
     @Column(nullable = false)
-    private Double precio;
+    private Double pago;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_mantenimiento", referencedColumnName = "id")
-    private List<Periodo> periodos = new ArrayList<>();
+    @Column
+    private String periodo;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JsonIgnoreProperties(value = {"mantenimientos", "handler","hibernateLazyInitializer"}, allowSetters = true)
-//    @JoinColumn(name = "id_parcela",nullable = false)
-//    private Parcela parcela;
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "id_parcela")
+    private Parcela parcela;
+
 }

@@ -19,8 +19,4 @@ public class EstadoParcela {
     @Enumerated(EnumType.STRING)
     private NombreParcela estadoParcela;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JsonIgnoreProperties(value = {"estados", "handler","hibernateLazyInitializer"}, allowSetters = true)
-//    @JoinColumn(name = "id_parcela")
-//    private Parcela parcela;
 }

@@ -42,11 +42,11 @@ public class Parcela{
     @Cascade(CascadeType.ALL)
     private List<EstadoParcela> estados = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
-    @Cascade(CascadeType.ALL)
-    @JoinColumn(name = "id_parcela", referencedColumnName = "id")
-    private List<Mantenimiento> mantenimientos = new ArrayList<>();
+//    @JsonIgnore
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @Cascade(CascadeType.ALL)
+//    @JoinColumn(name = "id_parcela", referencedColumnName = "id")
+//    private List<Mantenimiento> mantenimientos = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
 //    @Cascade(CascadeType.ALL)

@@ -40,10 +40,10 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         if(optionalMantenimiento.isPresent()){
             Mantenimiento mantenimientoToUpdate = optionalMantenimiento.get();
 
-            mantenimientoToUpdate.setVencimiento(mantenimiento.getVencimiento());
+            mantenimientoToUpdate.setFechaVencimiento(mantenimiento.getFechaVencimiento());
             mantenimientoToUpdate.setPago(mantenimiento.getPago());
-            mantenimientoToUpdate.setPrecio(mantenimiento.getPrecio());
-            mantenimientoToUpdate.setPeriodos(mantenimiento.getPeriodos());
+            mantenimientoToUpdate.setFechaPago(mantenimiento.getFechaPago());
+            mantenimientoToUpdate.setPeriodo(mantenimiento.getPeriodo());
 //            mantenimientoToUpdate.setParcela(mantenimiento.getParcela());
 
             mantenimientoRepository.save(mantenimientoToUpdate);

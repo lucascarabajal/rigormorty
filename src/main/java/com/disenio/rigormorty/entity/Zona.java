@@ -31,6 +31,9 @@ public class Zona implements Serializable {
     private Double precioZona;
 
     @Column(nullable = false)
+    private Double precioMantenimiento;
+
+    @Column(nullable = false)
     private Integer nivelMax;
 
     @JsonIgnore

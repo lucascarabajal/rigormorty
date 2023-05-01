@@ -5,6 +5,7 @@ import com.disenio.rigormorty.dto.DifuntoDTO;
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Difunto;
 import com.disenio.rigormorty.entity.EstadoParcela;
+import com.disenio.rigormorty.entity.Mantenimiento;
 import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class DifuntoServiceImpl implements DifuntoService{
     private final DifuntoRepository difuntoRepository;
     private final ParcelaService parcelaService;
+    private final MantenimientoService mantenimientoService;
 
     private final ModelMapper mapper;
     @Override
@@ -77,7 +79,6 @@ public class DifuntoServiceImpl implements DifuntoService{
             difuntoToUpdate.setFechaDef(difunto.getFechaDef());
             difuntoToUpdate.setNumExpediente(difunto.getNumExpediente());
             difuntoToUpdate.setNumNivel(difunto.getNumNivel());
-//            difuntoToUpdate.setDomicilios(difunto.getDomicilios());
             difuntoToUpdate.setActa(difunto.getActa());
             difuntoToUpdate.setParcela(difunto.getParcela());
             difuntoRepository.save(difuntoToUpdate);
@@ -91,7 +92,7 @@ public class DifuntoServiceImpl implements DifuntoService{
         Parcela parcela = parcelaService.getParcelaByDifunto(id);
         parcela.getEstados().stream().filter(estadoParcela -> estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_OCUPADO))
                         .findFirst()
-                        .ifPresent(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_LIBRE));
+                        .ifPresent(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_COMPRADO));
         difuntoRepository.deleteById(id);
     }
 }
