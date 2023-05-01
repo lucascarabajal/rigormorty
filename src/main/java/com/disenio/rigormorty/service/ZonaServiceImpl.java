@@ -62,9 +62,7 @@ public class ZonaServiceImpl implements ZonaService{
             Zona zonaToUpdate = optionalZona.get();
 
             zonaToUpdate.setPrecioZona(zona.getPrecioZona());
-            zonaToUpdate.setCantidadParcela(zona.getCantidadParcela());
-            zonaToUpdate.setNivelMax(zona.getNivelMax());
-            zonaToUpdate.setParcelas(zona.getParcelas());
+            zonaToUpdate.setPrecioMantenimiento(zona.getPrecioMantenimiento());
 
             zonaRepository.save(zonaToUpdate);
 
@@ -100,7 +98,6 @@ public class ZonaServiceImpl implements ZonaService{
             throw new ResourceNotFoundException("No se encuentra zona con ese id");
         }
     }
-
 
     private List<Parcela> generarParcelas(Zona zona){
 

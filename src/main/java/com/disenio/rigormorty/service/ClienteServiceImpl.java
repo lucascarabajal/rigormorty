@@ -82,7 +82,7 @@ public class ClienteServiceImpl implements ClienteService {
     public ResponseEntity<Object> delete(Long id) {
         try {
             clienteRepository.deleteById(id);
-            return ResponseEntity.accepted().body("Se borró correctamente") ;
+            return ResponseEntity.ok().body("Se borró correctamente") ;
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.internalServerError().body("El cliente tiene una parcela a su nombre");
         }

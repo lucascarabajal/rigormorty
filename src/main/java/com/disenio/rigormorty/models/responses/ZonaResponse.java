@@ -26,4 +26,6 @@ public class ZonaResponse implements Serializable {
 
     private Integer nivelMax;
 
+    private Double precioMantenimiento;
+
 }

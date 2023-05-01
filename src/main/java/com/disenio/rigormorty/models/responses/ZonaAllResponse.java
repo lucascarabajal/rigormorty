@@ -24,5 +24,7 @@ public class ZonaAllResponse implements Serializable {
 
     private Integer nivelMax;
 
+    private Double precioMantenimiento;
+
     private List<ParcelaClienteResponse> parcelas;
 }
