@@ -40,7 +40,7 @@ public class ZonaController {
         return this.zonaService.findByName(nombreZona);
     }
 
-    @PutMapping("{id}")
+    @PutMapping
     public ResponseEntity<Object> updateZona(@RequestBody Zona zona) {
         return ResponseEntity.ok().body(this.zonaService.updateZona(zona));
     }

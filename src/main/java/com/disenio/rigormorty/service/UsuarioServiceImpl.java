@@ -12,6 +12,7 @@ import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
 import com.disenio.rigormorty.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -85,5 +86,11 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public Integer countUsers() {
         return usuarioRepository.countAllByUsernameNotNull();
+    }
+
+    @Override
+    public ResponseEntity<Object> delete(Long id) {
+        usuarioRepository.deleteById(id);
+        return ResponseEntity.ok().body("Se borró correctamente el usuario");
     }
 }

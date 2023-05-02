@@ -54,4 +54,9 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(userRest);
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id){
+        return usuarioService.delete(id);
+    }
+
 }
