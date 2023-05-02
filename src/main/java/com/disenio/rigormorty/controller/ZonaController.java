@@ -35,7 +35,10 @@ public class ZonaController {
         return this.zonaService.findById(id);
     }
 
-
+    @GetMapping("nombre/{nombreZona}")
+    public ZonaResponse getZonaByName(@PathVariable String nombreZona){
+        return this.zonaService.findByName(nombreZona);
+    }
 
     @PutMapping("{id}")
     public ResponseEntity<Object> updateZona(@RequestBody Zona zona) {

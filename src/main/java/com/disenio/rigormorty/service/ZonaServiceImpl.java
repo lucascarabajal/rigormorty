@@ -101,6 +101,16 @@ public class ZonaServiceImpl implements ZonaService{
         }
     }
 
+    @Override
+    public ZonaResponse findByName(String nombreZona) {
+        Optional<Zona> zona = Optional.ofNullable(zonaRepository.findZonaByNombreZona(nombreZona));
+        if(zona.isEmpty()) {
+            throw new EqualObjectException("No existe zona con este nombre");
+        }
+        else{
+            return this.mapper.map(zona.get(), ZonaResponse.class);
+        }
+    }
 
     private List<Parcela> generarParcelas(Zona zona){
 

@@ -15,4 +15,5 @@ public interface ZonaService {
     void addListZona(List<Zona> zonas);
     void delete(Long id);
     ZonaAllResponse findById(Long id);
+    ZonaResponse findByName(String nombreZona);
 }
