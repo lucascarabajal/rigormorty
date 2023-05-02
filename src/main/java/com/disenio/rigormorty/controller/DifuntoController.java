@@ -40,7 +40,6 @@ public class DifuntoController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id){
-        difuntoService.delete(id);
-        return ResponseEntity.accepted().body("Se eliminó correctamente el difunto");
+        return ResponseEntity.ok().body(difuntoService.delete(id));
     }
 }

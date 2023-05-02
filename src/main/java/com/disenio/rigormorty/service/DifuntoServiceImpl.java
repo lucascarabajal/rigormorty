@@ -88,11 +88,12 @@ public class DifuntoServiceImpl implements DifuntoService{
         }
     }
 
-    public void delete(Long id){
+    public ResponseEntity<Object> delete(Long id){
         Parcela parcela = parcelaService.getParcelaByDifunto(id);
         parcela.getEstados().stream().filter(estadoParcela -> estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_OCUPADO))
                         .findFirst()
                         .ifPresent(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_COMPRADO));
-        difuntoRepository.deleteById(id);
+
+        return ResponseEntity.ok().body("Se borro correctamente el difunto");
     }
 }
