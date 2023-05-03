@@ -140,10 +140,12 @@ public class ZonaServiceImpl implements ZonaService{
 
     @Override
     public ResponseEntity<Object> delete(Long id) {
-
         if(!parcelaRepository.getParcelasLibres(id).equals(parcelaRepository.getParcelasByZona(id))) throw new RuntimeException("La zona tiene parcelas compradas");
-        zonaRepository.deleteById(id);
 
+        zonaRepository.deleteById(id);
         return ResponseEntity.ok().body("Se eliminó correctamente la zona");
     }
+
+
+
 }

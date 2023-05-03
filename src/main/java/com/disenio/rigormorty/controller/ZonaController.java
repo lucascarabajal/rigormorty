@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ZonaController {
 
-    private ZonaService zonaService;
+    private final ZonaService zonaService;
 
     @PostMapping
     public ResponseEntity<Zona> addZona(@RequestBody Zona zona){
@@ -53,7 +53,6 @@ public class ZonaController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteZona(@PathVariable("id")Long id){
-        zonaService.delete(id);
         return ResponseEntity.accepted().body(zonaService.delete(id));
     }
 }

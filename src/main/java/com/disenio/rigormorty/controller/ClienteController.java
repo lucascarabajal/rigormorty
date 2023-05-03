@@ -5,6 +5,7 @@ import com.disenio.rigormorty.models.request.ClienteAddRequest;
 import com.disenio.rigormorty.models.responses.ClienteAddResponse;
 import com.disenio.rigormorty.service.ClienteService;
 import com.disenio.rigormorty.service.ClienteServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,10 @@ import java.util.List;
 
 @RequestMapping("/api/cliente")
 @RestController
+@AllArgsConstructor
 public class ClienteController {
-    @Autowired
-    private ClienteService clienteService;
+
+    private final ClienteService clienteService;
 
     @PostMapping
     public ResponseEntity<ClienteAddResponse> addCliente(@Valid @RequestBody ClienteAddRequest cliente){
@@ -28,7 +30,6 @@ public class ClienteController {
         return clienteService.getClientes();
     }
 
-    //TODO update realizar un request
     @PutMapping("{id}")
     public ResponseEntity<Object> updateCliente(@PathVariable Long id, @RequestBody Cliente cliente){
         cliente.setId(id);
