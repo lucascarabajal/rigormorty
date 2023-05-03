@@ -93,7 +93,7 @@ public class DifuntoServiceImpl implements DifuntoService{
         parcela.getEstados().stream().filter(estadoParcela -> estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_OCUPADO))
                         .findFirst()
                         .ifPresent(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_COMPRADO));
-
-        return ResponseEntity.ok().body("Se borro correctamente el difunto");
+        difuntoRepository.deleteById(id);
+        return ResponseEntity.ok().body("Se eliminó correctamente el difunto");
     }
 }
