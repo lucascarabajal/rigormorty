@@ -13,7 +13,7 @@ public interface ZonaService {
     ResponseEntity<List<ZonaResponse>> getZonas();
     Object updateZona(Zona zona);
     void addListZona(List<Zona> zonas);
-    void delete(Long id);
+    ResponseEntity<Object> delete(Long id);
     ZonaAllResponse findById(Long id);
     ZonaResponse findByName(String nombreZona);
 }

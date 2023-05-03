@@ -54,6 +54,6 @@ public class ZonaController {
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteZona(@PathVariable("id")Long id){
         zonaService.delete(id);
-        return ResponseEntity.accepted().body("Se eliminó la zona correctamente");
+        return ResponseEntity.accepted().body(zonaService.delete(id));
     }
 }
