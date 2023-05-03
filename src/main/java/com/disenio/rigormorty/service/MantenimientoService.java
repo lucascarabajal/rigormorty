@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface MantenimientoService {
-    ResponseEntity<Mantenimiento> addMantenimiento(Mantenimiento mantenimiento);
+    ResponseEntity<Object> addMantenimiento(Mantenimiento mantenimiento);
     ResponseEntity<List<Mantenimiento>> getMantenimientos();
     Object updateMantenimiento(Mantenimiento mantenimiento);
 }

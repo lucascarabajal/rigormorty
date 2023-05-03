@@ -20,13 +20,14 @@ public class MantenimientoServiceImpl implements MantenimientoService {
     private final MantenimientoRepository mantenimientoRepository;
 
     @Override
-    public ResponseEntity<Mantenimiento> addMantenimiento(Mantenimiento mantenimiento){
+    public ResponseEntity<Object> addMantenimiento(Mantenimiento mantenimiento){
         int periodo = obtenerPeriodo(mantenimiento.getPeriodo());
 
         mantenimiento.setFechaPago(Date.from(Instant.now()));
         mantenimiento.setFechaVencimiento(obtenerVencimiento(periodo));
-
-        return ResponseEntity.ok(mantenimientoRepository.save(mantenimiento));
+        mantenimientoRepository.save(mantenimiento);
+        
+        return ResponseEntity.ok("Se pago correctamente");
     }
 
     @Override

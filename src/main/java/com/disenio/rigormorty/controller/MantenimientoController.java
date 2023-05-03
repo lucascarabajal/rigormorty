@@ -14,13 +14,12 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class MantenimientoController {
-    
+
     private final MantenimientoService mantenimientoService;
 
     @PostMapping
     public ResponseEntity<Object> addMantenimiento(@RequestBody Mantenimiento mantenimiento){
-        mantenimientoService.addMantenimiento(mantenimiento);
-        return ResponseEntity.ok().body("Se creo correctamnete");
+        return ResponseEntity.ok().body(mantenimientoService.addMantenimiento(mantenimiento));
     }
 
     @GetMapping
