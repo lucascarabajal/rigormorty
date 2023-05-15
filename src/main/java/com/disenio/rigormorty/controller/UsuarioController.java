@@ -7,6 +7,7 @@ import com.disenio.rigormorty.models.responses.UserRest;
 import com.disenio.rigormorty.service.UsuarioService;
 import com.disenio.rigormorty.service.UsuarioServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.LuhnCheck;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,4 +60,8 @@ public class UsuarioController {
         return usuarioService.delete(id);
     }
 
+    @GetMapping("all")
+    public ResponseEntity<List<UserRest>> getAll(){
+        return ResponseEntity.ok().body(usuarioService.getAll());
+    }
 }

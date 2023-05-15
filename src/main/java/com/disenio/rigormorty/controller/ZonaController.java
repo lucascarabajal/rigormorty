@@ -53,6 +53,6 @@ public class ZonaController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteZona(@PathVariable("id")Long id){
-        return ResponseEntity.accepted().body(zonaService.delete(id));
+        return ResponseEntity.ok().body(zonaService.delete(id));
     }
 }

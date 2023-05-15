@@ -134,17 +134,22 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
 
     public void desvincularCliente(Long idParcela){
         ParcelaDTO parcela = parcelaService.getById(idParcela);
+
+        if (!parcela.getAsignada()) throw new RuntimeException("La parcela seleccionada no tiene asociado un cliente");
+
         List<RegistroCompra>  registroCompra = registroCompraRepository.getRegistroComprasByClienteDni(parcela.getCliente().getDni());
 
         for (RegistroCompra registro : registroCompra) {
             for (Parcela parcela1 : registro.getParcelas()) {
-                if (parcela1.getId().equals(idParcela) && parcela1.getEstados().stream().allMatch(estadoParcela -> estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_COMPRADO))) {
-                    parcela1.setAsignada(false);
-                    parcela1.getEstados().forEach(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_LIBRE));
-                    registro.getParcelas().remove(parcela1);
-                    parcelaService.updateParcela(this.mapper.map(parcela1, Parcela.class));
-                }else {
-                    throw new RuntimeException("No se puede desvincular");
+                if (parcela1.getId().equals(idParcela)) {
+                    if (parcela1.getEstados().stream().allMatch(estadoParcela -> estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_COMPRADO))){
+                        parcela1.setAsignada(false);
+                        parcela1.getEstados().forEach(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_LIBRE));
+                        registro.getParcelas().remove(parcela1);
+                        parcelaService.updateParcela(this.mapper.map(parcela1, Parcela.class));
+                    }else {
+                        throw new RuntimeException("No se puede desvincular");
+                    }
                 }
             }
         }

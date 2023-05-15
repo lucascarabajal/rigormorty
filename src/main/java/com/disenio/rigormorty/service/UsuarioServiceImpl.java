@@ -9,8 +9,10 @@ import com.disenio.rigormorty.enums.NombreRol;
 import com.disenio.rigormorty.exception.EqualObjectException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
+import com.disenio.rigormorty.models.responses.UserRest;
 import com.disenio.rigormorty.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
@@ -20,8 +22,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -30,6 +34,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     private final UsuarioRepository usuarioRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ModelMapper mapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -93,4 +98,11 @@ public class UsuarioServiceImpl implements UsuarioService{
         usuarioRepository.deleteById(id);
         return ResponseEntity.ok().body("Se borró correctamente el usuario");
     }
+
+    @Override
+    public List<UserRest> getAll() {
+        return usuarioRepository.findAll().stream().map(usuario -> this.mapper.map(usuario,UserRest.class)).collect(Collectors.toList());
+    }
+
+
 }

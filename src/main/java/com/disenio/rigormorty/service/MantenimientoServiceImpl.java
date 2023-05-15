@@ -26,7 +26,7 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         mantenimiento.setFechaPago(Date.from(Instant.now()));
         mantenimiento.setFechaVencimiento(obtenerVencimiento(periodo));
         mantenimientoRepository.save(mantenimiento);
-        
+
         return ResponseEntity.ok("Se pago correctamente");
     }
 
