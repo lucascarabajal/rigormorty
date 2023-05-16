@@ -19,4 +19,5 @@ public class ParcelaClienteResponse implements Serializable {
     private Integer nivelMax;
     private String numeroParcela;
     private List<EstadoParcela> estados;
+    private Boolean asignada;
 }
