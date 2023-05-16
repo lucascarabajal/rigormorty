@@ -14,8 +14,7 @@ public interface ParcelaService {
     Object updateParcelaRegistro(ParcelaDTO parcela);
     ParcelaDTO getById(Long id);
     List<ParcelaClienteResponse>  getParcelasByCliente(Long idCliente);
-
     List<ParcelaClienteResponse> getParcelasDesocupadas(Long idZona);
-
     Parcela getParcelaByDifunto(Long id);
+    void desvincular(Long id);
 }

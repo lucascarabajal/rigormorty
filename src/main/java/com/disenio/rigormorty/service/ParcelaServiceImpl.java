@@ -113,4 +113,19 @@ public class ParcelaServiceImpl implements ParcelaService{
         return parcela;
     }
 
+    public void desvincular(Long id){
+        Parcela parcela= parcelaRepository.getById(id);
+
+        if (!parcela.getAsignada()) throw new RuntimeException("La parcela seleccionada no tiene asociado un cliente");
+
+        if (parcela.getEstados().stream().allMatch(estadoParcela -> estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_COMPRADO))){
+            parcela.setAsignada(false);
+            parcela.getEstados().forEach(estadoParcela -> estadoParcela.setEstadoParcela(NombreParcela.ESTADO_PARCELA_LIBRE));
+            updateParcela(this.mapper.map(parcela, Parcela.class));
+        }else {
+            throw new RuntimeException("No se puede desvincular");
+        }
+
+    }
+
 }

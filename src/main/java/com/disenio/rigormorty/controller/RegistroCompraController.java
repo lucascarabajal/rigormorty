@@ -43,11 +43,4 @@ public class RegistroCompraController {
     public ResponseEntity<Object> pagoCuota(@PathVariable Integer dni){
         return ResponseEntity.ok().body(this.registroCompraService.getRegistroCompraByCliente(dni));
     }
-
-    @GetMapping("desvincular/{idParcela}")
-    public ResponseEntity<Object> desvincular( @PathVariable Long idParcela){
-        registroCompraService.desvincularCliente(idParcela);
-        return ResponseEntity.ok().body("Se desvinculo correctamente");
-    }
-
 }
