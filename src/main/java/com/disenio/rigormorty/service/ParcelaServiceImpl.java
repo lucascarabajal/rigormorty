@@ -5,6 +5,7 @@ import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.*;
 import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
+import com.disenio.rigormorty.models.responses.ParcelaAllResponse;
 import com.disenio.rigormorty.models.responses.ParcelaClienteResponse;
 import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
 import com.disenio.rigormorty.models.responses.ZonaAllResponse;
@@ -34,10 +35,10 @@ public class ParcelaServiceImpl implements ParcelaService{
     }
 
     @Override
-    public ResponseEntity<List<ParcelaClienteResponse>> getParcelas(){
-        List<Parcela> parcelas = parcelaRepository.findAll();
-        List<ParcelaClienteResponse> response = parcelas.stream().map(parcela -> mapper.map(parcela,ParcelaClienteResponse.class)).toList();
-        return ResponseEntity.ok(response);
+    public ResponseEntity<List<ParcelaAllResponse>> getParcelas(){
+//        List<Parcela> parcelas = parcelaRepository.findAll();
+//        List<ParcelaClienteResponse> response = parcelas.stream().map(parcela -> mapper.map(parcela,ParcelaClienteResponse.class)).toList();
+        return ResponseEntity.ok(parcelaRepository.findAllProjectBy());
     }
 
     @Override

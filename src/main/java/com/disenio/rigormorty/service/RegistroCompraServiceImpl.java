@@ -51,7 +51,6 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
 
         RegistroCompra newRegistro = registroCompraRepository.save(registroCompra);
 
-
         parcelasDTO.forEach(parcelaService::updateParcelaRegistro);
 
         return this.mapper.map(newRegistro,RegistroCompraResponse.class);

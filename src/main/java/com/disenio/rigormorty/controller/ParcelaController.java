@@ -2,6 +2,7 @@ package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Parcela;
+import com.disenio.rigormorty.models.responses.ParcelaAllResponse;
 import com.disenio.rigormorty.models.responses.ParcelaClienteResponse;
 import com.disenio.rigormorty.service.ParcelaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class ParcelaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ParcelaClienteResponse>>getParcelas(){
+    public ResponseEntity<List<ParcelaAllResponse>>getParcelas(){
         return parcelaService.getParcelas();
     }
 
