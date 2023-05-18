@@ -48,9 +48,8 @@ public class ParcelaController {
         return ResponseEntity.ok().body(this.parcelaService.getParcelasDesocupadas(id)).getBody();
     }
 
-    @GetMapping("desvincular/{id}")
+    @DeleteMapping("desvincular/{id}")
     public ResponseEntity<Object> desvincular(@PathVariable Long id){
-        this.parcelaService.desvincular(id);
-        return ResponseEntity.ok().body("Se desvinculo correctamente la parcela");
+        return ResponseEntity.ok().body(this.parcelaService.desvincular(id));
     }
 }
