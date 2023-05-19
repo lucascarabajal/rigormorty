@@ -34,6 +34,8 @@ public class RegistroCompraServiceImpl implements RegistroCompraService {
         registroCompra.setPago(LocalDate.now());
         registroCompra.setVencimiento(getVencimiento(1));
 
+        if (!registroCompra.getUsuario().isActivo()) throw new CustomException("Tu usuario no se encuentra activo");
+
         validarFormaPago(registroCompra.getFormaPago());
 
         ClienteRegistroDTO clienteRegistroDTO = this.mapper.map(clienteService.getById(registroCompra.getCliente().getId()), ClienteRegistroDTO.class);

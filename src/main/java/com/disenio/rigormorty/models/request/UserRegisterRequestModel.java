@@ -40,6 +40,8 @@ public class UserRegisterRequestModel {
 
     private Roles rol;
 
+    private boolean activo;
+
     @Min(value = 100000, message = "The value must be positive")
     private Integer dni;
 }

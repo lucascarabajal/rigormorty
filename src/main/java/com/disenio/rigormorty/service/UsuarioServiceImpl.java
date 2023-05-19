@@ -61,6 +61,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         Usuario usuario = new Usuario();
         NombreRol.valueOf(user.getRol().getNombre());
         BeanUtils.copyProperties(user,usuario);
+        usuario.setActivo(true);
         usuario.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         return usuarioRepository.save(usuario);
@@ -80,6 +81,7 @@ public class UsuarioServiceImpl implements UsuarioService{
             usuario.setTelefono(user.getTelefono());
             usuario.setDni(user.getDni());
             usuario.setRol(user.getRol());
+            usuario.setActivo(user.isActivo());
 
             usuarioRepository.save(usuario);
 
@@ -96,20 +98,15 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public ResponseEntity<Object> delete(Long id) {
-        if (usuarioRepository.getAdmins().size()==1 && isAdmin(id)) throw new CustomException("No puede eliminar este administrador ya que no existe otro");
-        usuarioRepository.deleteById(id);
+        Usuario usuario = usuarioRepository.getById(id);
+        if (usuarioRepository.getAdmins().size()==1 && usuario.getRol().getNombre().equals("ADMIN")) throw new CustomException("No puede eliminar este administrador ya que no existe otro");
+        usuario.setActivo(false);
+        updateUser(this.mapper.map(usuario, UserRegisterRequestModel.class));
         return ResponseEntity.ok().body("Se borró correctamente el usuario");
     }
 
     @Override
     public List<UserRest> getAll() {
-        return usuarioRepository.findAll().stream().map(usuario -> this.mapper.map(usuario,UserRest.class)).collect(Collectors.toList());
+        return usuarioRepository.getAllByActivoIsTrue().stream().map(usuario -> this.mapper.map(usuario,UserRest.class)).collect(Collectors.toList());
     }
-
-    private boolean isAdmin(Long id){
-        Usuario usuario = usuarioRepository.getById(id);
-        return usuario.getRol().getNombre().equals("ADMIN");
-    }
-
-
 }

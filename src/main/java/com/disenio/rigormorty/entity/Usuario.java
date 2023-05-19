@@ -27,11 +27,14 @@ public class Usuario extends Persona implements Serializable {
     @Column(nullable = false)
     private String telefono;
 
+    @Column(nullable = false)
+    private boolean activo;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_rol")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Roles rol;
 
-    @OneToMany(mappedBy = "usuario",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario",fetch = FetchType.LAZY)
     List<RegistroCompra> registroCompras = new ArrayList<>();
 }

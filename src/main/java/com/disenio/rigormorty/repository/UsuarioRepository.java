@@ -12,6 +12,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     Usuario findByUsername(String username);
     Integer countAllByUsernameNotNull();
 
-    @Query("FROM Usuario WHERE rol.id = 1")
+    List<Usuario> getAllByActivoIsTrue();
+
+    @Query("FROM Usuario WHERE rol.id = 1 and activo = true")
     List<Usuario> getAdmins();
 }

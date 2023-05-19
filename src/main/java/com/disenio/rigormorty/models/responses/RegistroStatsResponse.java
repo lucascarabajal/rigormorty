@@ -17,6 +17,5 @@ public class RegistroStatsResponse implements Serializable {
 
     private Double totalPagar;
     private LocalDate fechaCompra;
-    private UserRest Usuario;
 }
 
