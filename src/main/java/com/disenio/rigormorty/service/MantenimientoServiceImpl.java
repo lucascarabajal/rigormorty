@@ -4,13 +4,16 @@ package com.disenio.rigormorty.service;
 import com.disenio.rigormorty.entity.Mantenimiento;
 import com.disenio.rigormorty.enums.NombrePago;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
+import com.disenio.rigormorty.models.responses.MantenimientoResponse;
 import com.disenio.rigormorty.repository.MantenimientoRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -18,6 +21,7 @@ public class MantenimientoServiceImpl implements MantenimientoService {
 
     private final MantenimientoRepository mantenimientoRepository;
     private static final Map<String, Integer> PERIODOMAP = new HashMap<>();
+    private ModelMapper mapper;
 
     @Override
     public ResponseEntity<Object> addMantenimiento(Mantenimiento mantenimiento){
@@ -31,9 +35,8 @@ public class MantenimientoServiceImpl implements MantenimientoService {
     }
 
     @Override
-    public ResponseEntity<List<Mantenimiento>> getMantenimientos(){
-        List<Mantenimiento> mantenimientos = mantenimientoRepository.findAll();
-        return ResponseEntity.ok(mantenimientos);
+    public ResponseEntity<List<MantenimientoResponse>> getMantenimientos(){
+        return ResponseEntity.ok(mantenimientoRepository.findAll().stream().map(mantenimiento -> this.mapper.map(mantenimiento, MantenimientoResponse.class)).collect(Collectors.toList()));
     }
 
     @Override

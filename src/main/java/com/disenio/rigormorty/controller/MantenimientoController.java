@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.Mantenimiento;
+import com.disenio.rigormorty.models.responses.MantenimientoResponse;
 import com.disenio.rigormorty.service.MantenimientoService;
 import com.disenio.rigormorty.service.MantenimientoServiceImpl;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class MantenimientoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Mantenimiento>>getMantenimiento(){
+    public ResponseEntity<List<MantenimientoResponse>>getMantenimiento(){
         return mantenimientoService.getMantenimientos();
     }
 
