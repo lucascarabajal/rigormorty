@@ -95,6 +95,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public ResponseEntity<Object> delete(Long id) {
+        if (usuarioRepository.getAdmins().size()==1) throw new RuntimeException("No puede eliminar este administrador ya que no existe otro");
         usuarioRepository.deleteById(id);
         return ResponseEntity.ok().body("Se borró correctamente el usuario");
     }
