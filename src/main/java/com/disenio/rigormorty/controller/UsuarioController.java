@@ -57,7 +57,7 @@ public class UsuarioController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id){
-        return usuarioService.delete(id);
+        return ResponseEntity.ok().body(usuarioService.delete(id));
     }
 
     @GetMapping("all")

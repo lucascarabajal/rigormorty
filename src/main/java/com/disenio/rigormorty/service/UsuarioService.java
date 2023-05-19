@@ -17,6 +17,5 @@ public interface UsuarioService extends UserDetailsService {
     Integer countUsers();
     Usuario updateUser(UserRegisterRequestModel userRegisterRequestModel);
     ResponseEntity<Object> delete(Long id);
-
     List<UserRest> getAll();
 }
