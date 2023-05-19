@@ -4,6 +4,7 @@ import com.disenio.rigormorty.entity.Roles;
 import lombok.Data;
 
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -35,7 +36,7 @@ public class UserRegisterRequestModel {
     @Size(max = 25)
     private String apellido;
 
-    private Date fechaNac;
+    private LocalDate fechaNac;
 
     private Roles rol;
 

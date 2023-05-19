@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -19,8 +20,8 @@ public class DifuntoDTO implements Serializable {
     private String nombre;
     private String apellido;
     private Integer dni;
-    private Date fechaNac;
-    private Date fechaDef;
+    private LocalDate fechaNac;
+    private LocalDate fechaDef;
     private String numExpediente;
     private Integer numNivel;
     private String acta;

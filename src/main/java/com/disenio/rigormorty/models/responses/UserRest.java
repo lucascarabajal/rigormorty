@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -18,7 +19,7 @@ public class UserRest implements Serializable {
     private String nombre;
     private String apellido;
     private Integer dni;
-    private Date fechaNac;
+    private LocalDate fechaNac;
     private String email;
     private String username;
     private String telefono;

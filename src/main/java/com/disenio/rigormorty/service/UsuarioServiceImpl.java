@@ -96,7 +96,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public ResponseEntity<Object> delete(Long id) {
-        if (usuarioRepository.getAdmins().size()==1) throw new CustomException("No puede eliminar este administrador ya que no existe otro");
+        if (usuarioRepository.getAdmins().size()==1 && isAdmin(id)) throw new CustomException("No puede eliminar este administrador ya que no existe otro");
         usuarioRepository.deleteById(id);
         return ResponseEntity.ok().body("Se borró correctamente el usuario");
     }
@@ -104,6 +104,11 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public List<UserRest> getAll() {
         return usuarioRepository.findAll().stream().map(usuario -> this.mapper.map(usuario,UserRest.class)).collect(Collectors.toList());
+    }
+
+    private boolean isAdmin(Long id){
+        Usuario usuario = usuarioRepository.getById(id);
+        return usuario.getRol().getNombre().equals("ADMIN");
     }
 
 

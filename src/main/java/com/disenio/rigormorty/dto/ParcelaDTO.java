@@ -29,5 +29,4 @@ public class ParcelaDTO implements Serializable {
     private List<EstadoParcela> estados = new ArrayList<>();
     private Boolean asignada;
     private ClienteRegistroDTO cliente;
-//    private List<RegistroCompra> registros = new ArrayList<>();
 }

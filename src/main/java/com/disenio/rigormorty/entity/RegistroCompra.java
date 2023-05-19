@@ -6,9 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -33,12 +35,14 @@ public class RegistroCompra implements Serializable {
     private Double totalPagar;
 
     @Column
-    @Temporal(TemporalType.DATE)
-    private Date vencimiento;
+    private LocalDate vencimiento;
 
     @Column
-    @Temporal(TemporalType.DATE)
-    private Date pago;
+    private LocalDate pago;
+
+    @CreationTimestamp
+    @Column(nullable = false)
+    private LocalDate fechaCompra;
 
     @Column
     private String formaPago;

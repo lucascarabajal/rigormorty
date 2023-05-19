@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class RegistroCompraResponse implements Serializable {
     private Integer totalCuotas;
     private Integer cuotasPagas;
     private Double totalPagar;
-    private Date vencimiento;
-    private Date pago;
+    private LocalDate vencimiento;
+    private LocalDate pago;
     private String formaPago;
     private ClienteAddResponse cliente;
     private List<ParcelaClienteResponse> parcelas;

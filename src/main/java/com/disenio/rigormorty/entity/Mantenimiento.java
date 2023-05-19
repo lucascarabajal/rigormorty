@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,12 +22,10 @@ public class Mantenimiento implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fechaVencimiento;
+    private LocalDate fechaVencimiento;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fechaPago;
+    private LocalDate fechaPago;
 
     @Column(nullable = false)
     private Double pago;

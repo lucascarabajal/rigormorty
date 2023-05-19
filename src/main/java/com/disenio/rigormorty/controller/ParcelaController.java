@@ -5,6 +5,7 @@ import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.models.responses.ParcelaAllResponse;
 import com.disenio.rigormorty.models.responses.ParcelaClienteResponse;
 import com.disenio.rigormorty.service.ParcelaService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,10 @@ import java.util.List;
 
 @RequestMapping("/parcela")
 @RestController
+@AllArgsConstructor
 public class ParcelaController {
-    @Autowired
-    private ParcelaService parcelaService;
+
+    private final ParcelaService parcelaService;
 
     @PostMapping
     public ResponseEntity<Parcela> addParcela(@RequestBody Parcela parcela){

@@ -17,15 +17,9 @@ public class ZonaResponse implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
     private String nombreZona;
-
     private Integer cantidadParcela;
-
     private Double precioZona;
-
     private Integer nivelMax;
-
     private Double precioMantenimiento;
-
 }

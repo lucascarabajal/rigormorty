@@ -9,21 +9,21 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class MantenimientoServiceImpl implements MantenimientoService {
+
     private final MantenimientoRepository mantenimientoRepository;
+    private static final Map<String, Integer> PERIODOMAP = new HashMap<>();
 
     @Override
     public ResponseEntity<Object> addMantenimiento(Mantenimiento mantenimiento){
         int periodo = obtenerPeriodo(mantenimiento.getPeriodo());
 
-        mantenimiento.setFechaPago(Date.from(Instant.now()));
+        mantenimiento.setFechaPago(LocalDate.now());
         mantenimiento.setFechaVencimiento(getVencimiento(periodo));
         mantenimientoRepository.save(mantenimiento);
 
@@ -60,30 +60,20 @@ public class MantenimientoServiceImpl implements MantenimientoService {
 
     private int obtenerPeriodo(String periodoMantenimiento ){
         String periodo = NombrePago.valueOf(periodoMantenimiento).toString();
-
-        if (Objects.equals(periodo, "MENSUAL")){
-            return 1;
-        }else if (Objects.equals(periodo,"BIMESTRAL")){
-            return 2;
-        } else if (Objects.equals(periodo,"TRIMESTRAL")) {
-            return 3;
-        } else if (Objects.equals(periodo,"CUATRIMESTRAL")) {
-            return 4;
-        } else if (Objects.equals(periodo,"SEMESTRAL")) {
-            return 6;
-        } else if (Objects.equals(periodo,"ANUAL")) {
-            return 12;
-        }
-
-        return 0;
+        return PERIODOMAP.getOrDefault(periodo, 0);
     }
 
-    private Date getVencimiento(Integer cantidad){
+    private LocalDate getVencimiento(Integer cantidad){
+        LocalDate localDate = LocalDate.now();
+        return localDate.plusMonths(cantidad);
+    }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(Date.from(Instant.now()));
-        calendar.add(Calendar.MONTH,cantidad);
-
-        return calendar.getTime();
+    static {
+        PERIODOMAP.put("MENSUAL", 1);
+        PERIODOMAP.put("BIMESTRAL", 2);
+        PERIODOMAP.put("TRIMESTRAL", 3);
+        PERIODOMAP.put("CUATRIMESTRAL", 4);
+        PERIODOMAP.put("SEMESTRAL", 6);
+        PERIODOMAP.put("ANUAL", 12);
     }
 }

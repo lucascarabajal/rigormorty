@@ -1,9 +1,8 @@
 package com.disenio.rigormorty.service;
 
-import com.disenio.rigormorty.dto.RegistroDTO;
 import com.disenio.rigormorty.entity.RegistroCompra;
 import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
-import org.springframework.http.ResponseEntity;
+import com.disenio.rigormorty.models.responses.RegistroStatsResponse;
 
 import java.util.List;
 
@@ -13,4 +12,5 @@ public interface RegistroCompraService {
     Object updateRegistroCompra(RegistroCompra registroCompra);
     RegistroCompraResponse pagoCuota(Long id, Integer cantidad);
     List<RegistroCompraResponse> getRegistroCompraByCliente(Integer dni);
+    List<RegistroStatsResponse> getRegistrosByUser(Long id);
 }

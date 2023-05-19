@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -26,8 +27,6 @@ public class Persona {
     private Integer dni;
 
     @Column
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
-    private Date fechaNac;
+    private LocalDate fechaNac;
 
 }

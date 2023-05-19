@@ -1,7 +1,7 @@
 package com.disenio.rigormorty.enums;
 
 public enum FormaPago {
-    TARJETA,
+    TARJETA_DEBITO,
     EFECTIVO,
     CCORRIENTE,
 }

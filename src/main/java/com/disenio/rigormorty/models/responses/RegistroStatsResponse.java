@@ -7,17 +7,16 @@ import lombok.Setter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
-@Getter @Setter @NoArgsConstructor
-public class PersonaResponse implements Serializable {
-
+@Getter
+@Setter
+@NoArgsConstructor
+public class RegistroStatsResponse implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-    private String nombre;
-    private String apellido;
-    private Integer dni;
-    private LocalDate fechaNac;
+    private Double totalPagar;
+    private LocalDate fechaCompra;
+    private UserRest Usuario;
 }
+

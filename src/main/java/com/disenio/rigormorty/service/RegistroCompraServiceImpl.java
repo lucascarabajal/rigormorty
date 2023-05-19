@@ -9,12 +9,13 @@ import com.disenio.rigormorty.enums.FormaPago;
 import com.disenio.rigormorty.exception.CustomException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
+import com.disenio.rigormorty.models.responses.RegistroStatsResponse;
 import com.disenio.rigormorty.repository.RegistroCompraRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,14 +24,14 @@ import java.util.stream.Collectors;
 public class RegistroCompraServiceImpl implements RegistroCompraService {
 
     private final RegistroCompraRepository registroCompraRepository;
-    private final ClienteService clienteService;
-    private final ParcelaService parcelaService;
-    private final ModelMapper mapper;
+    private  ClienteService clienteService;
+    private  ParcelaService parcelaService;
+    private  ModelMapper mapper;
 
     @Override
     public RegistroCompraResponse addRegistroCompra(RegistroCompra registroCompra) {
 
-        registroCompra.setPago(Date.from(Instant.now()));
+        registroCompra.setPago(LocalDate.now());
         registroCompra.setVencimiento(getVencimiento(1));
 
         validarFormaPago(registroCompra.getFormaPago());
@@ -89,7 +90,7 @@ public class RegistroCompraServiceImpl implements RegistroCompraService {
             registroCompraUpdate.setFormaPago(registroCompraUpdate.getFormaPago());
 
             registroCompraUpdate.setVencimiento(getVencimiento(cantidad));
-            registroCompraUpdate.setPago(Date.from(Instant.now()));
+            registroCompraUpdate.setPago(LocalDate.now());
 
             registroCompraRepository.save(registroCompraUpdate);
 
@@ -99,13 +100,9 @@ public class RegistroCompraServiceImpl implements RegistroCompraService {
         }
     }
 
-    private Date getVencimiento(Integer cantidad) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(Date.from(Instant.now()));
-        calendar.add(Calendar.MONTH, cantidad);
-
-        return calendar.getTime();
+    private LocalDate getVencimiento(Integer cantidad) {
+        LocalDate localDate = LocalDate.now();
+        return localDate.plusMonths(cantidad);
     }
 
     public List<RegistroCompraResponse> getRegistroCompraByCliente(Integer dni) {
@@ -146,5 +143,9 @@ public class RegistroCompraServiceImpl implements RegistroCompraService {
     private void actualizarParcelas(List<Parcela> parcelas) {
         List<ParcelaDTO> parcelaDTO = parcelas.stream().map(parcela -> this.mapper.map(parcela, ParcelaDTO.class)).toList();
         parcelaDTO.forEach(parcelaService::updateParcelaRegistro);
+    }
+
+    public List<RegistroStatsResponse> getRegistrosByUser(Long id){
+        return registroCompraRepository.findAllByUsuarioId(id).stream().map(registroCompra -> this.mapper.map(registroCompra, RegistroStatsResponse.class)).collect(Collectors.toList());
     }
 }
