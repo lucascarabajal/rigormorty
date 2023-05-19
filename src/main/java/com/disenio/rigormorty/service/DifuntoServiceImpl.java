@@ -8,6 +8,7 @@ import com.disenio.rigormorty.entity.EstadoParcela;
 import com.disenio.rigormorty.entity.Mantenimiento;
 import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.enums.NombreParcela;
+import com.disenio.rigormorty.exception.CustomException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.DifuntoResponse;
 import com.disenio.rigormorty.repository.DifuntoRepository;
@@ -53,7 +54,7 @@ public class DifuntoServiceImpl implements DifuntoService{
         }
         difunto.setNumNivel(ultimoEstadoOcupado
                 .map(estadoParcelas::indexOf)
-                .orElseThrow(() -> new IllegalStateException("No se encontró un estado de parcela ocupado")));
+                .orElseThrow(() -> new CustomException("No se encontró un estado de parcela ocupado")));
 
         Difunto newDifunto = difuntoRepository.save(difunto);
         return ResponseEntity.ok(newDifunto);
@@ -62,8 +63,6 @@ public class DifuntoServiceImpl implements DifuntoService{
     @Override
     public ResponseEntity<List<DifuntoResponse>> getDifuntos(){
         List<Difunto> difuntos = difuntoRepository.findAll();
-
-
         return ResponseEntity.ok(difuntos.stream().map(difunto -> this.mapper.map(difunto, DifuntoResponse.class)).collect(Collectors.toList()));
     }
 

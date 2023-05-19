@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.entity.Cliente;
+import com.disenio.rigormorty.exception.EqualObjectException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.request.ClienteAddRequest;
 import com.disenio.rigormorty.models.responses.ClienteAddResponse;
@@ -33,7 +34,7 @@ public class ClienteServiceImpl implements ClienteService {
     public ResponseEntity<ClienteAddResponse> addCliente(ClienteAddRequest clienteRequest) {
 
         if (Objects.nonNull(clienteRepository.getClienteByDni(clienteRequest.getDni())))
-            throw new RuntimeException("El cliente con el dni " + clienteRequest.getDni() + " ya existe.");
+            throw new EqualObjectException("El cliente con el dni " + clienteRequest.getDni() + " ya existe.");
 
         Cliente cliente = clienteRepository.save(this.mapper.map(clienteRequest, Cliente.class));
         ClienteAddResponse response = this.mapper.map(cliente, ClienteAddResponse.class);

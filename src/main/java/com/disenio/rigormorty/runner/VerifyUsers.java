@@ -18,9 +18,7 @@ import java.util.List;
 public class VerifyUsers implements ApplicationRunner {
 
     private final UsuarioService usuarioService;
-    private final RolesRepository rolesRepository;
     private final RolesService rolesService;
-
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

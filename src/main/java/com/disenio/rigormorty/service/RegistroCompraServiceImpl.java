@@ -1,73 +1,63 @@
 package com.disenio.rigormorty.service;
 
-
-
 import com.disenio.rigormorty.dto.ClienteRegistroDTO;
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Cliente;
 import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.entity.RegistroCompra;
 import com.disenio.rigormorty.enums.FormaPago;
-import com.disenio.rigormorty.enums.NombreParcela;
+import com.disenio.rigormorty.exception.CustomException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
-import com.disenio.rigormorty.models.responses.ClienteAddResponse;
 import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
 import com.disenio.rigormorty.repository.RegistroCompraRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class RegistroCompraServiceImpl implements RegistroCompraService{
+public class RegistroCompraServiceImpl implements RegistroCompraService {
+
     private final RegistroCompraRepository registroCompraRepository;
-
-    private final  ClienteService clienteService;
-
+    private final ClienteService clienteService;
     private final ParcelaService parcelaService;
-
     private final ModelMapper mapper;
 
     @Override
-    public RegistroCompraResponse addRegistroCompra(RegistroCompra registroCompra){
+    public RegistroCompraResponse addRegistroCompra(RegistroCompra registroCompra) {
 
         registroCompra.setPago(Date.from(Instant.now()));
-        registroCompra.setVencimiento(obtenerVencimiento(1));
+        registroCompra.setVencimiento(getVencimiento(1));
 
-        FormaPago.valueOf(registroCompra.getFormaPago().toUpperCase());
+        validarFormaPago(registroCompra.getFormaPago());
 
-        ClienteAddResponse cliente = clienteService.getById(registroCompra.getCliente().getId());
-        ClienteRegistroDTO clienteRegistroDTO = this.mapper.map(cliente, ClienteRegistroDTO.class);
+        ClienteRegistroDTO clienteRegistroDTO = this.mapper.map(clienteService.getById(registroCompra.getCliente().getId()), ClienteRegistroDTO.class);
 
-        registroCompra.getParcelas().forEach(parcela -> parcela.setCliente(this.mapper.map(clienteRegistroDTO,Cliente.class)));
-        registroCompra.getParcelas().forEach(parcela -> parcela.setAsignada(true));
-
-        List<ParcelaDTO> parcelasDTO = registroCompra.getParcelas().stream().map(parcela -> this.mapper.map(parcela, ParcelaDTO.class)).toList();
+        asignarClienteParcelas(registroCompra, clienteRegistroDTO);
 
         RegistroCompra newRegistro = registroCompraRepository.save(registroCompra);
 
-        parcelasDTO.forEach(parcelaService::updateParcelaRegistro);
+        actualizarParcelas(registroCompra.getParcelas());
 
-        return this.mapper.map(newRegistro,RegistroCompraResponse.class);
+        return this.mapper.map(newRegistro, RegistroCompraResponse.class);
     }
 
     @Override
-    public List<RegistroCompraResponse> getRegistroCompras(){
+    public List<RegistroCompraResponse> getRegistroCompras() {
         List<RegistroCompra> registroCompras = registroCompraRepository.findAll();
 
         return registroCompras.stream()
-                .map(registroCompra -> this.mapper.map(registroCompra,RegistroCompraResponse.class)).toList();
+                .map(registroCompra -> this.mapper.map(registroCompra, RegistroCompraResponse.class)).toList();
     }
 
     @Override
-    public Object updateRegistroCompra(RegistroCompra registroCompra){
+    public Object updateRegistroCompra(RegistroCompra registroCompra) {
         Optional<RegistroCompra> optionalRegistro = registroCompraRepository.findById(registroCompra.getId());
-        if(optionalRegistro.isPresent()){
+        if (optionalRegistro.isPresent()) {
             RegistroCompra registroToUpdate = optionalRegistro.get();
 
             registroToUpdate.setEntrega(registroCompra.getEntrega());
@@ -83,7 +73,7 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
             registroCompraRepository.save(registroToUpdate);
 
             return registroToUpdate;
-        }else{
+        } else {
             throw new ResourceNotFoundException("Registro de compra no encontrado");
         }
     }
@@ -92,43 +82,42 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
     public RegistroCompraResponse pagoCuota(Long id, Integer cantidad) {
         Optional<RegistroCompra> registroCompra = registroCompraRepository.findById(id);
 
-        if(registroCompra.isPresent()){
+        if (registroCompra.isPresent()) {
             RegistroCompra registroCompraUpdate = registroCompra.get();
 
-            registroCompraUpdate.setCuotasPagas(registroCompraUpdate.getCuotasPagas()+cantidad);
+            registroCompraUpdate.setCuotasPagas(registroCompraUpdate.getCuotasPagas() + cantidad);
             registroCompraUpdate.setFormaPago(registroCompraUpdate.getFormaPago());
 
-            registroCompraUpdate.setVencimiento(obtenerVencimiento(cantidad));
+            registroCompraUpdate.setVencimiento(getVencimiento(cantidad));
             registroCompraUpdate.setPago(Date.from(Instant.now()));
 
             registroCompraRepository.save(registroCompraUpdate);
 
-            return this.mapper.map(registroCompraUpdate,RegistroCompraResponse.class);
-        }else {
+            return this.mapper.map(registroCompraUpdate, RegistroCompraResponse.class);
+        } else {
             throw new ResourceNotFoundException("Registro compra no encontrado");
         }
     }
 
-    private Date obtenerVencimiento(Integer cantidad){
-        Date proximoVenc = new SimpleDateFormat("yyyy-MM-dd").get2DigitYearStart();
+    private Date getVencimiento(Integer cantidad) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Date.from(Instant.now()));
-        calendar.add(Calendar.MONTH,cantidad);
+        calendar.add(Calendar.MONTH, cantidad);
 
         return calendar.getTime();
     }
 
-    public List<RegistroCompraResponse> getRegistroCompraByCliente(Integer dni){
+    public List<RegistroCompraResponse> getRegistroCompraByCliente(Integer dni) {
         List<RegistroCompra> registroCompra = registroCompraRepository.getRegistroComprasByClienteDni(dni);
-        if (registroCompra.isEmpty()) throw new RuntimeException("El cliente no posee parcelas");
+        if (registroCompra.isEmpty()) throw new ResourceNotFoundException("El cliente no posee parcelas");
 
         List<RegistroCompra> registroCompras = new ArrayList<>();
 
         registroCompra.forEach(registroCompra1 -> {
             List<Parcela> parcelas = new ArrayList<>();
             registroCompra1.getParcelas().forEach(parcela -> {
-                if (parcela.getAsignada()){
+                if (parcela.getAsignada()) {
                     parcelas.add(parcela);
                 }
             });
@@ -136,7 +125,26 @@ public class RegistroCompraServiceImpl implements RegistroCompraService{
             registroCompras.add(registroCompra1);
         });
 
-        return registroCompras.stream().map(registroCompra1 -> this.mapper.map(registroCompra1,RegistroCompraResponse.class)).collect(Collectors.toList());
+        return registroCompras.stream().map(registroCompra1 -> this.mapper.map(registroCompra1, RegistroCompraResponse.class)).collect(Collectors.toList());
     }
 
+    private void validarFormaPago(String formaPago) {
+        try {
+            FormaPago.valueOf(formaPago.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new CustomException("La foma de pago ingresada no es válida");
+        }
+    }
+
+    private void asignarClienteParcelas(RegistroCompra registroCompra, ClienteRegistroDTO cliente) {
+        registroCompra.getParcelas().forEach(parcela -> {
+            parcela.setCliente(this.mapper.map(cliente, Cliente.class));
+            parcela.setAsignada(true);
+        });
+    }
+
+    private void actualizarParcelas(List<Parcela> parcelas) {
+        List<ParcelaDTO> parcelaDTO = parcelas.stream().map(parcela -> this.mapper.map(parcela, ParcelaDTO.class)).toList();
+        parcelaDTO.forEach(parcelaService::updateParcelaRegistro);
+    }
 }

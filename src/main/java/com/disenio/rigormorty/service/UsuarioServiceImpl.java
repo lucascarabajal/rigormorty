@@ -6,6 +6,7 @@ import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.entity.Roles;
 import com.disenio.rigormorty.entity.Usuario;
 import com.disenio.rigormorty.enums.NombreRol;
+import com.disenio.rigormorty.exception.CustomException;
 import com.disenio.rigormorty.exception.EqualObjectException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
@@ -95,7 +96,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public ResponseEntity<Object> delete(Long id) {
-        if (usuarioRepository.getAdmins().size()==1) throw new RuntimeException("No puede eliminar este administrador ya que no existe otro");
+        if (usuarioRepository.getAdmins().size()==1) throw new CustomException("No puede eliminar este administrador ya que no existe otro");
         usuarioRepository.deleteById(id);
         return ResponseEntity.ok().body("Se borró correctamente el usuario");
     }

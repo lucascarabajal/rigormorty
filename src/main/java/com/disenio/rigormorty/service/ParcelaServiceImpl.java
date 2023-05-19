@@ -4,6 +4,7 @@ package com.disenio.rigormorty.service;
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.*;
 import com.disenio.rigormorty.enums.NombreParcela;
+import com.disenio.rigormorty.exception.CustomException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.ParcelaAllResponse;
 import com.disenio.rigormorty.models.responses.ParcelaClienteResponse;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 public class ParcelaServiceImpl implements ParcelaService{
     private final ParcelaRepository parcelaRepository;
 
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
 
     @Override
     public ResponseEntity<Parcela> addParcela(Parcela parcela){
@@ -36,8 +37,6 @@ public class ParcelaServiceImpl implements ParcelaService{
 
     @Override
     public ResponseEntity<List<ParcelaAllResponse>> getParcelas(){
-//        List<Parcela> parcelas = parcelaRepository.findAll();
-//        List<ParcelaClienteResponse> response = parcelas.stream().map(parcela -> mapper.map(parcela,ParcelaClienteResponse.class)).toList();
         return ResponseEntity.ok(parcelaRepository.findAllProjectBy());
     }
 
@@ -97,7 +96,7 @@ public class ParcelaServiceImpl implements ParcelaService{
     public List<ParcelaClienteResponse>  getParcelasByCliente(Long idCliente){
 
         List<Parcela> parcelas = parcelaRepository.getParcelasByCliente_IdAndAsignadaTrue(idCliente);
-        if (parcelas.isEmpty())throw new RuntimeException("El cliente no tiene parcelas a su nombre");
+        if (parcelas.isEmpty())throw new ResourceNotFoundException("El cliente no tiene parcelas a su nombre");
         return parcelas.stream().map(parcela -> mapper.map(parcela, ParcelaClienteResponse.class)).collect(Collectors.toList());
     }
 
@@ -110,14 +109,14 @@ public class ParcelaServiceImpl implements ParcelaService{
     @Override
     public Parcela getParcelaByDifunto(Long id) {
         Parcela parcela = parcelaRepository.getParcelaByDifunto(id);
-        if (Objects.isNull(parcela))throw new RuntimeException("No existe parcela");
+        if (Objects.isNull(parcela))throw new ResourceNotFoundException("No existe parcela");
         return parcela;
     }
 
     public ResponseEntity<Object> desvincular(Long id){
         Parcela parcela= parcelaRepository.getById(id);
 
-        if (!parcela.getAsignada()) throw new RuntimeException("La parcela seleccionada no tiene asociado un cliente");
+        if (!parcela.getAsignada()) throw new CustomException("La parcela seleccionada no tiene asociado un cliente");
 
         if (parcela.getEstados().stream().allMatch(estadoParcela -> estadoParcela.getEstadoParcela().equals(NombreParcela.ESTADO_PARCELA_COMPRADO))){
             parcela.setAsignada(false);

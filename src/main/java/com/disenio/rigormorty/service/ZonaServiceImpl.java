@@ -6,6 +6,7 @@ import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.entity.Usuario;
 import com.disenio.rigormorty.entity.Zona;
 import com.disenio.rigormorty.enums.NombreParcela;
+import com.disenio.rigormorty.exception.CustomException;
 import com.disenio.rigormorty.exception.EqualObjectException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.responses.ZonaAllResponse;
@@ -103,7 +104,7 @@ public class ZonaServiceImpl implements ZonaService{
     public ZonaResponse findByName(String nombreZona) {
         Optional<Zona> zona = Optional.ofNullable(zonaRepository.findZonaByNombreZona(nombreZona));
         if(zona.isEmpty()) {
-            throw new EqualObjectException("No existe zona con este nombre");
+            throw new ResourceNotFoundException("No existe zona con este nombre");
         }
         else{
             return this.mapper.map(zona.get(), ZonaResponse.class);
@@ -140,7 +141,7 @@ public class ZonaServiceImpl implements ZonaService{
 
     @Override
     public ResponseEntity<Object> delete(Long id) {
-        if(!parcelaRepository.getParcelasLibres(id).equals(parcelaRepository.getParcelasByZona(id))) throw new RuntimeException("La zona tiene parcelas compradas");
+        if(!parcelaRepository.getParcelasLibres(id).equals(parcelaRepository.getParcelasByZona(id))) throw new CustomException("La zona tiene parcelas compradas");
 
         zonaRepository.deleteById(id);
         return ResponseEntity.ok().body("Se eliminó correctamente la zona");

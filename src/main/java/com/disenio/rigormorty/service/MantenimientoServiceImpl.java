@@ -24,7 +24,7 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         int periodo = obtenerPeriodo(mantenimiento.getPeriodo());
 
         mantenimiento.setFechaPago(Date.from(Instant.now()));
-        mantenimiento.setFechaVencimiento(obtenerVencimiento(periodo));
+        mantenimiento.setFechaVencimiento(getVencimiento(periodo));
         mantenimientoRepository.save(mantenimiento);
 
         return ResponseEntity.ok("Se pago correctamente");
@@ -78,8 +78,7 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         return 0;
     }
 
-    private Date obtenerVencimiento(Integer cantidad){
-        Date proximoVenc = new SimpleDateFormat("yyyy-MM-dd").get2DigitYearStart();
+    private Date getVencimiento(Integer cantidad){
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Date.from(Instant.now()));
