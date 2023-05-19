@@ -9,5 +9,6 @@ import java.util.List;
 public interface MantenimientoService {
     ResponseEntity<Object> addMantenimiento(Mantenimiento mantenimiento);
     ResponseEntity<List<MantenimientoResponse>> getMantenimientos();
+    List<MantenimientoResponse> getMantenimientoByCliente(Long id);
     Object updateMantenimiento(Mantenimiento mantenimiento);
 }

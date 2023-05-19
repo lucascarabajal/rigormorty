@@ -61,6 +61,10 @@ public class MantenimientoServiceImpl implements MantenimientoService {
 
     }
 
+    public List<MantenimientoResponse> getMantenimientoByCliente(Long id){
+        return mantenimientoRepository.getMantenimientoByCliente_Id(id).stream().map(mantenimiento -> this.mapper.map(mantenimiento, MantenimientoResponse.class)).collect(Collectors.toList());
+    }
+
     private int obtenerPeriodo(String periodoMantenimiento ){
         String periodo = NombrePago.valueOf(periodoMantenimiento).toString();
         return PERIODOMAP.getOrDefault(periodo, 0);
