@@ -67,25 +67,36 @@ public class UsuarioServiceImpl implements UsuarioService{
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario updateUser(UserRegisterRequestModel user){
+    public UserRest updatePersonalUser(UserRegisterRequestModel user){
         Optional<Usuario> usuarioToUpdate = Optional.ofNullable(usuarioRepository.findByUsername(user.getUsername()));
 
         if(usuarioToUpdate.isPresent()){
             Usuario usuario = usuarioToUpdate.get();
 
-            usuario.setUsername(user.getUsername());
-            usuario.setRol(user.getRol());
             usuario.setNombre(user.getNombre());
             usuario.setApellido(user.getApellido());
+            usuario.setFechaNac(user.getFechaNac());
             usuario.setEmail(user.getEmail());
             usuario.setTelefono(user.getTelefono());
             usuario.setDni(user.getDni());
-            usuario.setRol(user.getRol());
-            usuario.setActivo(user.isActivo());
 
             usuarioRepository.save(usuario);
+            return this.mapper.map(usuario, UserRest.class);
+        }else {
+            throw new ResourceNotFoundException("Usuario no encontrado");
+        }
+    }
 
-            return usuario;
+    public UserRest updateRol(UserRegisterRequestModel user){
+        Optional<Usuario> usuarioOptional = Optional.ofNullable(usuarioRepository.findByUsername(user.getUsername()));
+
+        if (usuarioOptional.isPresent()){
+            Usuario usuario = usuarioOptional.get();
+
+            usuario.setRol(user.getRol());
+
+            usuarioRepository.save(usuario);
+            return this.mapper.map(usuario,UserRest.class);
         }else {
             throw new ResourceNotFoundException("Usuario no encontrado");
         }
@@ -101,7 +112,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         Usuario usuario = usuarioRepository.getById(id);
         if (usuarioRepository.getAdmins().size()==1 && usuario.getRol().getNombre().equals("ADMIN")) throw new CustomException("No puede eliminar este administrador ya que no existe otro");
         usuario.setActivo(false);
-        updateUser(this.mapper.map(usuario, UserRegisterRequestModel.class));
+        usuarioRepository.save(usuario);
         return ResponseEntity.ok().body("Se borró correctamente el usuario");
     }
 

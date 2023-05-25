@@ -26,7 +26,7 @@ public class Persona {
     @Column(nullable = false, length = 9)
     private Integer dni;
 
-    @Column
+    @Column(nullable = false)
     private LocalDate fechaNac;
 
 }

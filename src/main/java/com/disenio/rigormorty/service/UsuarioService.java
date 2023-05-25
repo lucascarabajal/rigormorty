@@ -15,7 +15,8 @@ public interface UsuarioService extends UserDetailsService {
     Usuario getUser(String username);
     Usuario createUser(UserRegisterRequestModel user);
     Integer countUsers();
-    Usuario updateUser(UserRegisterRequestModel userRegisterRequestModel);
+    UserRest updatePersonalUser(UserRegisterRequestModel userRegisterRequestModel);
+    UserRest updateRol(UserRegisterRequestModel userRegisterRequestModel);
     ResponseEntity<Object> delete(Long id);
     List<UserRest> getAll();
 }

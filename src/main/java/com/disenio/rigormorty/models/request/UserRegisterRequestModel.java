@@ -36,6 +36,7 @@ public class UserRegisterRequestModel {
     @Size(max = 25)
     private String apellido;
 
+    @NotNull
     private LocalDate fechaNac;
 
     private Roles rol;

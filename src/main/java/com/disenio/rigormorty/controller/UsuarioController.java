@@ -47,12 +47,13 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<UserRest> updateUser(@RequestBody UserRegisterRequestModel userModel){
-        Usuario user = usuarioService.updateUser(userModel);
-        UserRest userRest = new UserRest();
+    public ResponseEntity<UserRest> updatePersonalUser(@RequestBody UserRegisterRequestModel userModel){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updatePersonalUser(userModel));
+    }
 
-        BeanUtils.copyProperties(user,userRest);
-        return ResponseEntity.status(HttpStatus.OK).body(userRest);
+    @PutMapping("/rol")
+    public ResponseEntity<UserRest> updateRol(@RequestBody UserRegisterRequestModel user){
+        return ResponseEntity.ok().body(usuarioService.updateRol(user));
     }
 
     @DeleteMapping("{id}")
