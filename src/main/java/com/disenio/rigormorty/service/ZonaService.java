@@ -11,6 +11,7 @@ import java.util.List;
 public interface ZonaService {
     ResponseEntity<Zona> addZona(Zona zona);
     ResponseEntity<List<ZonaResponse>> getZonas();
+    List<ZonaAllResponse> getAll();
     Object updateZona(Zona zona);
     void addListZona(List<Zona> zonas);
     ResponseEntity<Object> delete(Long id);

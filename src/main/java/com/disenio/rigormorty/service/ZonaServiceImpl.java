@@ -57,6 +57,11 @@ public class ZonaServiceImpl implements ZonaService{
     }
 
     @Override
+    public List<ZonaAllResponse> getAll() {
+        return zonaRepository.findAll().stream().map(zona -> this.mapper.map(zona, ZonaAllResponse.class)).toList();
+    }
+
+    @Override
     public Object updateZona(Zona zona){
         Optional<Zona> optionalZona = zonaRepository.findById(zona.getId());
         if(optionalZona.isPresent()){
