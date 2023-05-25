@@ -2,6 +2,7 @@ package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.Usuario;
 import com.disenio.rigormorty.exception.EqualObjectException;
+import com.disenio.rigormorty.models.request.UserPassRequest;
 import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
 import com.disenio.rigormorty.models.responses.UserRest;
 import com.disenio.rigormorty.service.UsuarioService;
@@ -54,6 +55,11 @@ public class UsuarioController {
     @PutMapping("/rol")
     public ResponseEntity<UserRest> updateRol(@RequestBody UserRegisterRequestModel user){
         return ResponseEntity.ok().body(usuarioService.updateRol(user));
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity<UserRest> updatePassword(@RequestBody UserPassRequest user){
+        return ResponseEntity.ok().body(usuarioService.updatePassword(user));
     }
 
     @DeleteMapping("{id}")

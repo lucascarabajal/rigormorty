@@ -10,6 +10,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class VerifyUsers implements ApplicationRunner {
             usuario.setNombre("admin");
             usuario.setApellido("admin");
             usuario.setDni(123456789);
+            usuario.setFechaNac(LocalDate.now());
             usuario.setTelefono("123456789");
             usuario.setUsername("administrador");
             usuario.setPassword("administrador");

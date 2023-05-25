@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.entity.Usuario;
+import com.disenio.rigormorty.models.request.UserPassRequest;
 import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
 import com.disenio.rigormorty.models.responses.UserRest;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ public interface UsuarioService extends UserDetailsService {
     Integer countUsers();
     UserRest updatePersonalUser(UserRegisterRequestModel userRegisterRequestModel);
     UserRest updateRol(UserRegisterRequestModel userRegisterRequestModel);
+    UserRest updatePassword(UserPassRequest user);
     ResponseEntity<Object> delete(Long id);
     List<UserRest> getAll();
 }

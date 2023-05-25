@@ -9,6 +9,7 @@ import com.disenio.rigormorty.enums.NombreRol;
 import com.disenio.rigormorty.exception.CustomException;
 import com.disenio.rigormorty.exception.EqualObjectException;
 import com.disenio.rigormorty.exception.ResourceNotFoundException;
+import com.disenio.rigormorty.models.request.UserPassRequest;
 import com.disenio.rigormorty.models.request.UserRegisterRequestModel;
 import com.disenio.rigormorty.models.responses.UserRest;
 import com.disenio.rigormorty.repository.UsuarioRepository;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -98,6 +100,24 @@ public class UsuarioServiceImpl implements UsuarioService{
             usuarioRepository.save(usuario);
             return this.mapper.map(usuario,UserRest.class);
         }else {
+            throw new ResourceNotFoundException("Usuario no encontrado");
+        }
+    }
+
+    public UserRest updatePassword(UserPassRequest user){
+        Optional<Usuario> usuarioOptional = Optional.ofNullable(usuarioRepository.findByUsername(user.getUsername()));
+        if (usuarioOptional.isPresent()){
+            Usuario usuario = usuarioOptional.get();
+            String oldPass = bCryptPasswordEncoder.encode(user.getOldPass());
+
+            if (bCryptPasswordEncoder.matches(user.getOldPass(),usuario.getPassword())){
+                usuario.setPassword(bCryptPasswordEncoder.encode(user.getNewPass()));
+                usuarioRepository.save(usuario);
+                return this.mapper.map(usuario,UserRest.class);
+            }else {
+                throw new CustomException("La contraseña ingresada no es correcta");
+            }
+        }else{
             throw new ResourceNotFoundException("Usuario no encontrado");
         }
     }
