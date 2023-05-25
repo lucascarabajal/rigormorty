@@ -2,8 +2,6 @@ package com.disenio.rigormorty.service;
 
 
 
-import com.disenio.rigormorty.entity.Parcela;
-import com.disenio.rigormorty.entity.Roles;
 import com.disenio.rigormorty.entity.Usuario;
 import com.disenio.rigormorty.enums.NombreRol;
 import com.disenio.rigormorty.exception.CustomException;
@@ -17,13 +15,13 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -40,12 +38,11 @@ public class UsuarioServiceImpl implements UsuarioService{
     private final ModelMapper mapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByUsername(username);
 
-        if (usuario == null){
-            throw new UsernameNotFoundException(username);
-        }
+        if (usuario == null) throw new UsernameNotFoundException(username);
+        if (!usuario.isActivo()) throw new CustomException("El usuario no está activo");
 
         return new User(usuario.getUsername(),usuario.getPassword(), new ArrayList<>());
     }
@@ -69,7 +66,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         return usuarioRepository.save(usuario);
     }
 
-    public UserRest updatePersonalUser(UserRegisterRequestModel user){
+    public UserRest updatePersonalUser(@Valid UserRegisterRequestModel user){
         Optional<Usuario> usuarioToUpdate = Optional.ofNullable(usuarioRepository.findByUsername(user.getUsername()));
 
         if(usuarioToUpdate.isPresent()){
@@ -108,15 +105,13 @@ public class UsuarioServiceImpl implements UsuarioService{
         Optional<Usuario> usuarioOptional = Optional.ofNullable(usuarioRepository.findByUsername(user.getUsername()));
         if (usuarioOptional.isPresent()){
             Usuario usuario = usuarioOptional.get();
-            String oldPass = bCryptPasswordEncoder.encode(user.getOldPass());
 
-            if (bCryptPasswordEncoder.matches(user.getOldPass(),usuario.getPassword())){
-                usuario.setPassword(bCryptPasswordEncoder.encode(user.getNewPass()));
-                usuarioRepository.save(usuario);
-                return this.mapper.map(usuario,UserRest.class);
-            }else {
-                throw new CustomException("La contraseña ingresada no es correcta");
-            }
+            if (!bCryptPasswordEncoder.matches(user.getOldPass(),usuario.getPassword())) throw new CustomException("La contraseña ingresada no es correcta");
+
+            usuario.setPassword(bCryptPasswordEncoder.encode(user.getNewPass()));
+            usuarioRepository.save(usuario);
+            return this.mapper.map(usuario,UserRest.class);
+
         }else{
             throw new ResourceNotFoundException("Usuario no encontrado");
         }
