@@ -23,6 +23,7 @@ public class RegistroCompraResponse implements Serializable {
     private Integer totalCuotas;
     private Integer cuotasPagas;
     private Double totalPagar;
+    private LocalDate fechaCompra;
     private LocalDate vencimiento;
     private LocalDate pago;
     private String formaPago;

@@ -3,6 +3,7 @@ package com.disenio.rigormorty.service;
 import com.disenio.rigormorty.dto.ClienteRegistroDTO;
 import com.disenio.rigormorty.dto.ParcelaDTO;
 import com.disenio.rigormorty.entity.Cliente;
+import com.disenio.rigormorty.entity.Cuota;
 import com.disenio.rigormorty.entity.Parcela;
 import com.disenio.rigormorty.entity.RegistroCompra;
 import com.disenio.rigormorty.enums.FormaPago;
@@ -27,12 +28,10 @@ public class RegistroCompraServiceImpl implements RegistroCompraService {
     private  ClienteService clienteService;
     private  ParcelaService parcelaService;
     private  ModelMapper mapper;
+    private  CuotaService cuotaService;
 
     @Override
     public RegistroCompraResponse addRegistroCompra(RegistroCompra registroCompra) {
-
-        registroCompra.setPago(LocalDate.now());
-        registroCompra.setVencimiento(getVencimiento(1));
 
         if (registroCompra.getUsuario().isActivo()) throw new CustomException("Tu usuario no se encuentra activo");
 
@@ -43,6 +42,8 @@ public class RegistroCompraServiceImpl implements RegistroCompraService {
         asignarClienteParcelas(registroCompra, clienteRegistroDTO);
 
         RegistroCompra newRegistro = registroCompraRepository.save(registroCompra);
+
+        if (registroCompra.getTotalCuotas()>0) agregarCuota(newRegistro);
 
         actualizarParcelas(registroCompra.getParcelas());
 
@@ -58,6 +59,11 @@ public class RegistroCompraServiceImpl implements RegistroCompraService {
     }
 
     @Override
+    public RegistroCompra getById(Long id) {
+        return registroCompraRepository.getById(id);
+    }
+
+    @Override
     public Object updateRegistroCompra(RegistroCompra registroCompra) {
         Optional<RegistroCompra> optionalRegistro = registroCompraRepository.findById(registroCompra.getId());
         if (optionalRegistro.isPresent()) {
@@ -65,40 +71,15 @@ public class RegistroCompraServiceImpl implements RegistroCompraService {
 
             registroToUpdate.setEntrega(registroCompra.getEntrega());
             registroToUpdate.setTotalCuotas(registroCompra.getTotalCuotas());
-            registroToUpdate.setCuotasPagas(registroCompra.getCuotasPagas());
-            registroToUpdate.setVencimiento(registroCompra.getVencimiento());
-            registroToUpdate.setPago(registroCompra.getPago());
             registroToUpdate.setFormaPago(registroCompra.getFormaPago());
             registroToUpdate.setCliente(registroCompra.getCliente());
             registroToUpdate.setParcelas(registroCompra.getParcelas());
-            registroToUpdate.setTotalPagar(registroCompra.getTotalPagar());
 
             registroCompraRepository.save(registroToUpdate);
 
             return registroToUpdate;
         } else {
             throw new ResourceNotFoundException("Registro de compra no encontrado");
-        }
-    }
-
-    @Override
-    public RegistroCompraResponse pagoCuota(Long id, Integer cantidad) {
-        Optional<RegistroCompra> registroCompra = registroCompraRepository.findById(id);
-
-        if (registroCompra.isPresent()) {
-            RegistroCompra registroCompraUpdate = registroCompra.get();
-
-            registroCompraUpdate.setCuotasPagas(registroCompraUpdate.getCuotasPagas() + cantidad);
-            registroCompraUpdate.setFormaPago(registroCompraUpdate.getFormaPago());
-
-            registroCompraUpdate.setVencimiento(getVencimiento(cantidad));
-            registroCompraUpdate.setPago(LocalDate.now());
-
-            registroCompraRepository.save(registroCompraUpdate);
-
-            return this.mapper.map(registroCompraUpdate, RegistroCompraResponse.class);
-        } else {
-            throw new ResourceNotFoundException("Registro compra no encontrado");
         }
     }
 
@@ -149,5 +130,16 @@ public class RegistroCompraServiceImpl implements RegistroCompraService {
 
     public List<RegistroStatsResponse> getRegistrosByUser(Long id){
         return registroCompraRepository.findAllByUsuarioId(id).stream().map(registroCompra -> this.mapper.map(registroCompra, RegistroStatsResponse.class)).collect(Collectors.toList());
+    }
+
+    private void agregarCuota(RegistroCompra registroCompra){
+        Cuota cuota = new Cuota();
+        cuota.setPago(registroCompra.getEntrega());
+        cuota.setCantCuota(1);
+        cuota.setFechaPago(LocalDate.now());
+        cuota.setFechaVencimiento(getVencimiento(1));
+        cuota.setRegistroCompra(registroCompra);
+        cuota.setTotalCuotasPagas(0);
+        cuotaService.add(cuota);
     }
 }

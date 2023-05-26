@@ -11,13 +11,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "registro_compra")
 @Getter @Setter @NoArgsConstructor
-public class RegistroCompra implements Serializable {
+public class RegistroCompra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,16 +30,7 @@ public class RegistroCompra implements Serializable {
     private Integer totalCuotas;
 
     @Column
-    private Integer cuotasPagas;
-
-    @Column
     private Double totalPagar;
-
-    @Column
-    private LocalDate vencimiento;
-
-    @Column
-    private LocalDate pago;
 
     @CreationTimestamp
     @Column(nullable = false)
@@ -62,5 +54,8 @@ public class RegistroCompra implements Serializable {
     @ManyToOne(optional=false)
     @JoinColumn(name="usuario",referencedColumnName="id")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "registroCompra")
+    private List<Cuota> cuotas = new ArrayList<>();
 
 }

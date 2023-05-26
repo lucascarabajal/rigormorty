@@ -9,8 +9,8 @@ import java.util.List;
 public interface RegistroCompraService {
     RegistroCompraResponse addRegistroCompra(RegistroCompra registroCompra);
     List<RegistroCompraResponse> getRegistroCompras();
+    RegistroCompra getById(Long id);
     Object updateRegistroCompra(RegistroCompra registroCompra);
-    RegistroCompraResponse pagoCuota(Long id, Integer cantidad);
     List<RegistroCompraResponse> getRegistroCompraByCliente(Integer dni);
     List<RegistroStatsResponse> getRegistrosByUser(Long id);
 }

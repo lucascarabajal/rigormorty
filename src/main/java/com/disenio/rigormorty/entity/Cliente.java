@@ -26,7 +26,4 @@ public class Cliente extends Persona{
     @OneToMany(mappedBy = "cliente")
     private List<RegistroCompra> registros = new ArrayList<>();
 
-//    @OneToMany
-//    @JoinColumn(name = "id_mantenimiento", referencedColumnName = "id")
-//    private List<Mantenimiento> mantenimientos;
 }

@@ -27,16 +27,10 @@ public class RegistroCompraController {
         return ResponseEntity.ok().body(registroCompraService.getRegistroCompras());
     }
 
-
     @PutMapping("{id}")
     public ResponseEntity<Object> updateRegistroCompra(@PathVariable Long id, @RequestBody RegistroCompra registroCompra) {
         registroCompra.setId(id);
         return ResponseEntity.ok().body(this.registroCompraService.updateRegistroCompra(registroCompra));
-    }
-
-    @GetMapping("/cuota/{id}/{cantidad}")
-    public ResponseEntity<Object> pagoCuota(@PathVariable Long id,@PathVariable Integer cantidad){
-        return ResponseEntity.ok().body(this.registroCompraService.pagoCuota(id, cantidad));
     }
 
     @GetMapping("{dni}")
