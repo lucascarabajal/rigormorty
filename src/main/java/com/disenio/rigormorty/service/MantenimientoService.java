@@ -11,4 +11,5 @@ public interface MantenimientoService {
     ResponseEntity<List<MantenimientoResponse>> getMantenimientos();
     List<MantenimientoResponse> getMantenimientoByCliente(Long id);
     Object updateMantenimiento(Mantenimiento mantenimiento);
+    List<MantenimientoResponse>getLastMantenimientosByParcelas();
 }

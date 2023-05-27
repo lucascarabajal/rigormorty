@@ -61,8 +61,15 @@ public class MantenimientoServiceImpl implements MantenimientoService {
 
     }
 
+    @Override
+    public List<MantenimientoResponse> getLastMantenimientosByParcelas() {
+        return mantenimientoRepository.findMantenimientosWithoutDuplicates().stream()
+                .map(mantenimiento -> this.mapper.map(mantenimiento,MantenimientoResponse.class)).collect(Collectors.toList());
+    }
+
     public List<MantenimientoResponse> getMantenimientoByCliente(Long id){
-        return mantenimientoRepository.getMantenimientoByCliente_Id(id).stream().map(mantenimiento -> this.mapper.map(mantenimiento, MantenimientoResponse.class)).collect(Collectors.toList());
+        return mantenimientoRepository.getMantenimientoByCliente_Id(id).stream()
+                .map(mantenimiento -> this.mapper.map(mantenimiento, MantenimientoResponse.class)).collect(Collectors.toList());
     }
 
     private int obtenerPeriodo(String periodoMantenimiento ){

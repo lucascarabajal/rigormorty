@@ -38,4 +38,9 @@ public class MantenimientoController {
         mantenimiento.setId(id);
         return ResponseEntity.ok().body(this.mantenimientoService.updateMantenimiento(mantenimiento));
     }
+
+    @GetMapping("/last")
+    public ResponseEntity<List<MantenimientoResponse>> getLastMantenimientoByParcelas(){
+        return ResponseEntity.ok().body(mantenimientoService.getLastMantenimientosByParcelas());
+    }
 }

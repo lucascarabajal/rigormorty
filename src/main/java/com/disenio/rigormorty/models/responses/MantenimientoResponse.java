@@ -19,7 +19,7 @@ public class MantenimientoResponse implements Serializable {
     private LocalDate fechaPago;
     private Double pago;
     private String periodo;
-    private ClienteAddResponse cliente;
+    private ClienteResponse cliente;
     private ParcelaClienteResponse parcela;
 
 }
