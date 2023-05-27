@@ -13,6 +13,5 @@ public interface ClienteService {
     Object updateCliente(Cliente cliente);
     ClienteAddResponse getById(Long id);
     ResponseEntity<Object> delete(Long id);
-
     List<ClienteAddResponse> clientesWithParcelas();
 }

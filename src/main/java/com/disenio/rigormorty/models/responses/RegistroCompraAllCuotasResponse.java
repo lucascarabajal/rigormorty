@@ -1,9 +1,5 @@
 package com.disenio.rigormorty.models.responses;
 
-import com.disenio.rigormorty.dto.ClienteRegistroDTO;
-import com.disenio.rigormorty.dto.ParcelaDTO;
-import com.disenio.rigormorty.entity.Cuota;
-import com.disenio.rigormorty.entity.Usuario;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,11 +7,12 @@ import lombok.Setter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
-@Getter @Setter @NoArgsConstructor
-public class RegistroCompraResponse implements Serializable {
+@Getter
+@Setter
+@NoArgsConstructor
+public class RegistroCompraAllCuotasResponse implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -25,7 +22,6 @@ public class RegistroCompraResponse implements Serializable {
     private LocalDate fechaCompra;
     private LocalDate pago;
     private String formaPago;
-    private ClienteResponse cliente;
+    private ClienteAddResponse cliente;
     private List<ParcelaClienteResponse> parcelas;
-    private List<CuotaResponse> cuotas;
 }
