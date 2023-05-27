@@ -28,12 +28,16 @@ public class CuotaServiceImpl implements CuotaService{
 
         Cuota cuota = new Cuota();
 
+        Integer cantidadCuota = cuotaAnterior.getTotalCuotasPagas() + cuotaRequest.getCantCuota();
+
         if (cuotaAnterior.getTotalCuotasPagas() == 0){
             cuota.setTotalCuotasPagas(cuotaRequest.getCantCuota());
-        } else if (cuotaAnterior.getTotalCuotasPagas().equals(cuotaRequest.getRegistroCompra().getTotalCuotas())){
+        } else if (cuotaAnterior.getTotalCuotasPagas().equals(cuotaAnterior.getTotalCuotas())){
             throw new CustomException("Usted ya pago todas las cuotas de este registro");
-        }else if (cuotaAnterior.getTotalCuotasPagas()>0) {
+        }else if (cuotaAnterior.getTotalCuotasPagas()>0 && cantidadCuota <= cuotaAnterior.getTotalCuotas() ) {
             cuota.setTotalCuotasPagas(cuotaAnterior.getTotalCuotasPagas()+cuotaRequest.getCantCuota());
+        }else {
+            throw new CustomException("Usted esta queriendo pagar más cuotas de las que debe");
         }
 
         cuota.setCantCuota(cuotaRequest.getCantCuota());
@@ -41,6 +45,7 @@ public class CuotaServiceImpl implements CuotaService{
         cuota.setFechaVencimiento(getVencimiento(cuotaRequest.getCantCuota()));
         cuota.setPago(cuotaRequest.getPago());
         cuota.setRegistroCompra(cuotaRequest.getRegistroCompra());
+        cuota.setTotalCuotas(cuotaAnterior.getTotalCuotas());
 
         return cuotaRepository.save(cuota);
     }

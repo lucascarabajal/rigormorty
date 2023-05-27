@@ -31,6 +31,9 @@ public class Cuota {
     private Integer totalCuotasPagas;
 
     @Column
+    private Integer totalCuotas;
+
+    @Column
     private LocalDate fechaVencimiento;
 
     @Column

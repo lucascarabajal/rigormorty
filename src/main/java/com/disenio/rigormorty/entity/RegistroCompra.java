@@ -27,9 +27,6 @@ public class RegistroCompra {
     private Double entrega;
 
     @Column
-    private Integer totalCuotas;
-
-    @Column
     private Double totalPagar;
 
     @CreationTimestamp

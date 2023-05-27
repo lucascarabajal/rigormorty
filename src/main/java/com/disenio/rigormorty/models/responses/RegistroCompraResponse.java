@@ -2,6 +2,7 @@ package com.disenio.rigormorty.models.responses;
 
 import com.disenio.rigormorty.dto.ClienteRegistroDTO;
 import com.disenio.rigormorty.dto.ParcelaDTO;
+import com.disenio.rigormorty.entity.Cuota;
 import com.disenio.rigormorty.entity.Usuario;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,4 +30,5 @@ public class RegistroCompraResponse implements Serializable {
     private String formaPago;
     private ClienteAddResponse cliente;
     private List<ParcelaClienteResponse> parcelas;
+    private List<CuotaResponse> cuotas;
 }

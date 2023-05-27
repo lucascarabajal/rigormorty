@@ -1,6 +1,7 @@
 package com.disenio.rigormorty.controller;
 
 import com.disenio.rigormorty.entity.RegistroCompra;
+import com.disenio.rigormorty.models.request.RegistroCompraRequest;
 import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
 import com.disenio.rigormorty.models.responses.RegistroStatsResponse;
 import com.disenio.rigormorty.service.RegistroCompraService;
@@ -18,7 +19,7 @@ public class RegistroCompraController {
     private final RegistroCompraService registroCompraService;
 
     @PostMapping
-    public ResponseEntity<RegistroCompraResponse> addRegistroCompra(@RequestBody RegistroCompra registroCompra){
+    public ResponseEntity<RegistroCompraResponse> addRegistroCompra(@RequestBody RegistroCompraRequest registroCompra){
         return ResponseEntity.ok().body(registroCompraService.addRegistroCompra(registroCompra));
     }
 
@@ -34,7 +35,7 @@ public class RegistroCompraController {
     }
 
     @GetMapping("{dni}")
-    public ResponseEntity<Object> pagoCuota(@PathVariable Integer dni){
+    public ResponseEntity<Object> getRegistroCompraByCliente(@PathVariable Integer dni){
         return ResponseEntity.ok().body(this.registroCompraService.getRegistroCompraByCliente(dni));
     }
 
