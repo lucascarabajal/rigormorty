@@ -14,4 +14,6 @@ public interface MantenimientoService {
     List<MantenimientoResponse>getLastMantenimientosByParcelas();
 
     List<MantenimientoResponse> getMantenimientosByParcela(Long id);
+
+    List<MantenimientoResponse> getLastMantenimientosByCliente(Long id);
 }

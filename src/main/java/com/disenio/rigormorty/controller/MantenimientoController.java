@@ -33,6 +33,11 @@ public class MantenimientoController {
         return ResponseEntity.ok().body(mantenimientoService.getMantenimientosByParcela(id));
     }
 
+    @GetMapping("/last/{id}")
+    public ResponseEntity<List<MantenimientoResponse>> getLastMantenimientosByCliente(@PathVariable Long id){
+        return ResponseEntity.ok().body(mantenimientoService.getLastMantenimientosByCliente(id));
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<List<MantenimientoResponse>> getMantenimientoByCliente(@PathVariable Long id){
         return ResponseEntity.ok().body(mantenimientoService.getMantenimientoByCliente(id));

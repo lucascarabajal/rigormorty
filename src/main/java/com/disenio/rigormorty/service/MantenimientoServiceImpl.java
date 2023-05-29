@@ -12,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +35,12 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         mantenimientoRepository.save(mantenimiento);
 
         return ResponseEntity.ok("Se pago correctamente");
+    }
+
+    @Override
+    public List<MantenimientoResponse> getLastMantenimientosByCliente(Long id) {
+        return mantenimientoRepository.findLastMantenimientoByCliente(id).stream()
+                .map(mantenimiento -> this.mapper.map(mantenimiento,MantenimientoResponse.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -66,12 +75,13 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         return mantenimientoRepository.findMantenimientosWithoutDuplicates().stream()
                 .map(mantenimiento -> this.mapper.map(mantenimiento,MantenimientoResponse.class)).collect(Collectors.toList());
     }
-
+    @Override
     public List<MantenimientoResponse> getMantenimientoByCliente(Long id){
         return mantenimientoRepository.getMantenimientoByCliente_Id(id).stream()
                 .map(mantenimiento -> this.mapper.map(mantenimiento, MantenimientoResponse.class)).collect(Collectors.toList());
     }
 
+    @Override
     public List<MantenimientoResponse> getMantenimientosByParcela(Long id){
         return mantenimientoRepository.getMantenimientoByParcela_Id(id).stream()
                 .map(mantenimiento -> this.mapper.map(mantenimiento,MantenimientoResponse.class)).collect(Collectors.toList());
