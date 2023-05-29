@@ -28,6 +28,11 @@ public class MantenimientoController {
         return mantenimientoService.getMantenimientos();
     }
 
+    @GetMapping("/parcela/{id}")
+    public ResponseEntity<List<MantenimientoResponse>> getMantenimientosByParcela(@PathVariable Long id){
+        return ResponseEntity.ok().body(mantenimientoService.getMantenimientosByParcela(id));
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<List<MantenimientoResponse>> getMantenimientoByCliente(@PathVariable Long id){
         return ResponseEntity.ok().body(mantenimientoService.getMantenimientoByCliente(id));

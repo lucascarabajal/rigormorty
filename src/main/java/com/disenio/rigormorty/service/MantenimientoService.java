@@ -12,4 +12,6 @@ public interface MantenimientoService {
     List<MantenimientoResponse> getMantenimientoByCliente(Long id);
     Object updateMantenimiento(Mantenimiento mantenimiento);
     List<MantenimientoResponse>getLastMantenimientosByParcelas();
+
+    List<MantenimientoResponse> getMantenimientosByParcela(Long id);
 }
