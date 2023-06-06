@@ -28,4 +28,5 @@ public class RegistroCompraResponse implements Serializable {
     private ClienteResponse cliente;
     private List<ParcelaClienteResponse> parcelas;
     private List<CuotaResponse> cuotas;
+    private UserRest usuario;
 }

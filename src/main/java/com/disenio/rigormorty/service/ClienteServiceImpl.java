@@ -56,12 +56,10 @@ public class ClienteServiceImpl implements ClienteService {
             clienteToUpdate.setId(cliente.getId());
             clienteToUpdate.setNombre(cliente.getNombre());
             clienteToUpdate.setApellido(cliente.getApellido());
-            clienteToUpdate.setDni(cliente.getDni());
             clienteToUpdate.setFechaNac(cliente.getFechaNac());
             clienteToUpdate.setEmail(cliente.getEmail());
             clienteToUpdate.setTelefono(cliente.getTelefono());
             clienteToUpdate.setDomicilios(cliente.getDomicilios());
-            clienteToUpdate.setRegistros(cliente.getRegistros());
             clienteRepository.save(clienteToUpdate);
             return clienteToUpdate;
         } else {
