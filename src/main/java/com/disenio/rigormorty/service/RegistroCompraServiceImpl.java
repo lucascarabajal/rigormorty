@@ -12,6 +12,7 @@ import com.disenio.rigormorty.exception.ResourceNotFoundException;
 import com.disenio.rigormorty.models.request.RegistroCompraRequest;
 import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
 import com.disenio.rigormorty.models.responses.RegistroStatsResponse;
+import com.disenio.rigormorty.models.responses.VentasResponses;
 import com.disenio.rigormorty.repository.RegistroCompraRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -107,6 +108,11 @@ public class RegistroCompraServiceImpl implements RegistroCompraService {
         });
 
         return registroCompras.stream().map(registroCompra1 -> this.mapper.map(registroCompra1, RegistroCompraResponse.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VentasResponses> getVentas() {
+        return registroCompraRepository.findAll().stream().map(registroCompra -> this.mapper.map(registroCompra,VentasResponses.class)).collect(Collectors.toList());
     }
 
     private void validarFormaPago(String formaPago) {

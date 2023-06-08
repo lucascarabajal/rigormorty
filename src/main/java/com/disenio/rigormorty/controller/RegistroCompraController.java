@@ -4,6 +4,7 @@ import com.disenio.rigormorty.entity.RegistroCompra;
 import com.disenio.rigormorty.models.request.RegistroCompraRequest;
 import com.disenio.rigormorty.models.responses.RegistroCompraResponse;
 import com.disenio.rigormorty.models.responses.RegistroStatsResponse;
+import com.disenio.rigormorty.models.responses.VentasResponses;
 import com.disenio.rigormorty.service.RegistroCompraService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,10 @@ public class RegistroCompraController {
     @GetMapping("/user/{id}")
     public ResponseEntity<List<RegistroStatsResponse>> getRegistrosByUser(@PathVariable Long id){
         return ResponseEntity.ok().body(this.registroCompraService.getRegistrosByUser(id));
+    }
+
+    @GetMapping("/ventas")
+    public ResponseEntity<List<VentasResponses>> getVentas(){
+        return ResponseEntity.ok().body(registroCompraService.getVentas());
     }
 }

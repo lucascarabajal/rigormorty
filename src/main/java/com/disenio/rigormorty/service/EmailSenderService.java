@@ -35,7 +35,7 @@ public class EmailSenderService {
 
         String html = templateEngine.process("mail-template", context);
         helper.setSubject("Notificación de Vencimiento - Rigormorty");
-
+        helper.addInline("logo", new ClassPathResource("src/main/resources/images/4ccdd621659342935a1460a1303c0ba1.jpeg"));
         helper.setTo(mail.getTo());
         helper.setText(html, true);
         helper.setFrom(mail.getFrom());
