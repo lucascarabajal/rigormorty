@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -21,7 +22,7 @@ public class DifuntoDTO implements Serializable {
     private String apellido;
     private Integer dni;
     private LocalDate fechaNac;
-    private LocalDate fechaDef;
+    private LocalDateTime fechaDef;
     private String numExpediente;
     private Integer numNivel;
     private String acta;
