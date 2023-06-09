@@ -32,9 +32,8 @@ public class DifuntoController {
         return difuntoService.getDifuntos();
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Object> updateDifunto(@PathVariable Long id, @RequestBody Difunto difunto){
-        difunto.setId(id);
+    @PutMapping()
+    public ResponseEntity<Object> updateDifunto(@RequestBody Difunto difunto){
         return ResponseEntity.ok().body(this.difuntoService.updateDifunto(difunto));
     }
 

@@ -2,6 +2,7 @@ package com.disenio.rigormorty.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonMerge;
 import org.hibernate.annotations.CascadeType;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Parcela{
     @Column(nullable = false)
     private Boolean asignada;
 
+    @JsonManagedReference
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_parcela", referencedColumnName = "id")
