@@ -2,7 +2,6 @@ package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.models.request.EmailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.thymeleaf.context.Context;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -25,6 +23,7 @@ public class EmailSenderService {
     private JavaMailSender emailSender;
     @Autowired
     private SpringTemplateEngine templateEngine;
+
     public void sendEmail(EmailRequest mail) throws MessagingException, IOException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message,
@@ -34,10 +33,17 @@ public class EmailSenderService {
         context.setVariables(mail.getModel());
 
         String html = templateEngine.process("mail-template", context);
-        helper.setSubject("Notificación de Vencimiento - Rigormorty");
-        helper.addInline("logo", new ClassPathResource("src/main/resources/images/4ccdd621659342935a1460a1303c0ba1.jpeg"));
-        helper.setTo(mail.getTo());
+        helper.setSubject(mail.getSubject());
         helper.setText(html, true);
+        File logo = new File("src/main/resources/images/logo.png");
+        helper.addInline("logo",logo);
+        File rounderUp = new File("src/main/resources/images/rounder-up.png");
+        helper.addInline("rounder-up",rounderUp);
+        File divider = new File("src/main/resources/images/divider.png");
+        helper.addInline("divider",divider);
+        File rounderDwn = new File("src/main/resources/images/rounder-dwn.png");
+        helper.addInline("rounder-dwn", rounderDwn);
+        helper.setTo(mail.getTo());
         helper.setFrom(mail.getFrom());
         emailSender.send(message);
     }
@@ -50,6 +56,7 @@ public class EmailSenderService {
         model.put("name", mail.getNombre());
         model.put("fechaVencimiento", mail.getFechaVencimiento());
         model.put("parcela", mail.getParcela());
+        model.put("title", mail.getTitle());
         mail.setModel(model);
 
         sendEmail(mail);

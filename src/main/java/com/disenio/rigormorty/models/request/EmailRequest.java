@@ -10,6 +10,8 @@ import java.util.Map;
 public class EmailRequest {
 
     String to;
+    String title;
+    String subject;
     String from;
     String content;
     String nombre;

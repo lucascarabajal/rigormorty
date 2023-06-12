@@ -3,7 +3,6 @@ package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.entity.EstadoParcela;
 import com.disenio.rigormorty.entity.Parcela;
-import com.disenio.rigormorty.entity.Usuario;
 import com.disenio.rigormorty.entity.Zona;
 import com.disenio.rigormorty.enums.NombreParcela;
 import com.disenio.rigormorty.exception.CustomException;
@@ -15,14 +14,11 @@ import com.disenio.rigormorty.repository.ParcelaRepository;
 import com.disenio.rigormorty.repository.ZonaRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @AllArgsConstructor
