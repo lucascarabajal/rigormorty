@@ -17,11 +17,11 @@ public class UserRegisterRequestModel {
     private String email;
 
     @NotBlank
-    @Size(min=5, max = 30)
+    @Size(min=6, max = 30)
     private String username;
 
     @NotBlank
-    @Size(min=5, max = 40)
+    @Size(min=8, max = 40)
     private String password;
 
     @NotBlank

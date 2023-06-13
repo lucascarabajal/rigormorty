@@ -28,7 +28,7 @@ public class Domicilio implements Serializable {
     @Column(nullable = false, length = 50)
     private String ciudad;
 
-    @Column(nullable = false, length = 25)
+    @Column(nullable = false, length = 90)
     private String provincia;
 
     @Column(nullable = false, length = 25)
