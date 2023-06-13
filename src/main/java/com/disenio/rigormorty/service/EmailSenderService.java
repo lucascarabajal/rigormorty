@@ -2,6 +2,7 @@ package com.disenio.rigormorty.service;
 
 import com.disenio.rigormorty.models.request.EmailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class EmailSenderService {
         emailSender.send(message);
     }
 
-    public void sendInlinedCssEmail(EmailRequest mail) throws MessagingException, IOException {
+    public ResponseEntity<Object> sendInlinedCssEmail(EmailRequest mail) throws MessagingException, IOException {
 
         mail.setFrom("from@gmail.com");//replace with your desired email
         mail.setTo(mail.getTo());//replace with your desired email
@@ -60,5 +61,6 @@ public class EmailSenderService {
         mail.setModel(model);
 
         sendEmail(mail);
+        return ResponseEntity.ok().body("Se envío correctamente el mail");
     }
 }
