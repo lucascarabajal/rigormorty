@@ -36,13 +36,13 @@ public class EmailSenderService {
         String html = templateEngine.process("mail-template", context);
         helper.setSubject(mail.getSubject());
         helper.setText(html, true);
-        File logo = new File("src/main/resources/images/logo.png");
+        File logo = new File("rigormorty.s3.amazonaws.com/assets/logo.png");
         helper.addInline("logo",logo);
-        File rounderUp = new File("src/main/resources/images/rounder-up.png");
+        File rounderUp = new File("rigormorty.s3.amazonaws.com/assets/rounder-up.png");
         helper.addInline("rounder-up",rounderUp);
-        File divider = new File("src/main/resources/images/divider.png");
+        File divider = new File("rigormorty.s3.amazonaws.com/assets/divider.png");
         helper.addInline("divider",divider);
-        File rounderDwn = new File("src/main/resources/images/rounder-dwn.png");
+        File rounderDwn = new File("rigormorty.s3.amazonaws.com/assets/rounder-dwn.png");
         helper.addInline("rounder-dwn", rounderDwn);
         helper.setTo(mail.getTo());
         helper.setFrom(mail.getFrom());
