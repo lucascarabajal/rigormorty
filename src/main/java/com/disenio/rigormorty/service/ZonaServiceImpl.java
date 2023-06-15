@@ -58,7 +58,7 @@ public class ZonaServiceImpl implements ZonaService{
     }
 
     @Override
-    public Object updateZona(Zona zona){
+    public ZonaResponse updateZona(Zona zona){
         Optional<Zona> optionalZona = zonaRepository.findById(zona.getId());
         if(optionalZona.isPresent()){
             Zona zonaToUpdate = optionalZona.get();
@@ -68,7 +68,7 @@ public class ZonaServiceImpl implements ZonaService{
 
             zonaRepository.save(zonaToUpdate);
 
-            return zonaToUpdate;
+            return this.mapper.map(zonaToUpdate,ZonaResponse.class);
         }else{
             throw new ResourceNotFoundException("Zona no encontrada");
         }

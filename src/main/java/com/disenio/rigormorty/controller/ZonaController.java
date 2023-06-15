@@ -46,7 +46,7 @@ public class ZonaController {
     }
 
     @PutMapping
-    public ResponseEntity<Object> updateZona(@RequestBody Zona zona) {
+    public ResponseEntity<ZonaResponse> updateZona(@RequestBody Zona zona) {
         return ResponseEntity.ok().body(this.zonaService.updateZona(zona));
     }
 
